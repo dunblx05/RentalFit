@@ -65,7 +65,21 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
 
         binding.apply {
 
+            // 장소 예약 화면
+            textMyPagePlaceHistory.setOnClickListener {
 
+                val intent = Intent(mainActivity, MyPageActivity::class.java)
+                intent.putExtra("name", "PlaceHistory")
+                startActivity(intent)
+            }
+
+            // 장비 예약 화면
+            textMyPageEquipHistory.setOnClickListener {
+
+                val intent = Intent(mainActivity, MyPageActivity::class.java)
+                intent.putExtra("name", "EquipHistory")
+                startActivity(intent)
+            }
         }
     }
 }

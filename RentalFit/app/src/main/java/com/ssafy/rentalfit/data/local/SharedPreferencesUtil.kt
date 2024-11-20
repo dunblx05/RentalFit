@@ -36,15 +36,15 @@ class SharedPreferencesUtil (context: Context) {
 //        editor.apply()
 //    }
 //
-//    fun addUserCookie(cookies: HashSet<String>) {
-//        val editor = preferences.edit()
-//        editor.putStringSet(COOKIES_KEY_NAME, cookies)
-//        editor.apply()
-//    }
-//
-//    fun getUserCookie(): MutableSet<String>? {
-//        return preferences.getStringSet(COOKIES_KEY_NAME, HashSet())
-//    }
+    fun addUserCookie(cookies: HashSet<String>) {
+        val editor = preferences.edit()
+        editor.putStringSet(COOKIES_KEY_NAME, cookies)
+        editor.apply()
+    }
+
+    fun getUserCookie(): MutableSet<String>? {
+        return preferences.getStringSet(COOKIES_KEY_NAME, HashSet())
+    }
 //
 //    fun deleteUserCookie() {
 //        preferences.edit().remove(COOKIES_KEY_NAME).apply()

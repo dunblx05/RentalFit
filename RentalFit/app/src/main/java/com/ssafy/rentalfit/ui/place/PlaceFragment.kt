@@ -8,10 +8,7 @@ import com.ssafy.rentalfit.databinding.FragmentEquipBinding
 import com.ssafy.rentalfit.databinding.FragmentPlaceBinding
 import com.ssafy.rentalfit.ui.places.adapter.PlaceAdapter
 
-class PlaceFragment : BaseFragment<FragmentPlaceBinding>(
-    bind = { view -> FragmentPlaceBinding.bind(view) },
-    layoutResId = R.layout.fragment_equip
-)  {
+class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::bind, R.layout.fragment_place)  {
 
     private lateinit var placeAdapter: PlaceAdapter
 

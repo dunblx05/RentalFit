@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseFragment
-import com.ssafy.rentalfit.databinding.FragmentEquipBinding
+import com.ssafy.rentalfit.databinding.FragmentEquipDetailBinding
 
-class EquipFragment : BaseFragment<FragmentEquipBinding>(
-    bind = { view -> FragmentEquipBinding.bind(view) },
+class EquipDetailFragment : BaseFragment<FragmentEquipDetailBinding>(
+    bind = { view -> FragmentEquipDetailBinding.bind(view) },
     layoutResId = R.layout.fragment_equip
 ) {
 

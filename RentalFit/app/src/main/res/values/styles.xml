@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 버튼 글자 -->
+    <style name="Button_Text">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/black_main</item>
+    </style>
+
+
+    <!-- 제목 -->
+    <style name="TextView_Title">
+        <item name="android:textSize">32sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+
+    <!-- 다이얼로그 -->
+    <!-- 다이얼로그 내용 -->
+    <style name="Dialog_Content">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 다이얼로그 버튼 글씨(취소) -->
+    <style name="Dialog_Button_Cancel">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/neon_main</item>
+    </style>
+
+    <!-- 다이얼로그 버튼 글씨(취소) -->
+    <style name="Dialog_Button_Confirm">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/black_main</item>
+    </style>
+    <!-- 다이얼로그 -->
+
+    <!-- PlaceFragment, PlaceDetailFragment, CartFragment -->
+    <!-- 리사이클러뷰의 이름(장소), 장소대여의 이름, 카테고리들, 바텀시트의 카테고리들, 장바구니 아이템 이름 -->
+    <style name="TextView_Place_Name">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 리사이클러뷰의 시간(장소) -->
+    <style name="TextView_Place_Time">
+        <item name="android:textSize">12sp</item>
+        <item name="font">@font/font_regular</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 장소대여의 설명들 -->
+    <style name="TextView_Place_Description">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_regular</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 장소대여의 시간 글씨 -->
+    <style name="TextView_Place_BottomSheet_Time">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <style name="TextView_Place_BottomSheet_Time2">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/neon_main</item>
+    </style>
+
+    <!-- 장소대여 바텀시트 금액 -->
+    <style name="TextView_Place_BottomSheet_Cost">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/neon_main</item>
+    </style>
+    <!-- PlaceFragment -->
+
+
+    <!-- EquipFragment -->
+    <!-- 리사이클러뷰의 이름(장비) -->
+    <style name="TextView_Equip_Name">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 리사이클러뷰의 수량(장비) -->
+    <style name="TextView_Place_Cnt">
+        <item name="android:textSize">32sp</item>
+        <item name="font">@font/font_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 장바구니 장비 가격 -->
+    <style name="TextView_Cart_Cost">
+        <item name="android:textSize">20sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+    <!-- EquipFragment -->
+
+
+    <!-- MyPageFragment -->
+    <!-- 마이페이지 이름 -->
+    <style name="TextView_MyPage_Name">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 마이페이지 카테고리 -->
+    <style name="TextView_MyPage_Category">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 마이페이지 카테고리 세부 -->
+    <style name="TextView_MyPage_Category_Detail">
+        <item name="android:textSize">20sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 알림 메시지 -->
+    <style name="Alarm_Content">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 예약 내역 탭 -->
+    <style name="History_Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 예약 내역 날짜 -->
+    <style name="History_Date">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/neon_main</item>
+    </style>
+
+    <!-- 예약 내역 이름 -->
+    <style name="History_Name">
+        <item name="android:textSize">24sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 예약 내역 내용들 -->
+    <style name="History_Content">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 예약 내역 상세 날짜 -->
+    <style name="History_Detail_Date">
+        <item name="android:textSize">20sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+    <!-- 예약 내역 상세 이름 -->
+    <style name="History_Detail_Name">
+        <item name="android:textSize">32sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/neon_main</item>
+    </style>
+
+    <!-- 예약 내역 상세 내용들 -->
+    <style name="History_Detail_Content">
+        <item name="android:textSize">16sp</item>
+        <item name="font">@font/font_semi_bold</item>
+        <item name="color">@color/oatmeal_main</item>
+    </style>
+
+</resources>

@@ -48,4 +48,36 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // RecyclerView
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+
+    //indicator
+    implementation ("me.relex:circleindicator:2.1.6")
+
+    // FCM 사용 위한 plugins
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+
+    // https://github.com/square/retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // https://github.com/square/okhttp
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+
+    // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    // Glide 사용
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
+    //Splash Screen
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
+    //framework ktx dependency 추가
+    implementation ("androidx.fragment:fragment-ktx:1.6.2")
 }

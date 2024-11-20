@@ -47,7 +47,6 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(ActivityRes
         }
 
         transaction.replace(R.id.fragmentContainer, goto)
-        transaction.addToBackStack(name)
         transaction.commit()
     }
 }

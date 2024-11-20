@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_main"
+    android:layout_margin="20dp">
+
+    <TextView
+        android:id="@+id/equipHistoryDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="야구배트"
+        style="@style/History_Detail_Name"
+        android:textColor="@color/neon_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/equipHistoryDetailImg"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equipHistoryDetailName"
+        app:srcCompat="@drawable/sample_equip_kdy" />
+
+    <TextView
+        android:id="@+id/equipHistoryDetailQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:text="수량 : 1개"
+        android:textColor="@color/oatmeal_main"
+        style="@style/History_Detail_Content"
+        app:layout_constraintStart_toEndOf="@+id/equipHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/equipHistoryDetailName" />
+
+    <TextView
+        android:id="@+id/equipHistoryDetailStartDate"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="시작 : 09:30"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/equipHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/equipHistoryDetailQuantity" />
+
+    <TextView
+        android:id="@+id/equipHistoryDetailEndDate"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="종료 : 10:30"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/equipHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/equipHistoryDetailStartDate" />
+
+    <TextView
+        android:id="@+id/equipHistoryDetailCost"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="금액 : 3,000원"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/equipHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/equipHistoryDetailEndDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

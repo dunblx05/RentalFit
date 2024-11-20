@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="1dp" /> <!-- 구분선 높이 -->
+    <solid android:color="@color/grey_main" /> <!-- 구분선 색상 -->
+</shape>

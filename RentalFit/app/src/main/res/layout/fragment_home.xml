@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:text="홈"
             style="@style/TextView_Title"
+            android:fontFamily="@font/font_bold"
             android:textColor="@color/oatmeal_main"/>
 
     </com.google.android.material.appbar.MaterialToolbar>

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseActivity
 import com.ssafy.rentalfit.databinding.ActivityLoginBinding
+import com.ssafy.rentalfit.ui.login.JoinFragment
 import com.ssafy.rentalfit.ui.login.LoginFragment
 
 class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
@@ -18,7 +19,6 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.containerLogin, LoginFragment())
-                .addToBackStack(null)
                 .commit()
         }
     }
@@ -39,11 +39,12 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
             // 회원가입
             "Join" -> {
-
+                goto = JoinFragment()
             }
         }
 
         transaction.replace(R.id.containerLogin, goto)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 }

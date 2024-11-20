@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentHistoryBinding
-import com.ssafy.rentalfit.ui.mypage.MyPageActivity
+import com.ssafy.rentalfit.activity.MyPageActivity
 
 /**
  * A simple [Fragment] subclass.
@@ -18,6 +18,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
 
     private lateinit var activity : MyPageActivity
 
+    private var selectedTab: String? = null
+
     private var param1: String? = null
     private var param2: String? = null
     override fun onAttach(context: Context) {
@@ -26,6 +28,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        selectedTab = arguments?.getString("selectedTab")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,5 +48,25 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
             tab.text = if (position == 0) "장소 내역" else "장비 내역"
         }.attach()
 
+        // 전달받은 탭 정보에 따라 초기 탭 설정.
+        when(selectedTab) {
+
+            // 장소 예약 내역 탭
+            "PlaceHistory" -> {
+                binding.historyViewPager.setCurrentItem(0, false)
+            }
+
+            // 장비 예약 내역 탭
+            "EquipHistory" -> {
+                binding.historyViewPager.setCurrentItem(1, false)
+            }
+
+            // 기본은 장소 예약 내역 탭으로 설정
+            else -> {
+                binding.historyViewPager.setCurrentItem(0, false)
+            }
+        }
     }
+
+
 }

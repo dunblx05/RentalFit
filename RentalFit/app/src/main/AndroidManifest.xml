@@ -54,6 +54,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.MyPageActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".activity.ReservationActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

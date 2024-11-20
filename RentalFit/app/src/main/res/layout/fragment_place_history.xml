@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mypage.history.PlaceHistoryFragment"
+    android:background="@color/black_main">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/placeHistoryToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/placeHistoryBackBtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="@+id/placeHistoryToolbar"
+        app:layout_constraintStart_toStartOf="@+id/placeHistoryToolbar"
+        app:layout_constraintTop_toTopOf="@+id/placeHistoryToolbar" />
+
+    <TextView
+        android:id="@+id/placeHistoryTitle"
+        style="@style/TextView_MyPage_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="장소 예약 내역"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintBottom_toBottomOf="@+id/placeHistoryToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/placeHistoryToolbar"
+        app:layout_constraintTop_toTopOf="@+id/placeHistoryToolbar" />
+
+    <TextView
+        android:id="@+id/placeHistoryDetailDate"
+        style="@style/History_Detail_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="2024.11.19"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryToolbar" />
+
+    <TextView
+        android:id="@+id/placeHistoryDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="올드트래포드"
+        style="@style/History_Detail_Name"
+        android:textColor="@color/neon_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailDate" />
+
+    <ImageView
+        android:id="@+id/placeHistoryDetailImg"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/sample_place_kdy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailName" />
+
+    <TextView
+        android:id="@+id/placeHistoryDetailPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:text="인원 : 30명"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/placeHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailName"
+        style="@style/History_Detail_Content"/>
+
+    <TextView
+        android:id="@+id/placeHistoryDetailStartDate"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="시작 : 09:30"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/placeHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailPeople" />
+
+    <TextView
+        android:id="@+id/placeHistoryDetailEndDate"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="종료 : 10:30"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/placeHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailStartDate" />
+
+    <TextView
+        android:id="@+id/placeHistoryDetailCost"
+        style="@style/History_Detail_Content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="종료 : 10:30"
+        android:textColor="@color/oatmeal_main"
+        app:layout_constraintStart_toEndOf="@+id/placeHistoryDetailImg"
+        app:layout_constraintTop_toBottomOf="@+id/placeHistoryDetailEndDate" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/placeHistoryDetailOkBtn"
+        style="@style/Button_Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="30dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_login"
+        android:fontFamily="@font/font_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="확인"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

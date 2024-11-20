@@ -6,4 +6,9 @@
     <color name="grey_main">#909090</color>
     <color name="oatmeal_main">#F6F2F2</color>
     <color name="charcoal_main">#2B2D2F</color>
+
+    <color name="bronze">#CD7F32</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="gold">#FFD700</color>
+    <color name="diamond">#0080FF</color>
 </resources>

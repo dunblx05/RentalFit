@@ -6,13 +6,13 @@
     <select id="selectPlaceResByUid" parameterType="String" resultType="PlaceReservation">
         select * from place_reservation pr inner join place p
         on pr.place_id = p.place_id
-        where pr.user_id = "${userId}";
+        where pr.user_id = #{userId};
     </select>
 
     <select id="selectPlaceResByRid" parameterType="Integer" resultType="PlaceReservation">
         select * from place_reservation pr inner join place p
         on pr.place_id = p.place_id
-        where pr.res_id = ${resId};
+        where pr.res_id = #{resId};
     </select>
 
 </mapper>

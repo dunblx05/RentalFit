@@ -1,26 +1,28 @@
 package com.ssafy.sports.model.dto;
 
+import org.springframework.cglib.core.Local;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class PlaceReservation {
+public class EquipReservation {
     private int resId;
     private String userId;
-    private int placeId;
+    private int equipId;
     private LocalDateTime resStartTime;
-    private LocalDateTime resEndTime;
     private int resCost;
 
-    private Place place;
+    private Equip equip;
 
-    public PlaceReservation() {};
+    public EquipReservation(){};
 
-    public PlaceReservation(int resId, String userId, int placeId, LocalDateTime resStartTime, LocalDateTime resEndTime, int resCost) {
+    public EquipReservation(int resId, String userId, int equipId, LocalDateTime resStartTime, int resCost, Equip equip) {
         this.resId = resId;
         this.userId = userId;
-        this.placeId = placeId;
+        this.equipId = equipId;
         this.resStartTime = resStartTime;
-        this.resEndTime = resEndTime;
         this.resCost = resCost;
+        this.equip = equip;
     }
 
     public int getResId() {
@@ -39,12 +41,12 @@ public class PlaceReservation {
         this.userId = userId;
     }
 
-    public int getPlaceId() {
-        return placeId;
+    public int getEquipId() {
+        return equipId;
     }
 
-    public void setPlaceId(int placeId) {
-        this.placeId = placeId;
+    public void setEquipId(int equipId) {
+        this.equipId = equipId;
     }
 
     public LocalDateTime getResStartTime() {
@@ -55,14 +57,6 @@ public class PlaceReservation {
         this.resStartTime = resStartTime;
     }
 
-    public LocalDateTime getResEndTime() {
-        return resEndTime;
-    }
-
-    public void setResEndTime(LocalDateTime resEndTime) {
-        this.resEndTime = resEndTime;
-    }
-
     public int getResCost() {
         return resCost;
     }
@@ -71,24 +65,23 @@ public class PlaceReservation {
         this.resCost = resCost;
     }
 
-    public Place getPlace() {
-        return place;
+    public Equip getEquip() {
+        return equip;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setEquip(Equip equip) {
+        this.equip = equip;
     }
 
     @Override
     public String toString() {
-        return "PlaceReservation{" +
+        return "EquipReservation{" +
                 "resId=" + resId +
                 ", userId='" + userId + '\'' +
-                ", placeId=" + placeId +
+                ", equipId=" + equipId +
                 ", resStartTime=" + resStartTime +
-                ", resEndTime=" + resEndTime +
                 ", resCost=" + resCost +
-                ", place=" + place +
+                ", equip=" + equip +
                 '}';
     }
 }

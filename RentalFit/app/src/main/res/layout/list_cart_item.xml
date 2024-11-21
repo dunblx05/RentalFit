@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewListCartItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/charcoal_main"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:id="@+id/imageListCartItem"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="@+id/textListCartItemName"
+                app:layout_constraintBottom_toBottomOf="@+id/textListCartItemPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/temp"/>
+
+            <TextView
+                android:id="@+id/textListCartItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="야구 배트"
+                style="@style/TextView_Place_Name"
+                android:layout_marginStart="30dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageListCartItem" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewListCartItemCnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black_main"
+                app:strokeWidth="0dp"
+                app:strokeColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/textListCartItemPrice"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="2dp">
+
+                    <ImageView
+                        android:id="@+id/imageListCartItemMinus"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/minus"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="@+id/textListCartItemCnt"
+                        app:layout_constraintBottom_toBottomOf="@+id/textListCartItemCnt"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/textListCartItemCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:text="1"
+                        style="@style/TextView_Cart_Cost"
+                        android:textColor="@color/neon_main"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageListCartItemMinus"
+                        app:layout_constraintEnd_toStartOf="@+id/imageListCartItemPlus"/>
+
+                    <ImageView
+                        android:id="@+id/imageListCartItemPlus"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/plus"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="@+id/textListCartItemCnt"
+                        app:layout_constraintBottom_toBottomOf="@+id/textListCartItemCnt"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textListCartItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="93,000원"
+                style="@style/TextView_Cart_Cost"
+                android:textSize="20sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintTop_toBottomOf="@+id/textListCartItemName"
+                app:layout_constraintStart_toEndOf="@+id/imageListCartItem" />
+
+            <ImageView
+                android:id="@+id/deleteListCartItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

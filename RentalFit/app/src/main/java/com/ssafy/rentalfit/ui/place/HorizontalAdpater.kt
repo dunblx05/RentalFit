@@ -17,8 +17,10 @@ import com.ssafy.rentalfit.R
 
 private const val TAG = "HorizontalAdpater_싸피"
 
-class HorizontalAdapter(private val items: List<Pair<String, Int>>) :
+class HorizontalAdapter(private val items: List<Place>) :
     RecyclerView.Adapter<HorizontalAdapter.HorizontalViewHolder>() {
+
+    var onItemClickListener: ((Place) -> Unit)? = null
 
     class HorizontalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.itemImage)
@@ -35,9 +37,13 @@ class HorizontalAdapter(private val items: List<Pair<String, Int>>) :
     }
 
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
-        val (title, imageRes) = items[position]
-        holder.title.text = title
-        holder.image.setImageResource(imageRes)
+        val item = items[position]
+        holder.title.text = item.name
+        holder.image.setImageResource(holder.itemView.context.resources.getIdentifier(item.img, "drawable", holder.itemView.context.packageName))
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(items[position])
+        }
 
         initSchedule(holder)
     }
@@ -59,6 +65,7 @@ class HorizontalAdapter(private val items: List<Pair<String, Int>>) :
             val timeLabel = TextView(holder.itemView.context).apply {
                 text = hour.toString()
                 textSize = 12f
+                setTextColor(ContextCompat.getColorStateList(holder.itemView.context, R.color.oatmeal_main))
                 setPadding(0, 0, distanceBetTime, 0)
             }
             holder.firstRowTimeLabels.addView(timeLabel)
@@ -85,6 +92,7 @@ class HorizontalAdapter(private val items: List<Pair<String, Int>>) :
             val timeLabel = TextView(holder.itemView.context).apply {
                 text = hour.toString()
                 textSize = 12f
+                setTextColor(ContextCompat.getColorStateList(holder.itemView.context, R.color.oatmeal_main))
                 setPadding(0, 0, distanceBetTime - 4, 0)
             }
             holder.secondRowTimeLabels.addView(timeLabel)

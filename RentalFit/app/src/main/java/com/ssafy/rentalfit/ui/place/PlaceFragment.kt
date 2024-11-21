@@ -37,10 +37,26 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
         // Sample data
         val sports = listOf("풋살", "야구", "축구", "수영", "탁구", "농구", "배구", "배드민턴")
         val sampleData = sports.map { sport ->
-            sport to List(10) { "올드트래포드" to R.drawable.temp }
+            sport to List(10) { Place(it, "올드트래포드", "@drawable/temp") }
         }
 
-        verticalRecyclerView.adapter = VerticalAdapter(sampleData)
+
+        // VerticalAdapter 설정
+        val verticalAdapter = VerticalAdapter(sampleData)
+
+        // VerticalAdapter 내 HorizontalAdapter 클릭 이벤트 처리
+        verticalAdapter.onHorizontalItemClickListener = { selectedItem ->
+            // 클릭된 아이템으로 ReservationActivity로 이동
+            val intent = Intent(mainActivity, ReservationActivity::class.java).apply {
+                putExtra("name", "PlaceDetail")  // 예시로 장소 이름 전달
+                putExtra("placeId", selectedItem.id)  // 장소 ID 전달
+                putExtra("placeName", selectedItem.name)  // 장소 이름 전달
+                putExtra("placeImage", selectedItem.img)  // 이미지 경로 전달 (필요시)
+            }
+            startActivity(intent)
+        }
+
+        verticalRecyclerView.adapter = verticalAdapter
 
         settingToolbar()
     }
@@ -69,4 +85,4 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
 
 }
 
-data class Place(val name: String, val reservations: List<String>)
+data class Place(val id: Int, val name: String, val img: String)

@@ -9,8 +9,6 @@ import com.ssafy.rentalfit.databinding.ListCartItemBinding
 class CartAdapter(): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     lateinit var cartDeleteListener: ItemClickListener
-    lateinit var cartMinusListener: ItemClickListener
-    lateinit var cartPlusListener: ItemClickListener
 
     interface ItemClickListener {
         fun onClick()
@@ -25,16 +23,6 @@ class CartAdapter(): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
                 // 삭제 버튼
                 deleteListCartItem.setOnClickListener {
                     cartDeleteListener.onClick()
-                }
-
-                // - 버튼
-                imageListCartItemMinus.setOnClickListener {
-                    cartMinusListener.onClick()
-                }
-
-                // + 버튼
-                imageListCartItemPlus.setOnClickListener {
-                    cartPlusListener.onClick()
                 }
             }
         }

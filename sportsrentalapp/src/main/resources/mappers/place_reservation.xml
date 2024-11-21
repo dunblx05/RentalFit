@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.sports.model.dao.PlaceReservationDao">
+    <select id="selectPlaceResByUid" parameterType="String" resultType="PlaceReservation">
+        select * from place_reservation pr inner join place p
+        on pr.place_id = p.place_id
+        where pr.user_id = "${userId}";
+    </select>
+
+    <select id="selectPlaceResByRid" parameterType="Integer" resultType="PlaceReservation">
+        select * from place_reservation pr inner join place p
+        on pr.place_id = p.place_id
+        where pr.res_id = ${resId};
+    </select>
+
+</mapper>

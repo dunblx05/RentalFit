@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.sports.model.dao.PlaceDao">
+    <select id="selectPlaceByPid" parameterType="Integer" resultType="Place">
+        select * from place
+        where place_id = ${placeId}
+    </select>
+</mapper>

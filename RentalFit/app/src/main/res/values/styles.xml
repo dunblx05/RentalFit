@@ -4,16 +4,16 @@
     <!-- 버튼 글자 -->
     <style name="Button_Text">
         <item name="android:textSize">16sp</item>
-        <item name="font">@font/font_semi_bold</item>
-        <item name="color">@color/black_main</item>
+        <item name="android:fontFamily">@font/font_semi_bold</item>
+        <item name="android:textColor">@color/black_main</item>
     </style>
 
 
     <!-- 제목 -->
     <style name="TextView_Title">
         <item name="android:textSize">32sp</item>
-        <item name="font">@font/font_bold</item>
-        <item name="color">@color/oatmeal_main</item>
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:textColor">@color/oatmeal_main</item>
     </style>
 
 
@@ -21,22 +21,22 @@
     <!-- 다이얼로그 내용 -->
     <style name="Dialog_Content">
         <item name="android:textSize">16sp</item>
-        <item name="font">@font/font_semi_bold</item>
-        <item name="color">@color/oatmeal_main</item>
+        <item name="android:fontFamily">@font/font_semi_bold</item>
+        <item name="android:textColor">@color/oatmeal_main</item>
     </style>
 
     <!-- 다이얼로그 버튼 글씨(취소) -->
     <style name="Dialog_Button_Cancel">
         <item name="android:textSize">16sp</item>
-        <item name="font">@font/font_bold</item>
-        <item name="color">@color/neon_main</item>
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:textColor">@color/neon_main</item>
     </style>
 
     <!-- 다이얼로그 버튼 글씨(취소) -->
     <style name="Dialog_Button_Confirm">
         <item name="android:textSize">16sp</item>
-        <item name="font">@font/font_bold</item>
-        <item name="color">@color/black_main</item>
+        <item name="android:fontFamily">@font/font_bold</item>
+        <item name="android:textColor">@color/black_main</item>
     </style>
     <!-- 다이얼로그 -->
 
@@ -44,8 +44,8 @@
     <!-- 리사이클러뷰의 이름(장소), 장소대여의 이름, 카테고리들, 바텀시트의 카테고리들, 장바구니 아이템 이름 -->
     <style name="TextView_Place_Name">
         <item name="android:textSize">24sp</item>
-        <item name="font">@font/font_semi_bold</item>
-        <item name="color">@color/oatmeal_main</item>
+        <item name="android:fontFamily">@font/font_semi_bold</item>
+        <item name="android:textColor">@color/oatmeal_main</item>
     </style>
 
     <!-- 리사이클러뷰의 시간(장소) -->

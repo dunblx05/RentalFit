@@ -3,20 +3,22 @@ package com.ssafy.rentalfit.ui.mypage.history
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.MyPageActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentHistoryBinding
-import com.ssafy.rentalfit.activity.MyPageActivity
 
 /**
  * A simple [Fragment] subclass.
  * Use the [HistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBinding::bind, R.layout.fragment_history) {
+class HistoryFragment :
+    BaseFragment<FragmentHistoryBinding>(FragmentHistoryBinding::bind, R.layout.fragment_history) {
 
-    private lateinit var activity : MyPageActivity
+    private lateinit var activity: MyPageActivity
 
     private var selectedTab: String? = null
 
@@ -26,8 +28,10 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
         super.onAttach(context)
         activity = context as MyPageActivity
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         selectedTab = arguments?.getString("selectedTab")
     }
 
@@ -49,7 +53,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
         }.attach()
 
         // 전달받은 탭 정보에 따라 초기 탭 설정.
-        when(selectedTab) {
+        when (selectedTab) {
 
             // 장소 예약 내역 탭
             "PlaceHistory" -> {
@@ -65,6 +69,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
             else -> {
                 binding.historyViewPager.setCurrentItem(0, false)
             }
+        }
+
+        initEvent()
+    }
+
+    private fun initEvent() {
+        binding.historyBackBtn.setOnClickListener {
+            activity.finish()
         }
     }
 

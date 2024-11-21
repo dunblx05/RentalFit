@@ -1,19 +1,31 @@
 package com.ssafy.rentalfit.ui.mypage.history
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.MyPageActivity
+import com.ssafy.rentalfit.databinding.ListPlaceHistoryItemBinding
 
-class PlaceViewPagerAdapter() : RecyclerView.Adapter<PlaceViewPagerAdapter.PlaceViewPagerViewHolder>() {
-    inner class PlaceViewPagerViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
+class PlaceViewPagerAdapter(var activity: MyPageActivity) : RecyclerView.Adapter<PlaceViewPagerAdapter.PlaceViewPagerViewHolder>() {
+    inner class PlaceViewPagerViewHolder(private val binding : ListPlaceHistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            binding.root.setOnClickListener {
+                myListener.onClick()
+            }
+        }
     }
 
+    fun interface ItemClickListener{
+        fun onClick()
+    }
+    lateinit var myListener: ItemClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewPagerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_place_history_item, parent, false)
+        val view = ListPlaceHistoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PlaceViewPagerViewHolder(view)
 
     }
@@ -23,6 +35,6 @@ class PlaceViewPagerAdapter() : RecyclerView.Adapter<PlaceViewPagerAdapter.Place
     }
 
     override fun onBindViewHolder(holder: PlaceViewPagerViewHolder, position: Int) {
-
+        holder.bind()
     }
 }

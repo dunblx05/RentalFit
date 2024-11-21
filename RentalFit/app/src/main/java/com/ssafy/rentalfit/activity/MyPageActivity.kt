@@ -1,6 +1,7 @@
 package com.ssafy.rentalfit.activity
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseActivity
@@ -8,7 +9,9 @@ import com.ssafy.rentalfit.databinding.ActivityMyPageBinding
 import com.ssafy.rentalfit.ui.cart.CartFragment
 import com.ssafy.rentalfit.ui.equip.EquipDetailFragment
 import com.ssafy.rentalfit.ui.mypage.alarm.AlarmFragment
+import com.ssafy.rentalfit.ui.mypage.history.EquipHistoryFragment
 import com.ssafy.rentalfit.ui.mypage.history.HistoryFragment
+import com.ssafy.rentalfit.ui.mypage.history.PlaceHistoryFragment
 import com.ssafy.rentalfit.ui.place.PlaceDetailFragment
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding::inflate) {
@@ -19,10 +22,20 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
         // 기본으로 AlarmFragment가 열리도록 설정
         val name = intent.getStringExtra("name") ?: "Alarm"
 
+        onBackPressedDispatcher.addCallback(this) {
+            val fragmentManager = supportFragmentManager
+            if (fragmentManager.backStackEntryCount > 1) {
+                fragmentManager.popBackStack() // 맨 위의 프래그먼트 제거
+            } else {
+                finish() // 프래그먼트가 없으면 액티비티 종료
+            }
+        }
+
         changeFragmentMyPage(name)
     }
 
-    private fun changeFragmentMyPage(name: String) {
+
+    fun changeFragmentMyPage(name: String) {
 
         val transaction = supportFragmentManager.beginTransaction()
 
@@ -52,9 +65,18 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
                     }
                 }
             }
+
+            "PlaceHistoryDetail" -> {
+                goto = PlaceHistoryFragment()
+            }
+
+            "EquipHistoryDetail" -> {
+                goto = EquipHistoryFragment()
+            }
         }
 
         transaction.replace(R.id.myPageContainer, goto)
+            .addToBackStack(name)
         transaction.commit()
     }
 }

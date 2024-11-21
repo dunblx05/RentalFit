@@ -5,14 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.databinding.ListEquipHistoryItemBinding
+import com.ssafy.rentalfit.databinding.ListPlaceHistoryItemBinding
 
 class EquipViewPagerAdapter() : RecyclerView.Adapter<EquipViewPagerAdapter.EquipViewPagerViewHolder>() {
-    inner class EquipViewPagerViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class EquipViewPagerViewHolder(private val binding : ListEquipHistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
+            binding.root.setOnClickListener {
+                myListener.onClick()
+            }
+        }
 
     }
 
+    fun interface ItemClickListener{
+        fun onClick()
+    }
+    lateinit var myListener: ItemClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipViewPagerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_equip_history_item, parent, false)
+        val view = ListEquipHistoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EquipViewPagerViewHolder(view)
 
     }
@@ -22,6 +34,6 @@ class EquipViewPagerAdapter() : RecyclerView.Adapter<EquipViewPagerAdapter.Equip
     }
 
     override fun onBindViewHolder(holder: EquipViewPagerViewHolder, position: Int) {
-
+        holder.bind()
     }
 }

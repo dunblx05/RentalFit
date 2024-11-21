@@ -1,13 +1,11 @@
 package com.ssafy.rentalfit.ui.mypage.history
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseFragment
-import com.ssafy.rentalfit.databinding.FragmentEquipHistoryBinding
 import com.ssafy.rentalfit.databinding.FragmentPlaceHistoryBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,5 +25,21 @@ class PlaceHistoryFragment : BaseFragment<FragmentPlaceHistoryBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initEvent()
+    }
+
+    private fun initEvent() {
+        binding.placeHistoryBackBtn.setOnClickListener {
+            parentFragmentManager.popBackStack("PlaceHistoryDetail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
+        binding.placeHistoryDetailOkBtn.setOnClickListener {
+            parentFragmentManager.popBackStack("PlaceHistoryDetail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
     }
 }

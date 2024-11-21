@@ -1,9 +1,11 @@
 package com.ssafy.rentalfit.ui.mypage.alarm
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentAlarmBinding
@@ -14,15 +16,10 @@ import com.ssafy.rentalfit.databinding.FragmentAlarmBinding
  * create an instance of this fragment.
  */
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 class AlarmFragment : BaseFragment<FragmentAlarmBinding>(
     FragmentAlarmBinding::bind,
-    R.layout.fragment_history
+    R.layout.fragment_alarm
 ) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -30,37 +27,32 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+        initEvent()
+    }
+
+    private fun initData() {
+        binding.alarmList.adapter = AlarmAdapter()
+
+        val dividerItemDecoration = DividerItemDecoration(activity, LinearLayoutManager.VERTICAL)
+
+        // 색상 리소스를 Drawable로 변환
+        val dividerDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.custom_divider)
+        if (dividerDrawable != null) {
+            dividerItemDecoration.setDrawable(dividerDrawable)
+        }
+
+        binding.alarmList.addItemDecoration(dividerItemDecoration)
+    }
+
+    private fun initEvent() {
+        binding.alarmBackBtn.setOnClickListener {
+            activity?.finish()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_alarm, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AlarmFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AlarmFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

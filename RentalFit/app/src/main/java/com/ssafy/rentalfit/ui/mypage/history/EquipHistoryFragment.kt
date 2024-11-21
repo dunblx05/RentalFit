@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
@@ -28,7 +28,7 @@ class EquipHistoryFragment : BaseFragment<FragmentEquipHistoryBinding>(
     R.layout.fragment_equip_history
 ) {
 
-    private lateinit var activity : MyPageActivity
+    private lateinit var activity: MyPageActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,6 +42,7 @@ class EquipHistoryFragment : BaseFragment<FragmentEquipHistoryBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initData()
+        initEvent()
     }
 
     private fun initData() {
@@ -56,6 +57,24 @@ class EquipHistoryFragment : BaseFragment<FragmentEquipHistoryBinding>(
         }
 
         binding.equipHistoryDetailList.addItemDecoration(dividerItemDecoration)
+    }
+
+    private fun initEvent() {
+        binding.equipHistoryBackBtn.setOnClickListener {
+            parentFragmentManager.popBackStack(
+                "EquipHistoryDetail",
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+        }
+
+        binding.equipHistoryDetailOkBtn.setOnClickListener {
+            parentFragmentManager.popBackStack(
+                "EquipHistoryDetail",
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+
+        }
+
     }
 
 }

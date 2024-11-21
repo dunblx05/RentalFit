@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/historyBackBtn"
+        android:id="@+id/alarmBackBtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="20dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/historyTitle"
+        android:id="@+id/alarmTitle"
         style="@style/TextView_MyPage_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,11 +42,12 @@
         app:layout_constraintTop_toTopOf="@+id/historyToolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/alarmList"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="40dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/historyToolbar" />

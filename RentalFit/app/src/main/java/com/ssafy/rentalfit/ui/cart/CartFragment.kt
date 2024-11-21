@@ -8,6 +8,7 @@ import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentCartBinding
+import com.ssafy.rentalfit.ui.place.ReservationBottomSheetFragment
 import com.ssafy.rentalfit.util.Utils
 
 class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind, R.layout.fragment_cart) {
@@ -60,10 +61,12 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
             // 예약 바텀시트 띄우기.
             buttonCartOpenBottomSheet.setOnClickListener {
 
+                val bottomSheet = CartBottomSheetFragment()
+                bottomSheet.show(parentFragmentManager, "CartBottomSheetFragment")
                 // 다이얼로그 임시로 띄워보기
-                Utils.showCustomDialog(reservationActivity) {
-                    reservationActivity.finish()
-                }
+//                Utils.showCustomDialog(reservationActivity) {
+//                    reservationActivity.finish()
+//                }
             }
         }
     }

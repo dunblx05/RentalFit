@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingClass">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_bottom_sheet"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/handleBar"
+            android:layout_width="80dp"
+            android:layout_height="4dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/handle_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/textViewQuantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_count" />
+
+            <TextView
+                style="@style/Dialog_Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="수량" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textViewQuantity"
+            style="@style/Dialog_Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5개"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/textViewQuantityLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewQuantityLabel" />
+
+        <LinearLayout
+            android:id="@+id/textViewTotalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewQuantityLabel">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_price" />
+
+            <TextView
+                style="@style/Dialog_Content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="총 금액" />
+
+        </LinearLayout>
+        <!-- 총 금액 -->
+
+        <TextView
+            android:id="@+id/textViewTotalPrice"
+            style="@style/Dialog_Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₩0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/neon_main"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTotalLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewTotalLabel" />
+
+        <!-- 예약 버튼 -->
+        <TextView
+            android:id="@+id/buttonConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:theme="@style/Button_Text"
+            android:text="예약 확인"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -35,5 +35,10 @@ class PlaceDetailFragment : BaseFragment<FragmentPlaceDetailBinding>(
             textViewCapacity.text = placeCapacity
             textViewDescription.text = placeDescription
         }
+
+        binding.buttonReservation.setOnClickListener {
+            val bottomSheet = ReservationBottomSheetFragment()
+            bottomSheet.show(parentFragmentManager, "ReservationBottomSheet")
+        }
     }
 }

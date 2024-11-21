@@ -1,0 +1,5 @@
+<!-- res/drawable/rounded_textview.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/neon_main" /> <!-- 배경색 -->
+    <corners android:radius="8dp" /> <!-- 둥근 모서리 설정 -->
+</shape>

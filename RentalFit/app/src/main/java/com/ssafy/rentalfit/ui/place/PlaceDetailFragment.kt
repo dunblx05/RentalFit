@@ -23,10 +23,10 @@ class PlaceDetailFragment : BaseFragment<FragmentPlaceDetailBinding>(
 //        }
 
         // 예시로 장소 데이터 설정
-        val placeImage = R.drawable.sample_place_image // 이미지 파일
-        val placeLocation = "서울 강남구"
-        val placeCapacity = "최대 100명"
-        val placeDescription = "이 장소는 축구 경기를 위한 시설로, 넓은 운동장이 마련되어 있습니다."
+        val placeImage = R.drawable.temp // 이미지 파일
+        val placeLocation = "창의관 지하 1층"
+        val placeCapacity = "30명"
+        val placeDescription = "XYZ 풋살장은 도심 속에서 손쉽게 풋살을 즐길 수 있는 최적의 공간입니다. 이곳은 최상급 인조잔디를 사용해 부상의 위험을 줄이고, 쾌적한 경기 환경을 제공합니다."
 
         // 데이터를 뷰에 설정
         binding.apply {

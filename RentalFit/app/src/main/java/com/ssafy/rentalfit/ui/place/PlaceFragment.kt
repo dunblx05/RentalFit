@@ -1,5 +1,6 @@
 package com.ssafy.rentalfit.ui.place
 
+import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -49,9 +50,8 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
             // 클릭된 아이템으로 ReservationActivity로 이동
             val intent = Intent(mainActivity, ReservationActivity::class.java).apply {
                 putExtra("name", "PlaceDetail")  // 예시로 장소 이름 전달
-                putExtra("placeId", selectedItem.id)  // 장소 ID 전달
-                putExtra("placeName", selectedItem.name)  // 장소 이름 전달
-                putExtra("placeImage", selectedItem.img)  // 이미지 경로 전달 (필요시)
+                putExtra("itemId", selectedItem.id)
+                Log.d(TAG, "onViewCreated: $selectedItem")
             }
             startActivity(intent)
         }

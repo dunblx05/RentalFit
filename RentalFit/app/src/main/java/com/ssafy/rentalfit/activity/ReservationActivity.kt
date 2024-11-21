@@ -18,11 +18,12 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(ActivityRes
 
         // 기본값으로 PlaceDetail이 열리도록 설정.
         val name = intent.getStringExtra("name") ?: "PlaceDetail"
+        val itemId = intent.getIntExtra("itemId",-1)
 
-        changeFragmentReservation(name)
+        changeFragmentReservation(name,itemId)
     }
 
-    private fun changeFragmentReservation(name: String) {
+    private fun changeFragmentReservation(name: String, itemId: Int) {
 
         val transaction = supportFragmentManager.beginTransaction()
 
@@ -37,12 +38,20 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(ActivityRes
 
             // 장소 상세 화면
             "PlaceDetail" -> {
-                goto = PlaceDetailFragment()
+                goto = PlaceDetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("itemId", itemId)
+                    }
+                }
             }
 
             // 장비 상세 화면
             "EquipDetail" -> {
-                goto = EquipDetailFragment()
+                goto = EquipDetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("itemId", itemId)
+                    }
+                }
             }
         }
 

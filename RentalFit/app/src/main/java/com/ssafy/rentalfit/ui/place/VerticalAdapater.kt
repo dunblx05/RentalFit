@@ -18,7 +18,7 @@ class VerticalAdapter(private val categories: List<Pair<String, List<Place>>>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_vertical, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_place_item_vertical, parent, false)
         return VerticalViewHolder(view)
     }
 

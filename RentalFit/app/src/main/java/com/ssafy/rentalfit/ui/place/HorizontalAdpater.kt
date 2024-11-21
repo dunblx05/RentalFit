@@ -1,7 +1,5 @@
 package com.ssafy.rentalfit.ui.place
 
-import android.provider.CalendarContract.Colors
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.iterator
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.rentalfit.R
 
@@ -32,7 +28,7 @@ class HorizontalAdapter(private val items: List<Place>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_horizontal, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_place_item_horizontal, parent, false)
         return HorizontalViewHolder(view)
     }
 

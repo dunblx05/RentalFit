@@ -1,6 +1,7 @@
 package com.ssafy.rentalfit.activity
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ssafy.rentalfit.R
@@ -19,6 +20,15 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(ActivityRes
         // 기본값으로 PlaceDetail이 열리도록 설정.
         val name = intent.getStringExtra("name") ?: "PlaceDetail"
         val itemId = intent.getIntExtra("itemId",-1)
+
+        onBackPressedDispatcher.addCallback(this) {
+            val fragmentManager = supportFragmentManager
+            if (fragmentManager.backStackEntryCount > 1) {
+                fragmentManager.popBackStack() // 맨 위의 프래그먼트 제거
+            } else {
+                finish() // 프래그먼트가 없으면 액티비티 종료
+            }
+        }
 
         changeFragmentReservation(name,itemId)
     }

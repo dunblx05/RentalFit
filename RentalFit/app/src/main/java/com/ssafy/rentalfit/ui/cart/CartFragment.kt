@@ -44,6 +44,11 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
 
         binding.apply {
 
+            // 뒤로가기
+            imageCartBack.setOnClickListener {
+                reservationActivity.finish()
+            }
+
             // 삭제 하기.
             cartAdapter.cartDeleteListener = object : CartAdapter.ItemClickListener {
                 override fun onClick() {

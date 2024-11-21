@@ -20,15 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="장소"
-            style="@style/TextView_Title"
-            android:fontFamily="@font/font_bold"
-            android:textColor="@color/oatmeal_main" />
+            style="@style/TextView_Title"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
     <!-- 세로 리사이클뷰 - 스포츠 종류 나열 -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSports"
+        android:id="@+id/verticalRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -35,7 +35,7 @@ class ReservationActivity : BaseActivity<ActivityReservationBinding>(ActivityRes
         changeFragmentReservation(name,itemId)
     }
 
-    private fun changeFragmentReservation(name: String, itemId: Int) {
+    fun changeFragmentReservation(name: String, itemId: Int) {
 
         val transaction = supportFragmentManager.beginTransaction()
 

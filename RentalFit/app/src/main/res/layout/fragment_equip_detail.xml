@@ -7,13 +7,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.equip.EquipDetailFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarEquipDetail"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="EquipDetailFragment"
-        android:textColor="@color/oatmeal_main"
-        android:textSize="32sp"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imageEquipDetailBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/textEquipDetailToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장비 대여"
+            android:fontFamily="@font/font_bold"
+            android:textSize="32sp"
+            android:textColor="@color/oatmeal_main"
+            android:layout_gravity="center" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEquipDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbarEquipDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEquipDetailOpenCart" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonEquipDetailOpenCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_login"
+        android:layout_weight="1"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="장바구니"
+        style="@style/Button_Text"
+        android:fontFamily="@font/font_bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

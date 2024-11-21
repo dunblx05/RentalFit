@@ -15,12 +15,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
+import com.ssafy.rentalfit.util.Utils
 
 private const val TAG = "ReservationBottomSheetF_싸피"
 
 class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
 
+    private lateinit var reservationActivity: ReservationActivity
     private var _binding: FragmentReservationBottomSheetBinding? = null
     private val binding get() = _binding!!
 
@@ -29,6 +32,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentReservationBottomSheetBinding.inflate(inflater, container, false)
+        reservationActivity = context as ReservationActivity
         return binding.root
     }
 
@@ -38,8 +42,10 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         initSchedule()
         // 버튼 클릭 시 동작 예시
         binding.buttonConfirm.setOnClickListener {
-            // 예약 확인 처리
-            dismiss() // BottomSheet 닫기
+            Utils.showCustomDialog(reservationActivity) {
+                reservationActivity.finish()
+
+            }
         }
     }
 

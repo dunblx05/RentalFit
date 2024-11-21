@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
@@ -14,6 +15,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     private lateinit var mainActivity: MainActivity
 
+    private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
+    private lateinit var homePlaceAdapter: HomePlaceAdapter
+    private lateinit var homeEquipAdapter: HomeEquipAdapter
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
@@ -23,6 +28,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         super.onViewCreated(view, savedInstanceState)
 
         settingToolbar()
+        settingViewPager()
+        settingRecyclerViewPlace()
+        settingRecyclerViewEquip()
+        settingEvent()
     }
 
     // 툴바 설정
@@ -48,6 +57,71 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
                     }
 
                     true
+                }
+            }
+        }
+    }
+
+    // 뷰페이저 설정
+    private fun settingViewPager() {
+
+        homeViewPagerAdapter = HomeViewPagerAdapter()
+
+        binding.apply {
+
+            viewpager2HomeBanner.adapter = homeViewPagerAdapter
+
+            indicatorHome.setViewPager(viewpager2HomeBanner)
+            viewpager2HomeBanner.adapter?.registerAdapterDataObserver(indicatorHome.adapterDataObserver)
+        }
+    }
+
+    // 장소 리사이클러뷰 설정
+    private fun settingRecyclerViewPlace() {
+
+        homePlaceAdapter = HomePlaceAdapter()
+
+        binding.apply {
+
+            recyclerViewHomePlace.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewHomePlace.adapter = homePlaceAdapter
+        }
+    }
+
+    // 장비 리사이클러뷰 설정
+    private fun settingRecyclerViewEquip() {
+
+        homeEquipAdapter = HomeEquipAdapter()
+
+        binding.apply {
+
+            recyclerViewHomeEquip.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewHomeEquip.adapter = homeEquipAdapter
+        }
+    }
+
+    // 이벤트 설정
+    private fun settingEvent() {
+
+        binding.apply {
+
+            // 장소 아이템 누른다면.
+            homePlaceAdapter.homePlaceListener = object : HomePlaceAdapter.ItemClickListener {
+                override fun onClick() {
+
+                    val intent = Intent(mainActivity, ReservationActivity::class.java)
+                    intent.putExtra("name", "PlaceDetail")
+                    startActivity(intent)
+                }
+            }
+
+            // 장비 아이템 누른다면.
+            homeEquipAdapter.homeEquipListener = object : HomeEquipAdapter.ItemClickListener {
+                override fun onClick() {
+
+                    val intent = Intent(mainActivity, ReservationActivity::class.java)
+                    intent.putExtra("name", "EquipDetail")
+                    startActivity(intent)
                 }
             }
         }

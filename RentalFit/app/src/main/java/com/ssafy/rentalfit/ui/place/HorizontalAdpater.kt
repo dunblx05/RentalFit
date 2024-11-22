@@ -148,7 +148,7 @@ class HorizontalAdapter(private val items: List<Place>) :
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         val start = LocalTime.parse(startTime, formatter)
         val end = LocalTime.parse(endTime, formatter)
-        Log.d(TAG, "drawSchedule: $end")
+//        Log.d(TAG, "drawSchedule: $end")
 
         for (item in holder.firstRowBlocks) {
 //            Log.d(TAG, "drawSchedule: ${item.id}")
@@ -176,10 +176,10 @@ class HorizontalAdapter(private val items: List<Place>) :
         val formatter = DateTimeFormatter.ofPattern("HH:mm") // 원하는 시간 형식 설정
         val endTime = now.format(formatter)
         val end = LocalTime.parse(endTime, formatter)
-        Log.d(TAG, "eraseBeforeCurrentTime: $end")
+//        Log.d(TAG, "eraseBeforeCurrentTime: $end")
 
         for (item in holder.firstRowBlocks) {
-            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
+//            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(end)) {
                 item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
@@ -193,7 +193,7 @@ class HorizontalAdapter(private val items: List<Place>) :
             if(item.id < 0){
                 break
             }
-            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
+//            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100)
             if (itemTime.isBefore(end)) {
                 item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))

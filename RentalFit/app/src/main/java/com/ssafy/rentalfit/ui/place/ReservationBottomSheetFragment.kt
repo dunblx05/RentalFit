@@ -203,7 +203,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     var endMinute=0
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateTime(timePicker: TimePicker, hourOfDay: Int, minute: Int, isStart: Boolean) {
-        val startTime = LocalTime.of(hourOfDay, minute)
+        var startTime = LocalTime.of(hourOfDay, minute)
         val minTime = LocalTime.of(9, 0)  // 최소 09:00
         val maxTime = LocalTime.of(18, 0) // 최대 18:00
 
@@ -211,14 +211,17 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         if (isStart){
             if(startMinute != minute){
                 timePicker.hour = startHour
+                startTime = LocalTime.of(startHour, minute)
             }
         }
         else{
             if(endMinute != minute){
                 timePicker.hour = endHour
+                startTime = LocalTime.of(endHour, minute)
             }
         }
         if (startTime.isBefore(minTime)) {
+            Log.d(TAG, "startTime: ${startTime}, minTime: ${minTime}")
             Toast.makeText(requireContext(), "시간은 09:00에서 18:00 사이여야 합니다.", Toast.LENGTH_SHORT).show()
             timePicker.hour = minTime.hour
             timePicker.minute = minTime.minute

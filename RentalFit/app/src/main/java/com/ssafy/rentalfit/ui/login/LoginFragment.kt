@@ -21,6 +21,7 @@ import com.ssafy.rentalfit.activity.LoginActivity
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
+import com.ssafy.rentalfit.data.model.User
 import com.ssafy.rentalfit.databinding.FragmentLoginBinding
 import com.ssafy.rentalfit.util.Utils
 
@@ -138,17 +139,30 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bi
             .addOnCompleteListener(loginActivity) { task ->
                 if (task.isSuccessful) {
                     // 로그인 성공
-                    val user = auth.currentUser
-                    Log.d(TAG, "signInWithCredential:success - ${user?.email}")
+                    val authUser = auth.currentUser
 
-                    // 필요한 경우 추가로 사용자 정보를 ViewModel이나 서버로 전달
-                    // 여기서는 MainActivity로 이동
-                    Utils.showCustomToast(loginActivity, "Google 로그인 성공")
+                    if(authUser != null) {
+                        // 필요한 경우 추가로 사용자 정보를 ViewModel이나 서버로 전달
+                        // 여기서는 MainActivity로 이동
 
-                    val intent = Intent(loginActivity, MainActivity::class.java)
-                    startActivity(intent)
+                        val user = User(
+                            userId = authUser.uid,
+                            userPwd = "",
+                            userNickName = authUser.displayName!!,
+                            userStamps = 0
+                        )
 
-                    loginActivity.finish()
+                        loginViewModel.insertUser(user)
+
+                        ApplicationClass.sharedPreferencesUtil.addUser(user)
+
+                        Utils.showCustomToast(loginActivity, "Google 로그인 성공")
+
+                        val intent = Intent(loginActivity, MainActivity::class.java)
+                        startActivity(intent)
+
+                        loginActivity.finish()
+                    }
                 } else {
                     // 로그인 실패
                     Log.d(TAG, "signInWithCredential:failure", task.exception)

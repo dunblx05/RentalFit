@@ -11,4 +11,5 @@ public interface EquipService {
     public Equip selectEquipByEid(int equipId);
 
     public List<Equip> selectEquipByType(String type);
+
 }

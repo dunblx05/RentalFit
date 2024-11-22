@@ -1,13 +1,9 @@
 package com.ssafy.sports.model.service;
 
-import com.ssafy.sports.model.dto.PlaceReservation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.ssafy.sports.model.dao.UserDao;
 import com.ssafy.sports.model.dto.User;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,6 +20,7 @@ public class UserServiceImpl implements UserService {
     public User login(String id, String pass) {
         User user = userDao.selectById(id);
         if (user != null && user.getUserPwd().equals(pass)) {
+            user.setUserPwd("");
             return user;
         } else {
             return null;

@@ -3,6 +3,7 @@ package com.ssafy.sports.controller.rest;
 
 import com.ssafy.sports.model.dto.EquipOrder;
 import com.ssafy.sports.model.dto.EquipOrderDetail;
+import com.ssafy.sports.model.dto.EquipOrderWithInfo;
 import com.ssafy.sports.model.service.EquipOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,13 @@ public class EquipOrderRestController {
     public List<EquipOrderDetail> selectEquipOrderDetail(@PathVariable int equipOrderId) {
         return equipOrderService.selectEquipOrderDetail(equipOrderId);
     }
+
+    @PostMapping
+    @Operation(summary = "장비 구매를 추가한다.",
+    description = "userId와 details.equipId와 details.quantity만 추가하면 작동")
+    public Integer insertEquipOrder(@RequestBody EquipOrderWithInfo equipOrderWithInfo) {
+        equipOrderService.makeEquipOrder(equipOrderWithInfo);
+        return equipOrderWithInfo.getEquipOrderId();
+    }
+
 }

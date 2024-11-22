@@ -22,4 +22,11 @@
         where equip_order_id = #{equipOrderId};
     </select>
 
+    <insert id="insert" parameterType="EquipOrderWithInfo" useGeneratedKeys="true" keyProperty="equipOrderId">
+        insert into equip_order
+        (user_id)
+        values
+        (#{userId})
+    </insert>
+
 </mapper>

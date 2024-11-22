@@ -1,11 +1,13 @@
 package com.ssafy.rentalfit.ui.place
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentPlaceDetailBinding
 
@@ -13,6 +15,13 @@ class PlaceDetailFragment : BaseFragment<FragmentPlaceDetailBinding>(
     bind = { view -> FragmentPlaceDetailBinding.bind(view) },
     layoutResId = R.layout.fragment_place_detail
 ) {
+
+    private lateinit var reservationActivity: ReservationActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        reservationActivity = context as ReservationActivity
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,9 +45,24 @@ class PlaceDetailFragment : BaseFragment<FragmentPlaceDetailBinding>(
             textViewDescription.text = placeDescription
         }
 
-        binding.buttonPlaceDetailReservation.setOnClickListener {
-            val bottomSheet = ReservationBottomSheetFragment()
-            bottomSheet.show(parentFragmentManager, "ReservationBottomSheet")
+        settingEvent()
+    }
+
+    // 이벤트 설정
+    private fun settingEvent() {
+
+        binding.apply {
+
+            // 뒤로 가기
+            imagePlaceDetailBack.setOnClickListener {
+                reservationActivity.finish()
+            }
+
+            // 바텀시트 띄우기
+            buttonPlaceDetailReservation.setOnClickListener {
+                val bottomSheet = ReservationBottomSheetFragment()
+                bottomSheet.show(parentFragmentManager, "ReservationBottomSheet")
+            }
         }
     }
 }

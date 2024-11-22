@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_bottom_sheet"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <View
             android:id="@+id/handleBar"
@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +36,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_count" />
+                android:src="@drawable/cnt" />
 
             <TextView
                 style="@style/Dialog_Content"
@@ -62,14 +63,15 @@
             android:id="@+id/textViewTotalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewQuantityLabel">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_price" />
+                android:src="@drawable/money" />
 
             <TextView
                 style="@style/Dialog_Content"
@@ -95,15 +97,32 @@
             app:layout_constraintTop_toTopOf="@id/textViewTotalLabel" />
 
         <!-- 예약 버튼 -->
-        <TextView
-            android:id="@+id/buttonConfirm"
-            android:layout_width="0dp"
+<!--        <TextView-->
+<!--            android:id="@+id/buttonConfirm"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:theme="@style/Button_Text"-->
+<!--            android:text="예약 확인"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonCartBottomSheet"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:theme="@style/Button_Text"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_login"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="예약 확인"
-            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Button_Text"
+            android:fontFamily="@font/font_bold"
+            app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTotalLabel" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -14,7 +14,7 @@
 
     <!-- 제목 -->
     <style name="TextView_Title">
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:fontFamily">@font/font_bold</item>
         <item name="android:textColor">@color/oatmeal_main</item>
     </style>

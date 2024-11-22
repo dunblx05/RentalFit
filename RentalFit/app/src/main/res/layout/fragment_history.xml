@@ -46,6 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/historyToolbar"
+        app:tabTextAppearance="@style/History_Tab"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorColor="@color/neon_main"
         app:tabIndicatorFullWidth="true"

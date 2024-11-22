@@ -58,6 +58,20 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
                 }
             }
 
+            // 수량 + 버튼
+            cartAdapter.cartPlusListener = object : CartAdapter.ItemClickListener {
+                override fun onClick() {
+
+                }
+            }
+
+            // 수량 - 버튼
+            cartAdapter.cartMinusListener = object : CartAdapter.ItemClickListener {
+                override fun onClick() {
+
+                }
+            }
+
             // 예약 바텀시트 띄우기.
             buttonCartOpenBottomSheet.setOnClickListener {
 

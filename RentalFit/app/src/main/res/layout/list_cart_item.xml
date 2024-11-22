@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="야구 배트"
                 style="@style/TextView_Place_Name"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageListCartItem" />
 
@@ -51,21 +51,56 @@
                 android:fontFamily="@font/font_regular"
                 android:textColor="@color/oatmeal_main"
                 android:textSize="20sp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@+id/textListCartItemName"
                 app:layout_constraintStart_toEndOf="@+id/imageListCartItem" />
 
-            <TextView
-                android:id="@+id/textListCartitemTime"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2시간"
-                android:fontFamily="@font/font_regular"
-                android:textColor="@color/oatmeal_main"
-                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_background2"
+                app:layout_constraintTop_toBottomOf="@+id/textListCartItemPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageCartMinus"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/minus"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintTop_toTopOf="@+id/textCartCnt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textCartCnt"
+                    app:layout_constraintBottom_toBottomOf="@+id/textCartCnt" />
+
+                <TextView
+                    android:id="@+id/textCartCnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_marginHorizontal="10dp"
+                    style="@style/TextView_Place_BottomSheet_Cost"
+                    android:textColor="@color/neon_main"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageCartMinus"
+                    app:layout_constraintEnd_toStartOf="@id/imageCartPlus"/>
+
+                <ImageView
+                    android:id="@+id/imageCartPlus"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/plus"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintTop_toTopOf="@id/textCartCnt"
+                    app:layout_constraintStart_toEndOf="@+id/textCartCnt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/textCartCnt" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/deleteListCartItem"

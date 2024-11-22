@@ -17,4 +17,9 @@
         where equip_order_id = #{equipOrderId};
     </select>
 
+    <select id="selectEquipOrderDetail" parameterType="int" resultType="EquipOrderDetail">
+        select * from equip_order_detail
+        where equip_order_id = #{equipOrderId};
+    </select>
+
 </mapper>

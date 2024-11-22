@@ -2,6 +2,7 @@ package com.ssafy.sports.controller.rest;
 
 
 import com.ssafy.sports.model.dto.EquipOrder;
+import com.ssafy.sports.model.dto.EquipOrderDetail;
 import com.ssafy.sports.model.service.EquipOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class EquipOrderRestController {
         return equipOrderService.selectEquipOrderByUid(userId);
     }
 
-
+    @GetMapping("/byOrderId/{equipOrderId}")
+    @Operation(summary = "{equipOrderId}에 해당하는 장비 주문 내역을 조회")
+    public List<EquipOrderDetail> selectEquipOrderDetail(@PathVariable int equipOrderId) {
+        return equipOrderService.selectEquipOrderDetail(equipOrderId);
+    }
 }

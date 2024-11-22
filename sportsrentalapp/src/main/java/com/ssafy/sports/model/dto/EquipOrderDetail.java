@@ -6,6 +6,8 @@ public class EquipOrderDetail {
     private int equipId;
     private int quantity;
 
+    private Equip equip;
+
     public EquipOrderDetail() {
     }
 
@@ -41,6 +43,14 @@ public class EquipOrderDetail {
         this.quantity = quantity;
     }
 
+    public Equip getEquip() {
+        return equip;
+    }
+
+    public void setEquip(Equip equip) {
+        this.equip = equip;
+    }
+
     @Override
     public String toString() {
         return "EquipOrderDetail{" +
@@ -48,6 +58,7 @@ public class EquipOrderDetail {
                 ", equipOrderId=" + equipOrderId +
                 ", equipId=" + equipId +
                 ", quantity=" + quantity +
+                ", equip=" + equip +
                 '}';
     }
 }

@@ -24,14 +24,14 @@ public interface PlaceReservationDao {
 
     /**
      * 예약 신청
-     * @param PlaceReservation
+     * @param res
      * @return
      */
     int insertPlaceReservation(PlaceReservation res);
 
     /**
      * 오늘 날짜 기준 해당 장소 예약 조회
-     * @param PlaceReservation
+     * @param placeId
      * @return
      */
     List<PlaceReservation> selectResByPidInToday(int placeId);

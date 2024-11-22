@@ -35,4 +35,10 @@ public class PlaceReservationRestController {
         prService.insertPlaceReservation(res);
         return res.getResId();
     }
+    
+    @GetMapping("/InToday/{placeId}")
+    @Operation(summary="오늘 날짜 기준으로 해당 장소에 대한 모든 예약")
+    public List<PlaceReservation> selectResByPidInToday(@PathVariable int placeId){
+    	return prService.selectResByPidInToday(placeId);
+    }
 }

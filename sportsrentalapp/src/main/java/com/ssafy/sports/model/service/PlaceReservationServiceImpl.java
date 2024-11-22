@@ -58,4 +58,16 @@ public class PlaceReservationServiceImpl implements PlaceReservationService {
 		
 		uDao.updateStamp(user);
 	}
+
+	@Override
+	public List<PlaceReservation> selectResByPidInToday(int placeId) {
+		List<PlaceReservation> reservations = prDao.selectResByPidInToday(placeId);
+
+        for (PlaceReservation reservation : reservations) {
+            Place place = pDao.selectPlaceByPid(reservation.getPlaceId());
+            reservation.setPlace(place);
+        }
+
+        return reservations;
+	}
 }

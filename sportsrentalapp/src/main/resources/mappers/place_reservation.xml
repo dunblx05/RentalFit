@@ -20,6 +20,12 @@
 	    VALUES (#{resId}, #{userId}, #{placeId}, #{resStartTime}, #{resEndTime}, #{resCost})
 	</insert>
 
+	<select id = "selectResByPidInToday" parameterType="Integer" resultType="PlaceReservation">
+		 SELECT * FROM place_reservation pr
+	    INNER JOIN place p ON pr.place_id = p.place_id
+	    WHERE pr.place_id = #{placeId}
+	    AND DATE(pr.res_start_time) = CURRENT_DATE();
+	</select>
 
     
 </mapper>

@@ -12,5 +12,7 @@ public interface PlaceReservationService {
     public PlaceReservation selectPlaceResByRid(int resId);
     
     public void insertPlaceReservation(PlaceReservation res);
+    
+    public List<PlaceReservation> selectResByPidInToday(int placeId);
 
 }

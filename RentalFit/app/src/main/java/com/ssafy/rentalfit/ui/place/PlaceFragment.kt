@@ -82,7 +82,6 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
             }
         }
     }
-
 }
 
 data class Place(val id: Int, val name: String, val img: String)

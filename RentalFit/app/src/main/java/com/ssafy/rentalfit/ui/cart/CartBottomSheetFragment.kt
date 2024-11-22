@@ -32,7 +32,7 @@ class CartBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonConfirm.setOnClickListener {
+        binding.buttonCartBottomSheet.setOnClickListener {
             Utils.showCustomDialog(reservationActivity) {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP

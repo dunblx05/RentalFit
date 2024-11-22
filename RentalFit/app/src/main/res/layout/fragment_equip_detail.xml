@@ -28,9 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="장비 판매"
-            android:fontFamily="@font/font_bold"
-            android:textSize="32sp"
-            android:textColor="@color/oatmeal_main"
+            style="@style/TextView_MyPage_Name"
             android:layout_gravity="center" />
     </com.google.android.material.appbar.MaterialToolbar>
 

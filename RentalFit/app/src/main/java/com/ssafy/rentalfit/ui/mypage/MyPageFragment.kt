@@ -7,6 +7,7 @@ import android.view.View
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.MyPageActivity
+import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentMyPageBinding
 
@@ -50,6 +51,11 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
                         // 로그아웃
                         R.id.menu_my_page_logout -> {
 
+                            // Preference 지우기
+                            ApplicationClass.sharedPreferencesUtil.deleteUser()
+                            ApplicationClass.sharedPreferencesUtil.deleteUserCookie()
+
+                            // 화면 이동
                             mainActivity.finish()
                         }
                     }

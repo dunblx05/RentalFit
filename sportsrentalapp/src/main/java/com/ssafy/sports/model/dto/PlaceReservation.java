@@ -27,7 +27,7 @@ public class PlaceReservation {
         return resId;
     }
 
-    public void setResId(int resId) {
+    public void setResId(Integer resId) {
         this.resId = resId;
     }
 
@@ -43,7 +43,7 @@ public class PlaceReservation {
         return placeId;
     }
 
-    public void setPlaceId(int placeId) {
+    public void setPlaceId(Integer placeId) {
         this.placeId = placeId;
     }
 

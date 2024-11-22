@@ -18,5 +18,5 @@ public interface UserDao {
 
     int selectUserStamp(String userId);
 
-
+    int updateStamp(User user);
 }

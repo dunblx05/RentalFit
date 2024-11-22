@@ -17,5 +17,5 @@ public interface UserService {
 
 	public int selectStamp(String id);
 
-
+	public int updateStamp(User user);
 }

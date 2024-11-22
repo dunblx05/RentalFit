@@ -21,4 +21,11 @@ public interface PlaceReservationDao {
      * @return
      */
     PlaceReservation selectPlaceResByRid(int resId);
+
+    /**
+     * 예약 신청
+     * @param PlaceReservation
+     * @return
+     */
+    int insertPlaceReservation(PlaceReservation res);
 }

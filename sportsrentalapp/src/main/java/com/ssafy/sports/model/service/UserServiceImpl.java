@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
         return userDao.selectUserStamp(id);
     }
 
+	@Override
+	public int updateStamp(User user) {
+		return userDao.updateStamp(user);
+	}
+
 }

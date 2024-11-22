@@ -14,5 +14,12 @@
         on pr.place_id = p.place_id
         where pr.res_id = #{resId};
     </select>
+    
+	<insert id="insertPlaceReservation" parameterType="PlaceReservation" useGeneratedKeys="true" keyProperty="resId">
+	    INSERT INTO place_reservation (res_id, user_id, place_id, res_start_time, res_end_time, res_cost)
+	    VALUES (#{resId}, #{userId}, #{placeId}, #{resStartTime}, #{resEndTime}, #{resCost})
+	</insert>
 
+
+    
 </mapper>

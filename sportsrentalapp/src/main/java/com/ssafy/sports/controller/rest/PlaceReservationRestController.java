@@ -28,5 +28,11 @@ public class PlaceReservationRestController {
     public PlaceReservation selectPlaceResByRid(@PathVariable int resId) {
         return prService.selectPlaceResByRid(resId);
     }
-
+    
+    @PostMapping
+    @Operation(summary="장소 예약 신청")
+    public Integer insertPlaceReservation(@RequestBody PlaceReservation res) {
+        prService.insertPlaceReservation(res);
+        return res.getResId();
+    }
 }

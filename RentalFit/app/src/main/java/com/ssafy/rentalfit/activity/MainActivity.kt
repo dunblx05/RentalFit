@@ -1,6 +1,8 @@
 package com.ssafy.rentalfit.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,6 +16,9 @@ import com.ssafy.rentalfit.ui.equip.EquipFragment
 import com.ssafy.rentalfit.ui.home.HomeFragment
 import com.ssafy.rentalfit.ui.mypage.MyPageFragment
 import com.ssafy.rentalfit.ui.place.PlaceFragment
+import kotlin.math.log
+
+private const val TAG = "MainActivity_싸피"
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -30,6 +35,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
         settingBottomNavigation()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        changeFragment("Home")
+        Log.d(TAG, "onNewIntent: ")
     }
 
     // 바텀 네비게이션 설정
@@ -73,27 +84,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         val transaction = supportFragmentManager.beginTransaction()
 
         var goto: Fragment = HomeFragment()
+        val menu = binding.bottomNaviMain.menu
 
-        when(name) {
-
-            // 홈 화면
+        when (name) {
             "Home" -> {
                 goto = HomeFragment()
+                menu.findItem(R.id.menu_bottom_home).isChecked = true
             }
-
-            // 장소 화면
             "Place" -> {
                 goto = PlaceFragment()
+                menu.findItem(R.id.menu_bottom_place).isChecked = true
             }
-
-            // 장비 화면
             "Equip" -> {
                 goto = EquipFragment()
+                menu.findItem(R.id.menu_bottom_equip).isChecked = true
             }
-
-            // 마이페이지 화면
             "MyPage" -> {
                 goto = MyPageFragment()
+                menu.findItem(R.id.menu_bottom_mypage).isChecked = true
             }
         }
 

@@ -1,5 +1,6 @@
 package com.ssafy.rentalfit.ui.cart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.databinding.FragmentCartBottomSheetBinding
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
@@ -32,6 +34,10 @@ class CartBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonConfirm.setOnClickListener {
             Utils.showCustomDialog(reservationActivity) {
+                val intent = Intent(reservationActivity, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                }
+                startActivity(intent)
                 reservationActivity.finish()
             }
         }

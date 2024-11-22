@@ -1,6 +1,7 @@
 package com.ssafy.rentalfit.ui.place
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
 import com.ssafy.rentalfit.util.Utils
@@ -43,8 +45,11 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         // 버튼 클릭 시 동작 예시
         binding.buttonConfirm.setOnClickListener {
             Utils.showCustomDialog(reservationActivity) {
+                val intent = Intent(reservationActivity, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                }
+                startActivity(intent)
                 reservationActivity.finish()
-
             }
         }
     }

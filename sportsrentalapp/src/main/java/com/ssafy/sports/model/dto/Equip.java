@@ -3,19 +3,15 @@ package com.ssafy.sports.model.dto;
 public class Equip {
     private int equipId;
     private String equipName;
-    private String equipPlayType;
-    private String equipUseType;
-    private int equipCost;
-    private int equipResTime;
+    private String equipType;
+    private int equipPrice;
     private String equipImg;
 
-    public Equip(int equipId, String equipName, String equipPlayType, String equipUseType, int equipCost, int equipResTime, String equipImg) {
+    public Equip(int equipId, String equipName, String equipType, int equipPrice, String equipImg) {
         this.equipId = equipId;
         this.equipName = equipName;
-        this.equipPlayType = equipPlayType;
-        this.equipUseType = equipUseType;
-        this.equipCost = equipCost;
-        this.equipResTime = equipResTime;
+        this.equipType = equipType;
+        this.equipPrice = equipPrice;
         this.equipImg = equipImg;
     }
 
@@ -35,36 +31,20 @@ public class Equip {
         this.equipName = equipName;
     }
 
-    public String getEquipPlayType() {
-        return equipPlayType;
+    public String getEquipType() {
+        return equipType;
     }
 
-    public void setEquipPlayType(String equipPlayType) {
-        this.equipPlayType = equipPlayType;
+    public void setEquipType(String equipType) {
+        this.equipType = equipType;
     }
 
-    public String getEquipUseType() {
-        return equipUseType;
+    public int getEquipPrice() {
+        return equipPrice;
     }
 
-    public void setEquipUseType(String equipUseType) {
-        this.equipUseType = equipUseType;
-    }
-
-    public int getEquipCost() {
-        return equipCost;
-    }
-
-    public void setEquipCost(int equipCost) {
-        this.equipCost = equipCost;
-    }
-
-    public int getEquipResTime() {
-        return equipResTime;
-    }
-
-    public void setEquipResTime(int equipResTime) {
-        this.equipResTime = equipResTime;
+    public void setEquipPrice(int equipPrice) {
+        this.equipPrice = equipPrice;
     }
 
     public String getEquipImg() {
@@ -80,10 +60,8 @@ public class Equip {
         return "Equip{" +
                 "equipId=" + equipId +
                 ", equipName='" + equipName + '\'' +
-                ", equipPlayType='" + equipPlayType + '\'' +
-                ", equipUseType='" + equipUseType + '\'' +
-                ", equipCost=" + equipCost +
-                ", equipResTime=" + equipResTime +
+                ", equipType='" + equipType + '\'' +
+                ", equipPrice=" + equipPrice +
                 ", equipImg='" + equipImg + '\'' +
                 '}';
     }

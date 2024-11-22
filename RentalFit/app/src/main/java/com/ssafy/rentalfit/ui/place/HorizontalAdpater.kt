@@ -1,15 +1,20 @@
 package com.ssafy.rentalfit.ui.place
 
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.rentalfit.R
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 private const val TAG = "HorizontalAdpater_싸피"
 
@@ -32,6 +37,7 @@ class HorizontalAdapter(private val items: List<Place>) :
         return HorizontalViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
         val item = items[position]
         holder.title.text = item.name
@@ -46,6 +52,7 @@ class HorizontalAdapter(private val items: List<Place>) :
 
     override fun getItemCount(): Int = items.size
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initSchedule(holder: HorizontalViewHolder) {
         holder.firstRowTimeLabels.removeAllViews()
         holder.firstRowBlocks.removeAllViews()
@@ -75,7 +82,7 @@ class HorizontalAdapter(private val items: List<Place>) :
                         marginStart = distanceBetBlock
                         marginEnd = 0
                     }
-                    setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                    setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.neon_main))
                 }
 //                Log.d(TAG, "id: ${block.id}")
                 holder.firstRowBlocks.addView(block)
@@ -102,7 +109,7 @@ class HorizontalAdapter(private val items: List<Place>) :
                         marginStart = distanceBetBlock
                         marginEnd = 0
                     }
-                    setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                    setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.neon_main))
                 }
                 holder.secondRowBlocks.addView(block)
             }
@@ -126,20 +133,73 @@ class HorizontalAdapter(private val items: List<Place>) :
             }
         }
 
-        drawSchedule(holder)
+        drawSchedule(holder, "10:30", "11:30")
+        drawSchedule(holder, "15:30", "17:00")
 
-
+        eraseBeforeCurrentTime(holder)
     }
 
-    fun drawSchedule(holder: HorizontalViewHolder){
-        for(item in holder.firstRowBlocks){
-            if (item.id <= 1230){
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.neon_main))
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun drawSchedule(
+        holder: HorizontalViewHolder,
+        startTime: String,
+        endTime: String
+    ) {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val start = LocalTime.parse(startTime, formatter)
+        val end = LocalTime.parse(endTime, formatter)
+        Log.d(TAG, "drawSchedule: $end")
+
+        for (item in holder.firstRowBlocks) {
+//            Log.d(TAG, "drawSchedule: ${item.id}")
+            val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
+            if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
+                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
             }
         }
-        for(item in holder.secondRowBlocks){
-            if (item.id > 1700){
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.neon_main))
+
+        for (item in holder.secondRowBlocks) {
+            if(item.id < 0){
+                break
+            }
+//            Log.d(TAG, "drawSchedule: ${item.id}")
+            val itemTime = LocalTime.of(item.id / 100, item.id % 100)
+            if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
+                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun eraseBeforeCurrentTime(holder: HorizontalViewHolder){
+        val now = LocalTime.now()
+        val formatter = DateTimeFormatter.ofPattern("HH:mm") // 원하는 시간 형식 설정
+        val endTime = now.format(formatter)
+        val end = LocalTime.parse(endTime, formatter)
+        Log.d(TAG, "eraseBeforeCurrentTime: $end")
+
+        for (item in holder.firstRowBlocks) {
+            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
+            val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
+            if (itemTime.isBefore(end)) {
+                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+            }
+            else{
+                return
+            }
+        }
+
+        for (item in holder.secondRowBlocks) {
+            if(item.id < 0){
+                break
+            }
+            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
+            val itemTime = LocalTime.of(item.id / 100, item.id % 100)
+            if (itemTime.isBefore(end)) {
+                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+            }
+            else{
+                return
             }
         }
     }

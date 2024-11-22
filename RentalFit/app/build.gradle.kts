@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -58,6 +59,10 @@ dependencies {
     // FCM 사용 위한 plugins
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation ("com.google.firebase:firebase-messaging-ktx")
+
+    // Firebase Auth
+    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
+    implementation("com.google.android.gms:play-services-auth:20.4.0")
 
     // https://github.com/square/retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")

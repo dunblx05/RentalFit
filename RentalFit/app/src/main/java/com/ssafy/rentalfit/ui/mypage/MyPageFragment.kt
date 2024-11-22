@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.google.firebase.auth.FirebaseAuth
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.MyPageActivity
@@ -89,6 +90,9 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
 
                         // 로그아웃
                         R.id.menu_my_page_logout -> {
+
+                            // 구글 로그인 로그아웃
+                            FirebaseAuth.getInstance().signOut()
 
                             // Preference 지우기
                             ApplicationClass.sharedPreferencesUtil.deleteUser()

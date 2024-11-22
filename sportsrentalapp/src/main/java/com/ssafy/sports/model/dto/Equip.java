@@ -5,14 +5,10 @@ public class Equip {
     private String equipName;
     private String equipType;
     private int equipPrice;
+    private String equipDetail;
     private String equipImg;
 
-    public Equip(int equipId, String equipName, String equipType, int equipPrice, String equipImg) {
-        this.equipId = equipId;
-        this.equipName = equipName;
-        this.equipType = equipType;
-        this.equipPrice = equipPrice;
-        this.equipImg = equipImg;
+    public Equip() {
     }
 
     public int getEquipId() {
@@ -47,6 +43,14 @@ public class Equip {
         this.equipPrice = equipPrice;
     }
 
+    public String getEquipDetail() {
+        return equipDetail;
+    }
+
+    public void setEquipDetail(String equipDetail) {
+        this.equipDetail = equipDetail;
+    }
+
     public String getEquipImg() {
         return equipImg;
     }
@@ -62,6 +66,7 @@ public class Equip {
                 ", equipName='" + equipName + '\'' +
                 ", equipType='" + equipType + '\'' +
                 ", equipPrice=" + equipPrice +
+                ", equipDetail='" + equipDetail + '\'' +
                 ", equipImg='" + equipImg + '\'' +
                 '}';
     }

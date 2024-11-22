@@ -56,6 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent">
             
             <ImageView
+                android:id="@+id/imageMyPageGrade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/grade"/>
@@ -156,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
-            android:text="장비 예약 내역"
+            android:text="장비 구매 내역"
             style="@style/TextView_MyPage_Category_Detail"
             android:textColor="@color/oatmeal_main"
             android:fontFamily="@font/font_semi_bold"

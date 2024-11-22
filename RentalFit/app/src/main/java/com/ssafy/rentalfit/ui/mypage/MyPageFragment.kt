@@ -1,9 +1,13 @@
 package com.ssafy.rentalfit.ui.mypage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.MyPageActivity
@@ -11,9 +15,12 @@ import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentMyPageBinding
 
+private const val TAG = "MyPageFragment_싸피"
 class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page) {
 
     private lateinit var mainActivity: MainActivity
+
+    private val myPageViewModel: MyPageViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -23,8 +30,40 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObserver()
+        initView()
         settingToolbar()
         settingEvent()
+    }
+
+    // 뷰 초기화.
+    private fun initView() {
+        myPageViewModel.getUser()
+    }
+
+    // ViewModel Observer 등록
+    private fun registerObserver() {
+
+        myPageViewModel.user.observe(viewLifecycleOwner) {
+
+            // 있다면.
+            if(it.userId.isNotEmpty()) {
+
+                binding.apply {
+
+                    // 닉네임 표시.
+                    textMyPageNickname.text = it.userNickName
+
+                    myPageViewModel.getStamp(it.userId)
+                }
+            }
+        }
+
+        myPageViewModel.userStamps.observe(viewLifecycleOwner) {
+
+            val triple = myPageViewModel.getGrade(it)
+            settingGrade(triple)
+        }
     }
 
     // 툴바 설정
@@ -86,6 +125,29 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
                 intent.putExtra("name", "EquipHistory")
                 startActivity(intent)
             }
+        }
+    }
+
+    // 등급 표시
+    private fun settingGrade(triple: Triple<String, Int, Int>) {
+
+        binding.apply {
+
+            val (rank, levelInRank, curPoint) = triple
+
+            val colorResId = when (rank) {
+                "Bronze" -> R.color.bronze
+                "Silver" -> R.color.silver
+                "Gold" -> R.color.gold
+                "Diamond" -> R.color.diamond
+                else -> R.color.oatmeal_main
+            }
+
+            imageMyPageGrade.setColorFilter(ContextCompat.getColor(mainActivity, colorResId))
+            textMyPageGrade.setTextColor(ContextCompat.getColor(mainActivity, colorResId))
+            textMyPageGrade.text = "$rank $levelInRank"
+            progressBarMyPageGrade.progress = curPoint
+            textMyPageProgressGradeNow.text = curPoint.toString()
         }
     }
 }

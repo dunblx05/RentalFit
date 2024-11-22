@@ -22,8 +22,6 @@ class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapte
 
                 imageListEquipItemHorizontal.setImageResource(R.drawable.temp)
                 textListEquipItemHorizontalName.text = equip.name
-                textListEquipItemHorizontalPossible.text = "1"
-                textListEquipItemHorizontalTotal.text = " / 3"
 
                 root.setOnClickListener {
                     equipHorizontalListener.onClick(equip)

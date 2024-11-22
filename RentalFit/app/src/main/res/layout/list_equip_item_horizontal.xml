@@ -32,35 +32,12 @@
                 android:id="@+id/textListEquipItemHorizontalName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text="야구공"
-                style="@style/Dialog_Content"
+                style="@style/TextView_Place_Name"
                 app:layout_constraintTop_toBottomOf="@id/imageListEquipItemHorizontal"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/textListEquipItemHorizontalName"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:id="@+id/textListEquipItemHorizontalPossible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    style="@style/TextView_Title"
-                    android:textColor="@color/neon_main"/>
-
-                <TextView
-                    android:id="@+id/textListEquipItemHorizontalTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" / 3"
-                    style="@style/TextView_Title" />
-
-            </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

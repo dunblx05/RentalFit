@@ -27,23 +27,171 @@
             android:id="@+id/textEquipDetailToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장비 대여"
+            android:text="장비 판매"
             android:fontFamily="@font/font_bold"
             android:textSize="32sp"
             android:textColor="@color/oatmeal_main"
             android:layout_gravity="center" />
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewEquipDetail"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbarEquipDetail"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonEquipDetailOpenCart" />
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarEquipDetail"
+        app:layout_constraintBottom_toTopOf="@id/buttonEquipDetailOpenCart">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextView_Place_Name"
+                android:text="야구공"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textDescription"/>
+
+            <ImageView
+                android:id="@+id/imageViewPlace"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:src="@drawable/temp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/textDescription"
+                android:scaleType="fitXY" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintEquipDetailPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가격"
+                    style="@style/TextView_Place_Description_SubTitle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/textEquipDetailPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3,000 원"
+                    style="@style/TextView_Place_Description_SubTitle"
+                    android:fontFamily="@font/font_regular"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintEquipDetailCnt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수량"
+                    style="@style/TextView_Place_Description_SubTitle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageEquipDetailMinus"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/minus"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="@+id/textEquipDetailCnt"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textEquipDetailCnt"
+                        app:layout_constraintBottom_toBottomOf="@+id/textEquipDetailCnt" />
+
+                    <TextView
+                        android:id="@+id/textEquipDetailCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:layout_marginHorizontal="10dp"
+                        style="@style/TextView_Place_BottomSheet_Cost"
+                        android:textColor="@color/neon_main"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imageEquipDetailMinus"
+                        app:layout_constraintEnd_toStartOf="@id/imageEquipDetailPlus"/>
+
+                    <ImageView
+                        android:id="@+id/imageEquipDetailPlus"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/plus"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintTop_toTopOf="@id/textEquipDetailCnt"
+                        app:layout_constraintStart_toEndOf="@+id/textEquipDetailCnt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/textEquipDetailCnt" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintequipDetailDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintEquipDetailCnt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/textEquipDetailDescriptionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="설명"
+                    style="@style/TextView_Place_Description_SubTitle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/textEquipDetailDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="축구공은 축구 경기에서 사용하는 둥근 공으로, 일반적으로 가죽이나 합성 소재로 만들어집니다. 표면에는 오각형과 육각형 패턴이 있으며, FIFA 규정에 따라 크기와 무게가 표준화되어 있습니다."
+                    style="@style/TextView_Place_Description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textEquipDetailDescriptionTitle"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonEquipDetailOpenCart"

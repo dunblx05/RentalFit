@@ -40,11 +40,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bi
 
             // 아이디 입력 X
             if(it.userId.isEmpty()) {
-                Utils.showCustomToast(loginActivity, "ID를 확인해주세요.")
-            }
-            // 비밀번호 입력 X
-            else if(it.userPwd.isEmpty()) {
-                Utils.showCustomToast(loginActivity, "PassWord를 확인해주세요.")
+                Utils.showCustomToast(loginActivity, "ID, 비밀번호를 확인해주세요.")
             }
             // 로그인 성공
             else {

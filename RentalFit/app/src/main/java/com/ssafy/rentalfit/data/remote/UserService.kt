@@ -18,9 +18,9 @@ interface UserService {
 
     // request parameter로 전달된 id가 이미 사용 중인지 반환한다.
     @GET("rest/user/isUsed")
-    suspend fun isUsedId(@Query("userId") userId: String): Boolean
+    suspend fun isUsedId(@Query("id") userId: String): Boolean
 
     // 전달된 id의 스탬프 개수를 반환한다.
     @GET("rest/user/stamp")
-    suspend fun getUserStamps(@Query("userId") userId: String): Int
+    suspend fun getUserStamps(@Query("id") userId: String): Int
 }

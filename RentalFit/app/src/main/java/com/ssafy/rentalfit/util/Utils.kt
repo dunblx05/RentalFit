@@ -93,4 +93,12 @@ object Utils {
         val outputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         return dateTime.format(outputFormatter)
     }
+
+    // 날짜 -> 시간
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatTime(input: String): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        val localDateTime = LocalDateTime.parse(input, formatter)
+        return localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+    }
 }

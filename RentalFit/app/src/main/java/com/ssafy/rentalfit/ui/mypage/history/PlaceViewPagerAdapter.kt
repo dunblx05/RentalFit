@@ -25,13 +25,14 @@ class PlaceViewPagerAdapter(var placeList: List<PlaceReservationResponse>) :
             }
 
             binding.root.setOnClickListener {
-                myListener.onClick()
+                val position = layoutPosition
+                myListener.onClick(placeReservationResponse.resId)
             }
         }
     }
 
     fun interface ItemClickListener {
-        fun onClick()
+        fun onClick(resId: Int)
     }
 
     lateinit var myListener: ItemClickListener

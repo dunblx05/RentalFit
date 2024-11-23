@@ -6,7 +6,8 @@
     <select id="selectPlaceResByUid" parameterType="String" resultType="PlaceReservation">
         select * from place_reservation pr inner join place p
         on pr.place_id = p.place_id
-        where pr.user_id = #{userId};
+        where pr.user_id = #{userId}
+        order by res_id desc;
     </select>
 
     <select id="selectPlaceResByRid" parameterType="Integer" resultType="PlaceReservation">

@@ -9,4 +9,8 @@ interface PlaceReservationService {
     // 로그인한 사용자의 장소 예약 정보 조회
     @GET("rest/place/reservation/byUserId/{userId}")
     suspend fun selectPlaceResByUid(@Path("userId") userId : String) : List<PlaceReservationResponse>
+
+    @GET("rest/place/reservation/byResId/{resId}")
+    suspend fun selectPlaceResByRid(@Path("resId") resId : Int) : PlaceReservationResponse
+
 }

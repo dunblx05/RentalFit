@@ -11,13 +11,9 @@ import com.ssafy.rentalfit.base.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentPlaceViewPagerBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PlaceViewPagerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 private const val TAG = "PlaceViewPagerFragment_싸피"
 
+// 성현이한테 ID sharedPreference 저장하는거 만들어달라고 해야함
 class PlaceViewPagerFragment : BaseFragment<FragmentPlaceViewPagerBinding>(
     FragmentPlaceViewPagerBinding::bind,
     R.layout.fragment_place_view_pager
@@ -28,7 +24,7 @@ class PlaceViewPagerFragment : BaseFragment<FragmentPlaceViewPagerBinding>(
 
     private val user = sharedPreferencesUtil.getUser()
 
-    private val placeHistoryViewModel : PlaceHistoryViewModel by viewModels()
+    private val placeHistoryViewModel: PlaceHistoryViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,9 +50,6 @@ class PlaceViewPagerFragment : BaseFragment<FragmentPlaceViewPagerBinding>(
 
     private fun registerObserver() {
         placeHistoryViewModel.placeReservationList.observe(viewLifecycleOwner) {
-            Log.d(TAG, "registerObserver: $it")
-            placeHistoryViewModel.selectPlaceReservationByUid("kdy")
-
             placeViewPagerAdapter.placeList = it
             placeViewPagerAdapter.notifyDataSetChanged()
 
@@ -70,9 +63,9 @@ class PlaceViewPagerFragment : BaseFragment<FragmentPlaceViewPagerBinding>(
 
     private fun initEvent() {
         placeViewPagerAdapter.myListener = object : PlaceViewPagerAdapter.ItemClickListener {
-            override fun onClick() {
+            override fun onClick(placeId: Int) {
                 Log.d(TAG, "onClick: ")
-                activity.changeFragmentMyPage("PlaceHistoryDetail")
+                activity.changeFragmentMyPage("PlaceHistoryDetail", placeId)
             }
         }
     }

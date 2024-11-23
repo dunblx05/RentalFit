@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseActivity
 import com.ssafy.rentalfit.databinding.ActivityMyPageBinding
-import com.ssafy.rentalfit.ui.cart.CartFragment
-import com.ssafy.rentalfit.ui.equip.EquipDetailFragment
 import com.ssafy.rentalfit.ui.mypage.alarm.AlarmFragment
 import com.ssafy.rentalfit.ui.mypage.history.EquipHistoryFragment
 import com.ssafy.rentalfit.ui.mypage.history.HistoryFragment
@@ -21,6 +19,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
 
         // 기본으로 AlarmFragment가 열리도록 설정
         val name = intent.getStringExtra("name") ?: "Alarm"
+        val resId = intent.getIntExtra("resId", -1)
 
         onBackPressedDispatcher.addCallback(this) {
             val fragmentManager = supportFragmentManager
@@ -30,12 +29,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
                 finish() // 프래그먼트가 없으면 액티비티 종료
             }
         }
-
-        changeFragmentMyPage(name)
+        changeFragmentMyPage(name, resId)
     }
 
 
-    fun changeFragmentMyPage(name: String) {
+    fun changeFragmentMyPage(name: String, resId: Int = -1) {
 
         val transaction = supportFragmentManager.beginTransaction()
 
@@ -67,7 +65,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
             }
 
             "PlaceHistoryDetail" -> {
-                goto = PlaceHistoryFragment()
+                goto = PlaceHistoryFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("placeId", resId)
+                    }
+                }
             }
 
             "EquipHistoryDetail" -> {

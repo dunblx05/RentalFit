@@ -8,5 +8,6 @@ class RetrofitUtil {
 
         val userService = ApplicationClass.retrofit.create(UserService::class.java)
         val placeReservationService = ApplicationClass.retrofit.create(PlaceReservationService::class.java)
+        val equipOrderService = ApplicationClass.retrofit.create(EquipOrderService::class.java)
     }
 }

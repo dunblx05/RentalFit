@@ -1,6 +1,6 @@
 package com.ssafy.rentalfit.data.remote
 
-import com.ssafy.rentalfit.data.model.User
+import com.ssafy.rentalfit.data.model.dto.User
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

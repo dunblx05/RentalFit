@@ -1,11 +1,10 @@
 package com.ssafy.rentalfit.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.rentalfit.data.model.User
+import com.ssafy.rentalfit.data.model.dto.User
 import com.ssafy.rentalfit.data.remote.RetrofitUtil
 import kotlinx.coroutines.launch
 

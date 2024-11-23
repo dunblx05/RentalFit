@@ -3,7 +3,7 @@ package com.ssafy.rentalfit.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.ssafy.rentalfit.data.model.User
+import com.ssafy.rentalfit.data.model.dto.User
 
 class SharedPreferencesUtil (context: Context) {
     val SHARED_PREFERENCES_NAME = "rentalfit_preference"

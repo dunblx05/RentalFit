@@ -1,4 +1,4 @@
-package com.ssafy.rentalfit.data.model
+package com.ssafy.rentalfit.data.model.dto
 
 data class User(
     val userId: String,

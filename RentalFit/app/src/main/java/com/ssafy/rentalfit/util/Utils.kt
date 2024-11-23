@@ -3,15 +3,19 @@ package com.ssafy.rentalfit.util
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import com.ssafy.rentalfit.R
+import java.text.DecimalFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 object Utils {
 
@@ -70,5 +74,23 @@ object Utils {
         toast.view = layout
         toast.setGravity(Gravity.BOTTOM, 0, 200)
         toast.show()
+    }
+
+    // 천단위 콤마
+    fun makeComma(num: Int): String {
+        val comma = DecimalFormat("#,###")
+        return "${comma.format(num)} 원"
+    }
+
+    // 날짜 출력 형식 변경
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatDate(input: String): String {
+        // 입력 문자열을 LocalDateTime으로 변환
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        val dateTime = LocalDateTime.parse(input, inputFormatter)
+
+        // 원하는 출력 형식 지정
+        val outputFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        return dateTime.format(outputFormatter)
     }
 }

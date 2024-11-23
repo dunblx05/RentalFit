@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.LoginActivity
 import com.ssafy.rentalfit.base.BaseFragment
-import com.ssafy.rentalfit.data.model.User
+import com.ssafy.rentalfit.data.model.dto.User
 import com.ssafy.rentalfit.databinding.FragmentJoinBinding
 import com.ssafy.rentalfit.util.Utils
 

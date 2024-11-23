@@ -21,7 +21,7 @@ import com.ssafy.rentalfit.activity.LoginActivity
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
-import com.ssafy.rentalfit.data.model.User
+import com.ssafy.rentalfit.data.model.dto.User
 import com.ssafy.rentalfit.databinding.FragmentLoginBinding
 import com.ssafy.rentalfit.util.Utils
 

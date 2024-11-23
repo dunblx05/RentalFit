@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ssafy.rentalfit.data.local.SharedPreferencesUtil
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -15,7 +16,7 @@ class ApplicationClass : Application() {
     companion object{
         // ipconfig를 통해 ip확인하기
         // 핸드폰으로 접속은 같은 인터넷으로 연결 되어있어야함 (유,무선)
-        const val SERVER_URL = "http://192.168.32.81:8080/"
+        const val SERVER_URL = "http://192.168.0.8:8080/"
 //        const val SERVER_URL = "http://mobile-pjt.sample.ssafy.io/"
         const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
         const val IMGS_URL = "${SERVER_URL}imgs/"
@@ -50,7 +51,7 @@ class ApplicationClass : Application() {
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
-//            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(AddCookiesInterceptor())
             .addInterceptor(ReceivedCookiesInterceptor()).build()
 

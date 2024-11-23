@@ -7,5 +7,6 @@ class RetrofitUtil {
     companion object {
 
         val userService = ApplicationClass.retrofit.create(UserService::class.java)
+        val placeReservationService = ApplicationClass.retrofit.create(PlaceReservationService::class.java)
     }
 }

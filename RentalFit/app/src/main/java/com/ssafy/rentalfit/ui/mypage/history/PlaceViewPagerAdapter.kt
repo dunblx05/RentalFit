@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.response.PlaceReservationResponse
 import com.ssafy.rentalfit.databinding.ListPlaceHistoryItemBinding
 import com.ssafy.rentalfit.util.Utils.formatDate
@@ -24,7 +25,7 @@ class PlaceViewPagerAdapter(var placeList: List<PlaceReservationResponse>) :
 
                 // 나중에 ip주소 변경해줘야함
                 Glide.with(placePagerImg.context)
-                    .load("http://192.168.0.8:8080/images/${placeReservationResponse.place.placeImg}")
+                    .load("${SERVER_URL}images/${placeReservationResponse.place.placeImg}")
                     .into(placePagerImg)
 
                 placePagerDate.text = "${formatDate(placeReservationResponse.resStartTime)}"

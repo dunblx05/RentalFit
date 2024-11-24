@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentPlaceHistoryBinding
 import com.ssafy.rentalfit.util.Utils.formatDate
@@ -43,7 +44,7 @@ class PlaceHistoryFragment : BaseFragment<FragmentPlaceHistoryBinding>(
         placeHistoryViewModel.placeResDetail.observe(viewLifecycleOwner) {
 
             Glide.with(binding.placeHistoryDetailImg.context)
-                .load("http://192.168.0.8:8080/images/${it.place.placeImg}")
+                .load("${SERVER_URL}images/${it.place.placeImg}")
                 .into(binding.placeHistoryDetailImg)
 
             binding.placeHistoryDetailDate.text = formatDate(it.resStartTime)

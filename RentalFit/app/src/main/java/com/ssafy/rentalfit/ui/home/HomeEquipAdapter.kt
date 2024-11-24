@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListHomeEquipItemBinding
 
@@ -26,7 +27,7 @@ class HomeEquipAdapter(var equipList:List<Equip>): RecyclerView.Adapter<HomeEqui
                 Log.d(TAG, "bindInfo: ${equip.equipImg}")
 
                 Glide.with(imageListHomeEquipItem.context)
-                    .load("http://192.168.0.8:8080/images/${equip.equipImg}")
+                    .load("${SERVER_URL}images/${equip.equipImg}")
                     .into(imageListHomeEquipItem)
 
                 textListHomeEquipItemName.text = equip.equipName

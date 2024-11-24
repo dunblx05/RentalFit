@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
@@ -14,6 +15,8 @@ import com.ssafy.rentalfit.databinding.FragmentHomeBinding
 class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home) {
 
     private lateinit var mainActivity: MainActivity
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
     private lateinit var homePlaceAdapter: HomePlaceAdapter
@@ -27,11 +30,23 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObserver()
+
         settingToolbar()
         settingViewPager()
         settingRecyclerViewPlace()
         settingRecyclerViewEquip()
+
+        homeViewModel.selectEquip()
+
         settingEvent()
+    }
+
+    private fun registerObserver() {
+        homeViewModel.equipList.observe(viewLifecycleOwner) {
+            homeEquipAdapter.equipList = it
+            homeEquipAdapter.notifyDataSetChanged()
+        }
     }
 
     // 툴바 설정
@@ -91,7 +106,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     // 장비 리사이클러뷰 설정
     private fun settingRecyclerViewEquip() {
 
-        homeEquipAdapter = HomeEquipAdapter()
+        homeEquipAdapter = HomeEquipAdapter(emptyList())
 
         binding.apply {
 

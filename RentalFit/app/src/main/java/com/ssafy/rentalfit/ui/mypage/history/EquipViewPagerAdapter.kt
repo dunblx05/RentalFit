@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.data.model.response.EquipOrderResponse
 import com.ssafy.rentalfit.databinding.ListEquipHistoryItemBinding
 import com.ssafy.rentalfit.util.Utils.formatDate
@@ -18,6 +19,12 @@ class EquipViewPagerAdapter(var equipList: List<EquipOrderResponse>) :
         fun bind(equipOrderResponse: EquipOrderResponse) {
 
             binding.apply {
+
+                // ip 주소 변경 필요함
+                Glide.with(equipPagerImg.context)
+                    .load("http://192.168.0.8:8080/images/${equipOrderResponse.details[0].equipImg}")
+                    .into(equipPagerImg)
+
                 equipPagerDate.text = "${formatDate(equipOrderResponse.equipOrderTime)}"
                 equipPagerName.text =
                     "${equipOrderResponse.details[0].equipName} 외 ${equipOrderResponse.details.size - 1}건"

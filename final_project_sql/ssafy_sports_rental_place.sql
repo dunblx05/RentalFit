@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: ssafy_sports_rental
+-- Host: localhost    Database: ssafy_sports_rental
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	8.0.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `place` (
   `place_cost` int DEFAULT NULL,
   `place_img` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`place_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `place` (
 
 LOCK TABLES `place` WRITE;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
-INSERT INTO `place` VALUES (1,'라이온즈파크',30,'대구광역시','야구장',1000,'img'),(2,'챔피언스필드',30,'광주광역시','야구장',1000,'img'),(3,'잠실야구장',30,'서울특별시','야구장',1000,'img'),(4,'고척돔구장',30,'서울특별시','야구장',1000,'img'),(5,'올드트래포드',30,'구미시','축구장',2000,'img'),(6,'대구시민구장',30,'대구광역시','축구장',2000,'img'),(7,'광주탁구장',30,'광주광역시','탁구장',500,'img'),(8,'구미수영장',20,'구미시','수영장',850,'img'),(9,'대구탁구장',10,'대구광역시','수영장',100,'img'),(10,'서울수영장',100,'서울특별시','수영장',3000,'img');
+INSERT INTO `place` VALUES (1,'라이온즈파크',30,'대구광역시','야구장',1000,'baseball_park1.png'),(2,'챔피언스필드',30,'광주광역시','야구장',1000,'baseball_park2.png'),(3,'잠실야구장',30,'서울특별시','야구장',1000,'baseball_park3.png'),(4,'고척돔구장',30,'서울특별시','야구장',1000,'baseball_park4.png'),(5,'올드트래포드',30,'구미시','축구장',2000,'soccer_place1.png'),(6,'대구시민구장',30,'대구광역시','축구장',2000,'soccer_place2.png'),(7,'광주탁구장',30,'광주광역시','탁구장',500,'pingpong_place1.png'),(8,'구미수영장',20,'구미시','수영장',850,'swimming_pool1.png'),(9,'대구수영장',10,'대구광역시','수영장',100,'swimming_pool2.png'),(10,'서울수영장',100,'서울특별시','수영장',3000,'swimming_pool3.png'),(11,'대구농구장',40,'대구광역시','농구장',5000,'basketball_court.png');
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22 17:32:31
+-- Dump completed on 2024-11-24 18:44:25

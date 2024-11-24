@@ -12,6 +12,7 @@ import com.ssafy.rentalfit.util.Utils.formatDate
 import com.ssafy.rentalfit.util.Utils.makeComma
 
 private const val TAG = "PlaceViewPagerAdapter_싸피"
+
 class PlaceViewPagerAdapter(var placeList: List<PlaceReservationResponse>) :
     RecyclerView.Adapter<PlaceViewPagerAdapter.PlaceViewPagerViewHolder>() {
     inner class PlaceViewPagerViewHolder(private val binding: ListPlaceHistoryItemBinding) :

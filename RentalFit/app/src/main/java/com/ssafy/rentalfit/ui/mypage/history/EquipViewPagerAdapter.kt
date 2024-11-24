@@ -21,20 +21,25 @@ class EquipViewPagerAdapter(var equipList: List<EquipOrderResponse>) :
                 equipPagerDate.text = "${formatDate(equipOrderResponse.equipOrderTime)}"
                 equipPagerName.text =
                     "${equipOrderResponse.details[0].equipName} 외 ${equipOrderResponse.details.size - 1}건"
-                equipPagerQuantity.text = "수량 : ${equipOrderResponse.details.size}"
+
+                // 총 구입 수량 계산
+                val totalQuantity = equipOrderResponse.details.sumOf { it.quantity }
+                equipPagerQuantity.text = "수량 : ${totalQuantity}개"
+
+                // 총 금액 계산
                 val totalCost = equipOrderResponse.details.sumOf { it.equipPrice * it.quantity }
                 equipPagerCost.text = "금액 : ${makeComma(totalCost)}"
             }
 
             binding.root.setOnClickListener {
-                myListener.onClick()
+                myListener.onClick(equipOrderResponse.equipOrderId)
             }
         }
 
     }
 
     fun interface ItemClickListener {
-        fun onClick()
+        fun onClick(equipOrderId: Int)
     }
 
     lateinit var myListener: ItemClickListener

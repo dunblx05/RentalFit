@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MyPageActivity
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.sharedPreferencesUtil
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentEquipViewPagerBinding
 
@@ -17,6 +18,8 @@ class EquipViewPagerFragment : BaseFragment<FragmentEquipViewPagerBinding>(
     private lateinit var equipViewPagerAdapter: EquipViewPagerAdapter
 
     private lateinit var activity: MyPageActivity
+
+    private val user = sharedPreferencesUtil.getUser()
 
     private val equipHistoryViewModel: EquipHistoryViewModel by viewModels()
 
@@ -33,7 +36,7 @@ class EquipViewPagerFragment : BaseFragment<FragmentEquipViewPagerBinding>(
         super.onViewCreated(view, savedInstanceState)
         registerObserver()
         initData()
-        equipHistoryViewModel.selectEquipOrderByUid("kdy")
+        equipHistoryViewModel.selectEquipOrderByUid(user.userId)
         initEvent()
     }
 
@@ -51,8 +54,8 @@ class EquipViewPagerFragment : BaseFragment<FragmentEquipViewPagerBinding>(
 
     private fun initEvent() {
         equipViewPagerAdapter.myListener = object : EquipViewPagerAdapter.ItemClickListener {
-            override fun onClick() {
-                activity.changeFragmentMyPage("EquipHistoryDetail", -1)
+            override fun onClick(equipOrderId: Int) {
+                activity.changeFragmentMyPage("EquipHistoryDetail", -1, equipOrderId)
             }
         }
     }

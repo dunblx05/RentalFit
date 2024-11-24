@@ -28,6 +28,7 @@ class PlaceHistoryFragment : BaseFragment<FragmentPlaceHistoryBinding>(
         placeId = arguments?.getInt("placeId")!!
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated: $placeId")

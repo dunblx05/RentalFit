@@ -39,7 +39,7 @@ class PlaceViewPagerFragment : BaseFragment<FragmentPlaceViewPagerBinding>(
         super.onViewCreated(view, savedInstanceState)
         registerObserver()
 
-        placeHistoryViewModel.selectPlaceReservationByUid("kdy")
+        placeHistoryViewModel.selectPlaceReservationByUid(user.userId)
 
         binding.placeHistoryList.apply {
             adapter = placeViewPagerAdapter

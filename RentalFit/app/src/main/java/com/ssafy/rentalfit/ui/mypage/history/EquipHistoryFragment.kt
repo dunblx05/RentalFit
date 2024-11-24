@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
@@ -13,22 +13,17 @@ import com.ssafy.rentalfit.activity.MyPageActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentEquipHistoryBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EquipHistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EquipHistoryFragment : BaseFragment<FragmentEquipHistoryBinding>(
     FragmentEquipHistoryBinding::bind,
     R.layout.fragment_equip_history
 ) {
+    private lateinit var equipHistoryDetailAdapter: EquipHistoryDetailAdapter
 
     private lateinit var activity: MyPageActivity
+
+    private val equipHistoryViewModel: EquipHistoryViewModel by viewModels()
+    private var orderId = -1
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,16 +32,27 @@ class EquipHistoryFragment : BaseFragment<FragmentEquipHistoryBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        orderId = arguments?.getInt("equipOrderId")!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        registerObserver()
         initData()
+        equipHistoryViewModel.selectEquipOrderByOrderId(orderId)
         initEvent()
     }
 
+    private fun registerObserver() {
+        equipHistoryViewModel.equipOrderDetailList.observe(viewLifecycleOwner) {
+            equipHistoryDetailAdapter.equipDetailList = it
+            equipHistoryDetailAdapter.notifyDataSetChanged()
+        }
+    }
+
     private fun initData() {
-        binding.equipHistoryDetailList.adapter = EquipHistoryDetailAdapter()
+        equipHistoryDetailAdapter = EquipHistoryDetailAdapter(emptyList())
+        binding.equipHistoryDetailList.adapter = equipHistoryDetailAdapter
 
         val dividerItemDecoration = DividerItemDecoration(activity, LinearLayoutManager.VERTICAL)
 

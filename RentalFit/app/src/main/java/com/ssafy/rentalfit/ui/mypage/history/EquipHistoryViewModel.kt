@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.rentalfit.data.model.response.EquipOrderResponse
+import com.ssafy.rentalfit.data.model.response.EquipOrderWithInfo
 import com.ssafy.rentalfit.data.remote.RetrofitUtil
 import kotlinx.coroutines.launch
 
@@ -18,6 +19,10 @@ class EquipHistoryViewModel : ViewModel() {
     val equipOrderList: LiveData<List<EquipOrderResponse>>
         get() = _equipOrderList
 
+    private val _equipOrderDetailList = MutableLiveData<List<EquipOrderWithInfo>>()
+    val equipOrderDetailList: LiveData<List<EquipOrderWithInfo>>
+        get() = _equipOrderDetailList
+
     fun selectEquipOrderByUid(userId: String) {
         viewModelScope.launch {
             runCatching {
@@ -26,6 +31,18 @@ class EquipHistoryViewModel : ViewModel() {
                 _equipOrderList.value = it
             }.onFailure {
                 Log.d(TAG, "selectEquipOrderByUid: ")
+            }
+        }
+    }
+
+    fun selectEquipOrderByOrderId(equipOrderId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                equipOrderService.selectEquipOrderByOid(equipOrderId)
+            }.onSuccess {
+                _equipOrderDetailList.value = it
+            }.onFailure {
+                Log.d(TAG, "selectEquipOrderByOrderId: ")
             }
         }
     }

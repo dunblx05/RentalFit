@@ -20,6 +20,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
         // 기본으로 AlarmFragment가 열리도록 설정
         val name = intent.getStringExtra("name") ?: "Alarm"
         val resId = intent.getIntExtra("resId", -1)
+        val equipOrderId = intent.getIntExtra("equipOrderId", -1)
 
         onBackPressedDispatcher.addCallback(this) {
             val fragmentManager = supportFragmentManager
@@ -29,11 +30,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
                 finish() // 프래그먼트가 없으면 액티비티 종료
             }
         }
-        changeFragmentMyPage(name, resId)
+        changeFragmentMyPage(name, resId, equipOrderId)
     }
 
 
-    fun changeFragmentMyPage(name: String, resId: Int = -1) {
+    fun changeFragmentMyPage(name: String, resId: Int = -1, equipOrderId: Int = -1) {
 
         val transaction = supportFragmentManager.beginTransaction()
 
@@ -73,7 +74,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
             }
 
             "EquipHistoryDetail" -> {
-                goto = EquipHistoryFragment()
+                goto = EquipHistoryFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("equipOrderId", equipOrderId)
+                    }
+                }
             }
         }
 

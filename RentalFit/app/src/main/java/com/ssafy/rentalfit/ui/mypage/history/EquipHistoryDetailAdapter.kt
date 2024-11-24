@@ -1,29 +1,46 @@
 package com.ssafy.rentalfit.ui.mypage.history
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.data.model.response.EquipOrderWithInfo
+import com.ssafy.rentalfit.databinding.ListEquipHistoryDetailItemBinding
+import com.ssafy.rentalfit.util.Utils.makeComma
 
-class EquipHistoryDetailAdapter : RecyclerView.Adapter<EquipHistoryDetailAdapter.EquipHistoryDetailViewHolder>() {
-    inner class EquipHistoryDetailViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+class EquipHistoryDetailAdapter(var equipDetailList: List<EquipOrderWithInfo>) :
+    RecyclerView.Adapter<EquipHistoryDetailAdapter.EquipHistoryDetailViewHolder>() {
+    inner class EquipHistoryDetailViewHolder(private val binding: ListEquipHistoryDetailItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
+        fun bind(equipOrderWithInfo: EquipOrderWithInfo) {
+            binding.apply {
+                equipHistoryDetailName.text = equipOrderWithInfo.equip.equipName
+                equipHistoryDetailQuantity.text = "수량 : ${equipOrderWithInfo.quantity}개"
+                equipHistoryDetailCost.text =
+                    "금액 : ${makeComma(equipOrderWithInfo.equip.equipPrice)}"
+            }
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): EquipHistoryDetailViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_equip_history_detail_item, parent, false)
+        val view =
+            ListEquipHistoryDetailItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+
         return EquipHistoryDetailViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return equipDetailList.size
     }
 
     override fun onBindViewHolder(holder: EquipHistoryDetailViewHolder, position: Int) {
-
+        holder.bind(equipDetailList[position])
     }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentPlaceHistoryBinding
@@ -40,6 +41,11 @@ class PlaceHistoryFragment : BaseFragment<FragmentPlaceHistoryBinding>(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun registerObserver() {
         placeHistoryViewModel.placeResDetail.observe(viewLifecycleOwner) {
+
+            Glide.with(binding.placeHistoryDetailImg.context)
+                .load("http://192.168.0.8:8080/images/${it.place.placeImg}")
+                .into(binding.placeHistoryDetailImg)
+
             binding.placeHistoryDetailDate.text = formatDate(it.resStartTime)
             binding.placeHistoryDetailName.text = it.place.placeName
             binding.placeHistoryDetailPeople.text = "인원 : ${it.place.placePeople}명"

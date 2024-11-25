@@ -21,6 +21,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.alpha
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
@@ -122,12 +123,21 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
 
                 return@setOnClickListener
             }
-            else if(isAvailableReserve(startTime, endTime) == false){
-                showCustomToast(
-                    reservationActivity,
-                    "해당 시간대에 다른 예약이 들어있습니다.",
-                )
-                return@setOnClickListener
+            when(isAvailableReserve(startTime, endTime)){
+                1 ->{
+                    showCustomToast(
+                        reservationActivity,
+                        "해당 시간대에 다른 예약이 들어있습니다.",
+                    )
+                    return@setOnClickListener
+                }
+                2->{
+                    showCustomToast(
+                        reservationActivity,
+                        "이미 지나간 시간대입니다.",
+                    )
+                    return@setOnClickListener
+                }
             }
 
             val content =
@@ -365,9 +375,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(time)) {
-                var color = (item.background as ColorDrawable).color
-                var newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
-                item.setBackgroundColor(newColor)
+                item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkneon_main))
             }
             else{
                 break
@@ -471,25 +479,33 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun isAvailableReserve(startTime: LocalTime, endTime: LocalTime) : Boolean{
+    private fun isAvailableReserve(startTime: LocalTime, endTime: LocalTime) : Int{
 
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(startTime) && !itemTime.isAfter(endTime) && itemTime != endTime) {
                 val backgroundColor = (item.background as? ColorDrawable)?.color
                 val neonMainColor = ContextCompat.getColor(item.context, R.color.neon_main)
+                val passedNeonColor = ContextCompat.getColor(item.context, R.color.darkneon_main)
+                val passedGreyColor = ContextCompat.getColor(item.context, R.color.darkgrey_main)
+                val greyColor = ContextCompat.getColor(item.context, R.color.grey_main)
                 if (backgroundColor != null) {
-                    if(!backgroundColor.equals(neonMainColor)){
-                        Log.d(TAG, "isAvailableReserve: $backgroundColor, $neonMainColor")
-                        return false
+                    if(backgroundColor.equals(greyColor)){
+                        return 1
+                    }
+                    else if(backgroundColor.equals(passedGreyColor)){
+                        return 2
+                    }
+                    else if(backgroundColor.equals(passedNeonColor)){
+                        return 2
                     }
                 }
             }
             else if(itemTime.isAfter(endTime)){
-                return true
+                return 0
             }
         }
 
-        return true
+        return 0
     }
 }

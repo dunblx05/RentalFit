@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentHomeBinding
 import com.ssafy.rentalfit.ui.equip.EquipViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home) {
 
@@ -24,6 +29,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
     private lateinit var homePlaceAdapter: HomePlaceAdapter
     private lateinit var homeEquipAdapter: HomeEquipAdapter
+
+    private var sliderJob: Job? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,6 +51,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         homeViewModel.selectPlace()
 
         settingEvent()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sliderJob?.cancel()
     }
 
     private fun registerObserver() {
@@ -90,14 +102,37 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     // 뷰페이저 설정
     private fun settingViewPager() {
 
-        homeViewPagerAdapter = HomeViewPagerAdapter()
+        val images = listOf(
+            R.drawable.banner1,
+            R.drawable.banner2,
+            R.drawable.banner3,
+            R.drawable.banner4,
+            R.drawable.banner5,
+        )
+
+        homeViewPagerAdapter = HomeViewPagerAdapter(images)
 
         binding.apply {
 
             viewpager2HomeBanner.adapter = homeViewPagerAdapter
 
+            viewpager2HomeBanner.offscreenPageLimit = 1
+
+            viewpager2HomeBanner.setPageTransformer { page: View, position: Float ->
+                page.apply {
+                    alpha = 0.5f + (1 - Math.abs(position))
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+            }
+
+            viewpager2HomeBanner.clipToPadding = true
+            viewpager2HomeBanner.clipChildren = true
+
+            // 인디케이터 연결
             indicatorHome.setViewPager(viewpager2HomeBanner)
             viewpager2HomeBanner.adapter?.registerAdapterDataObserver(indicatorHome.adapterDataObserver)
+
         }
     }
 
@@ -130,6 +165,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
         binding.apply {
 
+            // 뷰페이저 자동 슬라이드 함수.
+            autoSlideViewPager()
+
             // 장소 아이템 누른다면.
             homePlaceAdapter.homePlaceListener = object : HomePlaceAdapter.ItemClickListener {
                 override fun onClick(placeId: Int) {
@@ -149,6 +187,22 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
                     intent.putExtra("name", "EquipDetail")
                     intent.putExtra("equipId", equipId)
                     startActivity(intent)
+                }
+            }
+        }
+    }
+
+    // 자동 슬라이드
+    private fun autoSlideViewPager() {
+
+        binding.apply {
+            sliderJob = viewLifecycleOwner.lifecycleScope.launch {
+                while (isActive) {
+                    delay(3000)
+                    if(homeViewPagerAdapter.itemCount > 0) {
+                        val nextItem = (viewpager2HomeBanner.currentItem + 1) % homeViewPagerAdapter.itemCount
+                        viewpager2HomeBanner.setCurrentItem(nextItem, true)
+                    }
                 }
             }
         }

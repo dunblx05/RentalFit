@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: ssafy_sports_rental
+-- Host: 127.0.0.1    Database: ssafy_sports_rental
 -- ------------------------------------------------------
--- Server version	8.0.40
+-- Server version	8.0.37
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('aaa','aaa','aaa',0),('hsw','hsw','황선우',242),('kdy','kdy','김두영',380),('kdy2','kdy2','kdy2',0),('kdy3','kdy3','kdy3',0),('ksh','ksh','김성현',87),('pjh','pjh','박장훈',0),('qwer','qwer','qwer',0);
+INSERT INTO `user` VALUES ('aaa','aaa','aaa',0),('Dxn8zsz35aZXWxmIKMyawHaJpCZ2','','김두영',0),('hsw','hsw','황선우',242),('kdy','kdy','김두영',380),('kdy2','kdy2','kdy2',0),('kdy3','kdy3','kdy3',0),('ksh','ksh','김성현',87),('pjh','pjh','박장훈',0),('qwer','qwer','qwer',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 18:44:25
+-- Dump completed on 2024-11-25 10:44:08

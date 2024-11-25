@@ -135,8 +135,14 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         // 먼저 기존 뷰들을 비웁니다.
         binding.firstRowTimeLabels.removeAllViews()
         binding.firstRowBlocks.removeAllViews()
+        binding.timePickerStart.hour = 10
+        startHour = 10
+        binding.timePickerEnd.hour=17
+        endHour = 17
         binding.timePickerStart.minute=0
         binding.timePickerEnd.minute=0
+        startMinute=0
+        endMinute=0
 
         val distanceBetTime = 38
         val distanceBetBlock = 16
@@ -300,9 +306,9 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    var startHour=0
+    var startHour=10
     var startMinute=0
-    var endHour=0
+    var endHour=17
     var endMinute=0
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateTime(timePicker: TimePicker, hourOfDay: Int, minute: Int, isStart: Boolean) {

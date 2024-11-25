@@ -84,7 +84,7 @@ class EquipDetailFragment : BaseFragment<FragmentEquipDetailBinding>(FragmentEqu
                 .into(imageEquipDetail)
 
             // 가격
-            textEquipDetailPrice.text = equip.equipPrice.toString()
+            textEquipDetailPrice.text = Utils.makeComma(equip.equipPrice)
 
             // 설명
             textEquipDetailDescription.text = equip.equipDetail

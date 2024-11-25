@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -25,9 +26,13 @@ import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass
+import com.ssafy.rentalfit.data.model.dto.Place
+import com.ssafy.rentalfit.data.remote.HomeService
 import com.ssafy.rentalfit.data.remote.PlaceReservationService
+import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.homeService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
+import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
 import com.ssafy.rentalfit.util.Utils
 import com.ssafy.rentalfit.util.Utils.formatTime
 import com.ssafy.rentalfit.util.Utils.showCustomDialog
@@ -35,12 +40,14 @@ import com.ssafy.rentalfit.util.Utils.showCustomToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.math.min
 
 private const val TAG = "ReservationBottomSheetF_싸피"
 
@@ -50,6 +57,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentReservationBottomSheetBinding? = null
     private val binding get() = _binding!!
     private var placeId: Int = -1
+    lateinit var place: Place
     lateinit var focusDate :Date
 
     override fun onCreateView(
@@ -67,9 +75,18 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        focusDate = Date()
-        initSheet()
-        settingEvent()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            runCatching {
+                place = homeService.selectPlaceById(placeId)
+            }.onSuccess {
+                focusDate = Date()
+                initSheet()
+                settingEvent()
+            }.onFailure {
+                Log.d(TAG, "onViewCreated: Place is null")
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -161,18 +178,21 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         eraseBeforeCurrentTime()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initSchedule() {
         // 먼저 기존 뷰들을 비웁니다.
         binding.firstRowTimeLabels.removeAllViews()
         binding.firstRowBlocks.removeAllViews()
-        binding.timePickerStart.hour = 10
-        startHour = 10
-        binding.timePickerEnd.hour=17
-        endHour = 17
-        binding.timePickerStart.minute=0
-        binding.timePickerEnd.minute=0
-        startMinute=0
-        endMinute=0
+        binding.timePickerStart.apply {
+            hour=10
+            minute=0
+        }
+        binding.timePickerEnd.apply {
+            hour=17
+            minute=0
+        }
+        validateTime(binding.timePickerStart, 10,0,true)
+        validateTime(binding.timePickerEnd, 17,0,false)
 
         val distanceBetTime = 38
         val distanceBetBlock = 16
@@ -361,18 +381,18 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         }
         if (startTime.isBefore(minTime)) {
             Log.d(TAG, "startTime: ${startTime}, minTime: ${minTime}")
-            showCustomToast(
-                reservationActivity,
-                "시간은 09:00에서 18:00 사이여야 합니다.",
-            )
+//            showCustomToast(
+//                reservationActivity,
+//                "시간은 09:00에서 18:00 사이여야 합니다.",
+//            )
             timePicker.hour = minTime.hour
             timePicker.minute = minTime.minute
         }
         else if(startTime.isAfter(maxTime)){
-            showCustomToast(
-                reservationActivity,
-                "시간은 09:00에서 18:00 사이여야 합니다.",
-            )
+//            showCustomToast(
+//                reservationActivity,
+//                "시간은 09:00에서 18:00 사이여야 합니다.",
+//            )
             timePicker.hour = maxTime.hour
             timePicker.minute = maxTime.minute
         }
@@ -383,6 +403,18 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         else{
             endHour=timePicker.hour
             endMinute =timePicker.minute
+        }
+
+        var startInt = startHour * 2 + (startMinute)
+        var endInt = endHour * 2 + (endMinute)
+        var totalPrice = (endInt - startInt) * place.placeCost
+        if(totalPrice >= 0){
+            val decimalFormat = DecimalFormat("#,###")
+            val totalPriceText = "₩ ${decimalFormat.format(totalPrice)}"
+            binding.textViewTotalPrice.text = totalPriceText
+        }
+        else{
+            binding.textViewTotalPrice.text = "₩ ???"
         }
     }
 

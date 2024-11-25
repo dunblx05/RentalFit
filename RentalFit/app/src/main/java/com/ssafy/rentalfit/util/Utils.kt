@@ -20,12 +20,16 @@ import java.time.format.DateTimeFormatter
 object Utils {
 
     // 다이얼로그 띄우기.
-    fun showCustomDialog(context: Context, onConfirm: () -> Unit) {
+    @SuppressLint("MissingInflatedId")
+    fun showCustomDialog(context: Context, content: String, onConfirm: () -> Unit) {
 
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog, null)
 
+        val textViewContent = dialogView.findViewById<TextView>(R.id.textDialogContent)
         val buttonConfirm = dialogView.findViewById<AppCompatButton>(R.id.buttonDialogConfirm)
         val buttonCancel = dialogView.findViewById<AppCompatButton>(R.id.buttonDialogCancel)
+
+        textViewContent.text = content
 
         val dialog = AlertDialog.Builder(context)
             .setView(dialogView)

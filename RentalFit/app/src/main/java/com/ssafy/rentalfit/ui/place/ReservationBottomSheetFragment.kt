@@ -50,6 +50,8 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     private var placeId: Int = -1
     lateinit var place: Place
     lateinit var focusDate :Date
+    val defaultStartTime = 10
+    val defaultEndTime = 17
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -165,7 +167,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                         )
                     }
                     if(isAvailableReserve(startTime, endTime) != 0){
-                        showCustomToast(requireContext(), "다시 예약해주세요")
+                        showCustomToast(requireContext(), "예약이 찼습니다. 다시 예약해주세요")
                         return@launch
                     }
                     Log.d(TAG, "Avaiable Pass")
@@ -218,15 +220,15 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         binding.firstRowTimeLabels.removeAllViews()
         binding.firstRowBlocks.removeAllViews()
         binding.timePickerStart.apply {
-            hour=10
+            hour=defaultStartTime
             minute=0
         }
         binding.timePickerEnd.apply {
-            hour=17
+            hour=defaultEndTime
             minute=0
         }
-        validateTime(binding.timePickerStart, 10,0,true)
-        validateTime(binding.timePickerEnd, 17,0,false)
+        validateTime(binding.timePickerStart, defaultStartTime,0,true)
+        validateTime(binding.timePickerEnd, defaultEndTime,0,false)
 
         val distanceBetTime = 38
         val distanceBetBlock = 16
@@ -342,7 +344,10 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
-                if (calendarInputDate.before(calendarToday) && itemTime.isBefore(time)){
+                if (calendarInputDate.before(calendarToday)){
+                    item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkgrey_main))
+                }
+                else if(calendarInputDate.equals(calendarToday) && itemTime.isBefore(time)){
                     item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkgrey_main))
                 }
                 else{
@@ -388,9 +393,9 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    var startHour=10
+    var startHour=defaultStartTime
     var startMinute=0
-    var endHour=17
+    var endHour=defaultEndTime
     var endMinute=0
     var totalPrice=0
     @RequiresApi(Build.VERSION_CODES.O)
@@ -490,7 +495,6 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(startTime) && !itemTime.isAfter(endTime) && itemTime != endTime) {
                 val backgroundColor = (item.background as? ColorDrawable)?.color
-                val neonMainColor = ContextCompat.getColor(item.context, R.color.neon_main)
                 val passedNeonColor = ContextCompat.getColor(item.context, R.color.darkneon_main)
                 val passedGreyColor = ContextCompat.getColor(item.context, R.color.darkgrey_main)
                 val greyColor = ContextCompat.getColor(item.context, R.color.grey_main)

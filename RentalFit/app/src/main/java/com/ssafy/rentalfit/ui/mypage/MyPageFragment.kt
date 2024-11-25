@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.activity.LoginActivity
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.MyPageActivity
 import com.ssafy.rentalfit.base.ApplicationClass
@@ -101,6 +102,8 @@ class MyPageFragment :
 
                             // 화면 이동
                             mainActivity.finish()
+                            val intent = Intent(mainActivity, LoginActivity::class.java)
+                            startActivity(intent)
                         }
                     }
 

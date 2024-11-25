@@ -203,6 +203,9 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         val start = LocalTime.parse(startTime, formatter)
         val end = LocalTime.parse(endTime, formatter)
+        val now = LocalTime.now()
+        val nowFormat = now.format(formatter)
+        val nowTime = LocalTime.parse(nowFormat, formatter)
 //        Log.d(TAG, "drawSchedule: $end")
 
         for (item in holder.firstRowBlocks) {
@@ -220,7 +223,12 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
 //            Log.d(TAG, "drawSchedule: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100)
             if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                if(itemTime.isBefore(nowTime)){
+                    item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+                }
+                else{
+                    item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                }
             }
         }
     }
@@ -237,9 +245,14 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
 //            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(end)) {
-                var color = (item.background as ColorDrawable).color
-                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
-                item.setBackgroundColor(newColor)
+                val backgroundColor = (item.background as? ColorDrawable)?.color
+                val passedNeonColor = ContextCompat.getColor(item.context, R.color.darkneon_main)
+                val neonColor = ContextCompat.getColor(item.context, R.color.neon_main)
+                if (backgroundColor != null){
+                    if(backgroundColor.equals(neonColor)){
+                        item.setBackgroundColor(passedNeonColor)
+                    }
+                }
             }
             else{
                 return
@@ -250,12 +263,16 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
             if(item.id < 0){
                 break
             }
-//            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100)
             if (itemTime.isBefore(end)) {
-                var color = (item.background as ColorDrawable).color
-                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
-                item.setBackgroundColor(newColor)
+                val backgroundColor = (item.background as? ColorDrawable)?.color
+                val passedNeonColor = ContextCompat.getColor(item.context, R.color.darkneon_main)
+                val neonColor = ContextCompat.getColor(item.context, R.color.neon_main)
+                if (backgroundColor != null){
+                    if(backgroundColor.equals(neonColor)){
+                        item.setBackgroundColor(passedNeonColor)
+                    }
+                }
             }
             else{
                 return

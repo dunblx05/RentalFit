@@ -3,7 +3,9 @@ package com.ssafy.sports.model.dao;
 import com.ssafy.sports.model.dto.PlaceReservation;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PlaceReservationDao {
@@ -35,4 +37,11 @@ public interface PlaceReservationDao {
      * @return
      */
     List<PlaceReservation> selectResByPidInToday(int placeId);
+
+    /**
+     * 특정 날짜 기준 해당 장소 예약 조회
+     * @param placeId
+     * @return
+     */
+    List<PlaceReservation> selectResByPidInDate(Map<String, Object> params);
 }

@@ -10,7 +10,11 @@ import com.ssafy.sports.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PlaceReservationServiceImpl implements PlaceReservationService {
@@ -70,4 +74,20 @@ public class PlaceReservationServiceImpl implements PlaceReservationService {
 
         return reservations;
 	}
+
+	@Override
+	public List<PlaceReservation> selectResByPidInDate(int placeId, Date date) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("placeId", placeId);
+	    params.put("date", new SimpleDateFormat("yyyy-MM-dd").format(date)); // yyyy-MM-dd 형식으로 변환
+	    List<PlaceReservation> reservations =prDao.selectResByPidInDate(params);
+
+        for (PlaceReservation reservation : reservations) {
+            Place place = pDao.selectPlaceByPid(reservation.getPlaceId());
+            reservation.setPlace(place);
+        }
+
+        return reservations;
+	}
+
 }

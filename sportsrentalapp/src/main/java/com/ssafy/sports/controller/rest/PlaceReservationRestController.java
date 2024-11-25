@@ -5,8 +5,10 @@ import com.ssafy.sports.model.dto.PlaceReservation;
 import com.ssafy.sports.model.service.PlaceReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,5 +42,12 @@ public class PlaceReservationRestController {
     @Operation(summary="오늘 날짜 기준으로 해당 장소에 대한 모든 예약")
     public List<PlaceReservation> selectResByPidInToday(@PathVariable int placeId){
     	return prService.selectResByPidInToday(placeId);
+    }
+    
+    @GetMapping("/InDate/{placeId}")
+    @Operation(summary="특정 날짜 기준으로 해당 장소에 대한 모든 예약")
+    public List<PlaceReservation> selectResByPidInDate(@PathVariable int placeId,
+    	    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+    	return prService.selectResByPidInDate(placeId, date);
     }
 }

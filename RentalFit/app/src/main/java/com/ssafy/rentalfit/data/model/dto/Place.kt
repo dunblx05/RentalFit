@@ -8,4 +8,5 @@ data class Place(
     val placeType: String,
     val placeCost: Int,
     val placeImg: String,
+    val placeDetail: String
 )

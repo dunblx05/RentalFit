@@ -10,6 +10,7 @@ public class Place {
     private String placeType;
     private Integer placeCost;
     private String placeImg;
+    private String placeDetail;
 
     public Place(Integer placeId, String placeName, Integer placePeople, String placeLocation, String placeType, Integer placeCost, String placeImg) {
         this.placeId = placeId;
@@ -89,4 +90,12 @@ public class Place {
                 ", placeImg='" + placeImg + '\'' +
                 '}';
     }
+
+	public String getPlaceDetail() {
+		return placeDetail;
+	}
+
+	public void setPlaceDetail(String placeDetail) {
+		this.placeDetail = placeDetail;
+	}
 }

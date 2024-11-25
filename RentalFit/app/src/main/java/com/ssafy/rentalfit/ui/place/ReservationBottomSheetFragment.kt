@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.children
@@ -77,9 +78,17 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         binding.buttonConfirm.setOnClickListener {
 
             val startHour = binding.timePickerStart.hour
-            val startMinute = binding.timePickerStart.minute
+            val startMinute  = if(binding.timePickerStart.minute == 1) {
+                30
+            }else{
+                0
+            }
             val endHour = binding.timePickerEnd.hour
-            val endMinute = binding.timePickerEnd.minute
+            val endMinute = if(binding.timePickerEnd.minute == 1) {
+                30
+            }else{
+                0
+            }
 
             val startTime = LocalTime.of(startHour, startMinute)
             val endTime = LocalTime.of(endHour, endMinute)
@@ -100,7 +109,19 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            val content = "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+            val content =
+                if(startTime.minute == 0) {
+                    "${startTime.hour}시부터 "
+                }else {
+                    "${startTime.hour}시 ${startTime.minute}분부터 "
+                }+
+                if(endTime.minute == 0) {
+                    "${endTime.hour}시까지 예약을 진행합니다. \n"
+                }else {
+                    " ${endTime.hour}시 ${endTime.minute}분까지 예약을 진행합니다. \n"
+                }+
+                     "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+
 
             showCustomDialog(reservationActivity, content) {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {

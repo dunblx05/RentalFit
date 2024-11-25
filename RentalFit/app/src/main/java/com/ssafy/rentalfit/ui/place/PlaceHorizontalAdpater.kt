@@ -253,7 +253,9 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
 //            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100)
             if (itemTime.isBefore(end)) {
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+                var color = (item.background as ColorDrawable).color
+                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
+                item.setBackgroundColor(newColor)
             }
             else{
                 return

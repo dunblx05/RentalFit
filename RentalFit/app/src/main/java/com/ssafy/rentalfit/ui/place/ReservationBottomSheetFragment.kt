@@ -1,8 +1,6 @@
 package com.ssafy.rentalfit.ui.place
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -14,12 +12,8 @@ import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.graphics.ColorUtils
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
@@ -27,13 +21,11 @@ import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.data.model.dto.Place
-import com.ssafy.rentalfit.data.remote.HomeService
-import com.ssafy.rentalfit.data.remote.PlaceReservationService
+import com.ssafy.rentalfit.data.model.response.PlaceReservationResponse
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.homeService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
-import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
-import com.ssafy.rentalfit.util.Utils
+import com.ssafy.rentalfit.util.Utils.combineDateAndTime
 import com.ssafy.rentalfit.util.Utils.formatTime
 import com.ssafy.rentalfit.util.Utils.showCustomDialog
 import com.ssafy.rentalfit.util.Utils.showCustomToast
@@ -47,7 +39,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.math.min
 
 private const val TAG = "ReservationBottomSheetF_싸피"
 
@@ -118,12 +109,21 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
 
                 return@setOnClickListener
             }
-            else if(isAvailableReserve(startTime, endTime) == false){
-                showCustomToast(
-                    reservationActivity,
-                    "해당 시간대에 다른 예약이 들어있습니다.",
-                )
-                return@setOnClickListener
+            when(isAvailableReserve(startTime, endTime)){
+                1 ->{
+                    showCustomToast(
+                        reservationActivity,
+                        "해당 시간대에 다른 예약이 들어있습니다.",
+                    )
+                    return@setOnClickListener
+                }
+                2->{
+                    showCustomToast(
+                        reservationActivity,
+                        "이미 지나간 시간대입니다.",
+                    )
+                    return@setOnClickListener
+                }
             }
 
             val content =
@@ -137,15 +137,38 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 }else {
                     " ${endTime.hour}시 ${endTime.minute}분까지 예약을 진행합니다. \n"
                 }+
-                     "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+                        "예약 비용은 ${totalPrice} 원입니다. \n"+
+                        "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
 
 
             showCustomDialog(reservationActivity, content) {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
-                startActivity(intent)
-                reservationActivity.finish()
+
+                drawAllSchedule()
+                if(isAvailableReserve(startTime, endTime) != 0){
+                    showCustomToast(requireContext(), "다시 예약해주세요")
+                    return@showCustomDialog
+                }
+
+                var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
+                    -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
+                    placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
+                    resEndTime = combineDateAndTime(focusDate, endTime),
+                    resCost = totalPrice, place = place
+                )
+                CoroutineScope(Dispatchers.Main).launch {
+                    runCatching {
+                        placeReservationService.insertPlaceReservation(placeReservationResponse)
+                    }.onSuccess {
+                        showCustomToast(requireContext(), "예약이 완료되었습니다.")
+                        startActivity(intent)
+                        reservationActivity.finish()
+                    }.onFailure {
+                        Log.d(TAG, "Failure to make reservation")
+                    }
+                }
             }
         }
 
@@ -346,9 +369,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(time)) {
-                var color = (item.background as ColorDrawable).color
-                var newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
-                item.setBackgroundColor(newColor)
+                item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkneon_main))
             }
             else{
                 break
@@ -360,6 +381,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     var startMinute=0
     var endHour=17
     var endMinute=0
+    var totalPrice=0
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateTime(timePicker: TimePicker, hourOfDay: Int, minute: Int, isStart: Boolean) {
         var startTime = LocalTime.of(hourOfDay, minute)
@@ -407,7 +429,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
 
         var startInt = startHour * 2 + (startMinute)
         var endInt = endHour * 2 + (endMinute)
-        var totalPrice = (endInt - startInt) * place.placeCost
+        totalPrice = (endInt - startInt) * place.placeCost
         if(totalPrice >= 0){
             val decimalFormat = DecimalFormat("#,###")
             val totalPriceText = "₩ ${decimalFormat.format(totalPrice)}"
@@ -451,25 +473,33 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun isAvailableReserve(startTime: LocalTime, endTime: LocalTime) : Boolean{
+    private fun isAvailableReserve(startTime: LocalTime, endTime: LocalTime) : Int{
 
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(startTime) && !itemTime.isAfter(endTime) && itemTime != endTime) {
                 val backgroundColor = (item.background as? ColorDrawable)?.color
                 val neonMainColor = ContextCompat.getColor(item.context, R.color.neon_main)
+                val passedNeonColor = ContextCompat.getColor(item.context, R.color.darkneon_main)
+                val passedGreyColor = ContextCompat.getColor(item.context, R.color.darkgrey_main)
+                val greyColor = ContextCompat.getColor(item.context, R.color.grey_main)
                 if (backgroundColor != null) {
-                    if(!backgroundColor.equals(neonMainColor)){
-                        Log.d(TAG, "isAvailableReserve: $backgroundColor, $neonMainColor")
-                        return false
+                    if(backgroundColor.equals(greyColor)){
+                        return 1
+                    }
+                    else if(backgroundColor.equals(passedGreyColor)){
+                        return 2
+                    }
+                    else if(backgroundColor.equals(passedNeonColor)){
+                        return 2
                     }
                 }
             }
             else if(itemTime.isAfter(endTime)){
-                return true
+                return 0
             }
         }
 
-        return true
+        return 0
     }
 }

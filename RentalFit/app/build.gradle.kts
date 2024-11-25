@@ -37,6 +37,8 @@ android {
     viewBinding {
         enable = true
     }
+
+
 }
 
 dependencies {
@@ -89,4 +91,7 @@ dependencies {
     //   구글 map api(사용)
     implementation ("com.google.android.gms:play-services-maps:18.0.2")
     implementation ("com.google.android.gms:play-services-location:20.0.0")
+
+    implementation("com.github.AppIntro:AppIntro:6.3.1")
+
 }

@@ -17,6 +17,7 @@ import com.ssafy.rentalfit.ui.equip.EquipViewModel
 import com.ssafy.rentalfit.util.ShoppingRepository.totalCnt
 import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
 import com.ssafy.rentalfit.util.Utils
+import com.ssafy.rentalfit.util.Utils.showCustomToast
 
 
 class CartBottomSheetFragment : BottomSheetDialogFragment() {
@@ -71,6 +72,7 @@ class CartBottomSheetFragment : BottomSheetDialogFragment() {
                 val content = "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
 
                 Utils.showCustomDialog(reservationActivity, content) {
+                    showCustomToast(requireContext(), "예약이 완료되었습니다.")
 
                     // 주문 서버로 전송.
                     equipViewModel.makeEquipOrder()

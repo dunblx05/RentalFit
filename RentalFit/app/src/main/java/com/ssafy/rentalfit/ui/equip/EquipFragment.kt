@@ -14,7 +14,6 @@ import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.FragmentEquipBinding
-import com.ssafy.rentalfit.ui.place.Place
 
 class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::bind, R.layout.fragment_equip) {
 

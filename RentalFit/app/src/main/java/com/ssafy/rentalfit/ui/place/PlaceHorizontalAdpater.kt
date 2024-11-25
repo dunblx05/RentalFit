@@ -2,7 +2,6 @@ package com.ssafy.rentalfit.ui.place
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +13,52 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
+import com.ssafy.rentalfit.data.model.dto.Equip
+import com.ssafy.rentalfit.data.model.dto.Place
+import com.ssafy.rentalfit.databinding.ListEquipItemHorizontalBinding
+import com.ssafy.rentalfit.databinding.ListPlaceItemHorizontalBinding
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 private const val TAG = "HorizontalAdpater_싸피"
 
-class HorizontalAdapter(private val items: List<Place>) :
-    RecyclerView.Adapter<HorizontalAdapter.HorizontalViewHolder>() {
+class PlaceHorizontalAdapter(private val items: List<Place>) :
+    RecyclerView.Adapter<PlaceHorizontalAdapter.HorizontalViewHolder>() {
 
-    var onItemClickListener: ((Place) -> Unit)? = null
+    lateinit var placeHorizontalListener: ItemClickListener
 
-    class HorizontalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface ItemClickListener {
+        fun onClick(placeId: Int)
+    }
+
+    inner class HorizontalViewHolder(private val binding: ListPlaceItemHorizontalBinding) : RecyclerView.ViewHolder(binding.root) {
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bindInfo(place: Place) {
+
+            binding.apply {
+                title.text = place.placeName
+                image.setImageResource(itemView.context.resources.getIdentifier(place.placeImg, "drawable", itemView.context.packageName))
+
+                Glide.with(itemImage.context)
+                    .load("${SERVER_URL}images/${place.placeImg}")
+                    .into(itemImage)
+
+
+                initSchedule(this@HorizontalViewHolder)
+
+                drawSchedule(this@HorizontalViewHolder, "10:30", "11:30")
+                drawSchedule(this@HorizontalViewHolder, "15:30", "17:00")
+
+                eraseBeforeCurrentTime(this@HorizontalViewHolder)
+                root.setOnClickListener {
+                    placeHorizontalListener.onClick(place.placeId)
+                }
+            }
+        }
+
         val image: ImageView = itemView.findViewById(R.id.itemImage)
         val title: TextView = itemView.findViewById(R.id.itemTitle)
         val firstRowTimeLabels: LinearLayout = itemView.findViewById(R.id.firstRowTimeLabels)
@@ -35,26 +68,22 @@ class HorizontalAdapter(private val items: List<Place>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_place_item_horizontal, parent, false)
-        return HorizontalViewHolder(view)
+        val binding = ListPlaceItemHorizontalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HorizontalViewHolder(binding)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
-        val item = items[position]
-        holder.title.text = item.name
-        holder.image.setImageResource(holder.itemView.context.resources.getIdentifier(item.img, "drawable", holder.itemView.context.packageName))
+        holder.bindInfo(items[position])
+//        holder.title.text = item.placeName
+//        holder.image.setImageResource(holder.itemView.context.resources.getIdentifier(item.placeImg, "drawable", holder.itemView.context.packageName))
 
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(items[position])
-        }
-
-        initSchedule(holder)
-
-        drawSchedule(holder, "10:30", "11:30")
-        drawSchedule(holder, "15:30", "17:00")
-
-        eraseBeforeCurrentTime(holder)
+//        initSchedule(holder)
+//
+//        drawSchedule(holder, "10:30", "11:30")
+//        drawSchedule(holder, "15:30", "17:00")
+//
+//        eraseBeforeCurrentTime(holder)
     }
 
     override fun getItemCount(): Int = items.size

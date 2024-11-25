@@ -16,10 +16,6 @@ class OnBoardingActivity : AppIntro2() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.two_hyun_story)
-        mediaPlayer?.isLooping = true // 음악 반복 재생
-        mediaPlayer?.start() // 음악 재생 시작
-
         val user = ApplicationClass.sharedPreferencesUtil.getUser()
 
         if (user.userId != "") {
@@ -67,11 +63,6 @@ class OnBoardingActivity : AppIntro2() {
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
 
-        // 온보딩 완료 시 음악 중지
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
-
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
@@ -79,11 +70,6 @@ class OnBoardingActivity : AppIntro2() {
 
     override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
-
-        // 온보딩 완료 시 음악 중지
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
-        mediaPlayer = null
 
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)

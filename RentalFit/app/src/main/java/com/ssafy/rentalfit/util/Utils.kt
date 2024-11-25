@@ -15,7 +15,10 @@ import androidx.appcompat.widget.AppCompatButton
 import com.ssafy.rentalfit.R
 import java.text.DecimalFormat
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 object Utils {
 
@@ -105,4 +108,13 @@ object Utils {
         val localDateTime = LocalDateTime.parse(input, formatter)
         return localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun combineDateAndTime(date: Date, time: LocalTime): String {
+        val localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val localDateTime = LocalDateTime.of(localDate, time)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+        return localDateTime.format(formatter)
+    }
+
 }

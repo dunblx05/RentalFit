@@ -2,6 +2,7 @@ package com.ssafy.rentalfit.ui.place
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -26,7 +27,9 @@ import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass
+import com.ssafy.rentalfit.data.local.SharedPreferencesUtil
 import com.ssafy.rentalfit.data.model.dto.Place
+import com.ssafy.rentalfit.data.model.response.PlaceReservationResponse
 import com.ssafy.rentalfit.data.remote.HomeService
 import com.ssafy.rentalfit.data.remote.PlaceReservationService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.homeService
@@ -34,6 +37,7 @@ import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationSe
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
 import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
 import com.ssafy.rentalfit.util.Utils
+import com.ssafy.rentalfit.util.Utils.combineDateAndTime
 import com.ssafy.rentalfit.util.Utils.formatTime
 import com.ssafy.rentalfit.util.Utils.showCustomDialog
 import com.ssafy.rentalfit.util.Utils.showCustomToast
@@ -137,15 +141,30 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 }else {
                     " ${endTime.hour}시 ${endTime.minute}분까지 예약을 진행합니다. \n"
                 }+
-                     "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+                        "예약 비용은 ${totalPrice} 원입니다. \n"+
+                        "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
 
 
             showCustomDialog(reservationActivity, content) {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
-                startActivity(intent)
-                reservationActivity.finish()
+                var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
+                    -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
+                    placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
+                    resEndTime = combineDateAndTime(focusDate, endTime),
+                    resCost = totalPrice, place = place
+                )
+                CoroutineScope(Dispatchers.Main).launch {
+                    runCatching {
+                        placeReservationService.insertPlaceReservation(placeReservationResponse)
+                    }.onSuccess {
+                        startActivity(intent)
+                        reservationActivity.finish()
+                    }.onFailure {
+                        Log.d(TAG, "Failure to make reservation")
+                    }
+                }
             }
         }
 
@@ -360,6 +379,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     var startMinute=0
     var endHour=17
     var endMinute=0
+    var totalPrice=0
     @RequiresApi(Build.VERSION_CODES.O)
     private fun validateTime(timePicker: TimePicker, hourOfDay: Int, minute: Int, isStart: Boolean) {
         var startTime = LocalTime.of(hourOfDay, minute)
@@ -407,7 +427,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
 
         var startInt = startHour * 2 + (startMinute)
         var endInt = endHour * 2 + (endMinute)
-        var totalPrice = (endInt - startInt) * place.placeCost
+        totalPrice = (endInt - startInt) * place.placeCost
         if(totalPrice >= 0){
             val decimalFormat = DecimalFormat("#,###")
             val totalPriceText = "₩ ${decimalFormat.format(totalPrice)}"

@@ -1,9 +1,6 @@
 package com.ssafy.rentalfit.ui.place
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -15,29 +12,19 @@ import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.alpha
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass
-import com.ssafy.rentalfit.data.local.SharedPreferencesUtil
 import com.ssafy.rentalfit.data.model.dto.Place
 import com.ssafy.rentalfit.data.model.response.PlaceReservationResponse
-import com.ssafy.rentalfit.data.remote.HomeService
-import com.ssafy.rentalfit.data.remote.PlaceReservationService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.homeService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
-import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
-import com.ssafy.rentalfit.util.Utils
 import com.ssafy.rentalfit.util.Utils.combineDateAndTime
 import com.ssafy.rentalfit.util.Utils.formatTime
 import com.ssafy.rentalfit.util.Utils.showCustomDialog
@@ -52,7 +39,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.math.min
 
 private const val TAG = "ReservationBottomSheetF_싸피"
 
@@ -159,6 +145,13 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
+
+                drawAllSchedule()
+                if(isAvailableReserve(startTime, endTime) != 0){
+                    showCustomToast(requireContext(), "다시 예약해주세요")
+                    return@showCustomDialog
+                }
+
                 var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
                     -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
                     placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
@@ -169,6 +162,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                     runCatching {
                         placeReservationService.insertPlaceReservation(placeReservationResponse)
                     }.onSuccess {
+                        showCustomToast(requireContext(), "예약이 완료되었습니다.")
                         startActivity(intent)
                         reservationActivity.finish()
                     }.onFailure {

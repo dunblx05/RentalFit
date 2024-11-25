@@ -104,7 +104,9 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
 
             // 예약 바텀시트 띄우기.
             buttonCartOpenBottomSheet.setOnClickListener {
-
+                if(cartAdapter.shoppingList.isEmpty()){
+                    return@setOnClickListener
+                }
                 val bottomSheet = CartBottomSheetFragment()
                 bottomSheet.show(parentFragmentManager, "CartBottomSheetFragment")
             }

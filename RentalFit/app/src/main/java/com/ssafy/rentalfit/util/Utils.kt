@@ -44,7 +44,6 @@ object Utils {
         // 확인 버튼
         buttonConfirm.setOnClickListener {
             dialog.dismiss()
-            showCustomToast(context, "예약이 완료되었습니다.")
             onConfirm()
         }
 

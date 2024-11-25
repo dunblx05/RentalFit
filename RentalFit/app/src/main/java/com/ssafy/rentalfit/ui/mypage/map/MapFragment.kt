@@ -10,6 +10,7 @@ import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.LOCATION_SERVICE
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.MyPageActivity
+import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentMapBinding
 import com.ssafy.rentalfit.util.PermissionChecker
@@ -61,6 +63,14 @@ class MapFragment :
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(readyCallback)
 
+        initEvent()
+
+    }
+
+    private fun initEvent() {
+        binding.mapBackBtn.setOnClickListener {
+            myPageActivity.finish()
+        }
     }
 
     private val readyCallback: OnMapReadyCallback by lazy {

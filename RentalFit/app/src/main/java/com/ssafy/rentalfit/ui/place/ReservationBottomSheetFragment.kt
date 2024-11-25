@@ -126,7 +126,10 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 }
             }
 
+
+
             val content =
+                (SimpleDateFormat("yyyy년 MM월 dd일 ${place.placeLocation} ${place.placeName}")).format(focusDate)+"\n"+
                 if(startTime.minute == 0) {
                     "${startTime.hour}시부터 "
                 }else {
@@ -146,28 +149,36 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
 
-                drawAllSchedule()
-                if(isAvailableReserve(startTime, endTime) != 0){
-                    showCustomToast(requireContext(), "다시 예약해주세요")
-                    return@showCustomDialog
-                }
 
-                var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
-                    -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
-                    placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
-                    resEndTime = combineDateAndTime(focusDate, endTime),
-                    resCost = totalPrice, place = place
-                )
                 CoroutineScope(Dispatchers.Main).launch {
-                    runCatching {
-                        placeReservationService.insertPlaceReservation(placeReservationResponse)
-                    }.onSuccess {
-                        showCustomToast(requireContext(), "예약이 완료되었습니다.")
-                        startActivity(intent)
-                        reservationActivity.finish()
-                    }.onFailure {
-                        Log.d(TAG, "Failure to make reservation")
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val formattedDate = dateFormat.format(focusDate)
+
+                    val reservations = placeReservationService.selectResByPidInDate(placeId,
+                        formattedDate
+                    )
+                    reservations.forEach { reservation ->
+//                    Log.d(TAG, "bindInfo: ${reservation.resStartTime}, ${reservation.resEndTime}")
+                        drawSchedule(
+                            formatTime(reservation.resStartTime),
+                            formatTime(reservation.resEndTime)
+                        )
                     }
+                    if(isAvailableReserve(startTime, endTime) != 0){
+                        showCustomToast(requireContext(), "다시 예약해주세요")
+                        return@launch
+                    }
+                    Log.d(TAG, "Avaiable Pass")
+                    var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
+                        -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
+                        placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
+                        resEndTime = combineDateAndTime(focusDate, endTime),
+                        resCost = totalPrice, place = place
+                    )
+                    placeReservationService.insertPlaceReservation(placeReservationResponse)
+                    showCustomToast(requireContext(), "예약이 완료되었습니다.")
+                    startActivity(intent)
+                    reservationActivity.finish()
                 }
             }
         }
@@ -289,7 +300,7 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                     formattedDate
                 )
                 reservations.forEach { reservation ->
-                    Log.d(TAG, "bindInfo: ${reservation.resStartTime}, ${reservation.resEndTime}")
+//                    Log.d(TAG, "bindInfo: ${reservation.resStartTime}, ${reservation.resEndTime}")
                     drawSchedule(
                         formatTime(reservation.resStartTime),
                         formatTime(reservation.resEndTime)

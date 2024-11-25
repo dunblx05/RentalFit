@@ -21,7 +21,7 @@ object Utils {
 
     // 다이얼로그 띄우기.
     @SuppressLint("MissingInflatedId")
-    fun showCustomDialog(context: Context, content: String, onConfirm: () -> Unit) {
+    fun showCustomDialog(context: Context, content: String, contentToast: String = "예약이 완료되었습니다.", onConfirm: () -> Unit): AlertDialog {
 
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog, null)
 
@@ -41,7 +41,7 @@ object Utils {
         // 확인 버튼
         buttonConfirm.setOnClickListener {
             dialog.dismiss()
-            showCustomToast(context, "예약이 완료되었습니다.")
+            showCustomToast(context, contentToast)
             onConfirm()
         }
 
@@ -51,6 +51,8 @@ object Utils {
         }
 
         dialog.show()
+
+        return dialog
     }
 
     // 토스트 띄우기.

@@ -71,7 +71,11 @@ class PlaceDetailFragment : BaseFragment<FragmentPlaceDetailBinding>(
 
             // 바텀시트 띄우기
             buttonPlaceDetailReservation.setOnClickListener {
-                val bottomSheet = ReservationBottomSheetFragment()
+                val bottomSheet = ReservationBottomSheetFragment().apply {
+                    arguments = Bundle().apply {
+                        putInt("placeId", placeId)
+                    }
+                }
                 bottomSheet.show(parentFragmentManager, "ReservationBottomSheet")
             }
         }

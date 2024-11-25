@@ -23,10 +23,21 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
+import com.ssafy.rentalfit.base.ApplicationClass
+import com.ssafy.rentalfit.data.remote.PlaceReservationService
+import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
 import com.ssafy.rentalfit.util.Utils
+import com.ssafy.rentalfit.util.Utils.formatTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 private const val TAG = "ReservationBottomSheetF_싸피"
 
@@ -35,6 +46,8 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var reservationActivity: ReservationActivity
     private var _binding: FragmentReservationBottomSheetBinding? = null
     private val binding get() = _binding!!
+    private var placeId: Int = -1
+    lateinit var focusDate :Date
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,25 +55,22 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     ): View {
         _binding = FragmentReservationBottomSheetBinding.inflate(inflater, container, false)
         reservationActivity = context as ReservationActivity
+        arguments?.let {
+            placeId = it.getInt("placeId", -1)
+        }
         return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        focusDate = Date()
+        initSheet()
+        settingEvent()
+    }
 
-        initSchedule()
-
-        setupTimePickers()
-        binding.timePickerStart.minute=0
-        binding.timePickerEnd.minute=0
-
-        drawSchedule("09:30","12:30")
-        drawSchedule("17:00","18:00")
-
-        eraseBeforeCurrentTime(LocalTime.now())
-
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun settingEvent(){
         // 버튼 클릭 시 동작 예시
         binding.buttonConfirm.setOnClickListener {
 
@@ -90,6 +100,14 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
+        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth) // month는 0부터 시작하므로 그대로 사용
+
+            focusDate = calendar.time
+            initSheet()
+        }
+
         binding.timePickerStart.setOnTimeChangedListener { view, hourOfDay, minute ->
             validateTime(view, hourOfDay, minute,true)
         }
@@ -103,11 +121,20 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initSheet(){
+        initSchedule()
+        setupTimePickers()
+        drawAllSchedule()
+        eraseBeforeCurrentTime()
+    }
 
     private fun initSchedule() {
         // 먼저 기존 뷰들을 비웁니다.
         binding.firstRowTimeLabels.removeAllViews()
         binding.firstRowBlocks.removeAllViews()
+        binding.timePickerStart.minute=0
+        binding.timePickerEnd.minute=0
 
         val distanceBetTime = 38
         val distanceBetBlock = 16
@@ -170,33 +197,103 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    private fun drawAllSchedule(){
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val formattedDate = dateFormat.format(focusDate)
+
+                Log.d(TAG, "drawAllSchedule: $formattedDate")
+                val reservations = placeReservationService.selectResByPidInDate(placeId,
+                    formattedDate
+                )
+                reservations.forEach { reservation ->
+                    Log.d(TAG, "bindInfo: ${reservation.resStartTime}, ${reservation.resEndTime}")
+                    drawSchedule(
+                        formatTime(reservation.resStartTime),
+                        formatTime(reservation.resEndTime)
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // 예외 처리
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun drawSchedule(startTime: String, endTime: String) {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         val start = LocalTime.parse(startTime, formatter)
         val end = LocalTime.parse(endTime, formatter)
 
         // 첫 번째 줄의 블록 색상 변경
+        val calendarToday = Calendar.getInstance().apply {
+            time = Date() // 오늘 날짜
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val calendarInputDate = Calendar.getInstance().apply {
+            time = focusDate // 입력받은 날짜
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val time = when {
+            calendarInputDate.after(calendarToday) -> LocalTime.of(0, 0)
+            calendarInputDate.before(calendarToday) -> LocalTime.of(23, 59)
+            else -> LocalTime.now()
+        }
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
-                item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_main))
+                if (calendarInputDate.before(calendarToday) && itemTime.isBefore(time)){
+                    item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkgrey_main))
+                }
+                else{
+                    item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_main))
+                }
             }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun eraseBeforeCurrentTime(currentTime: LocalTime) {
-        Log.d(TAG, "eraseBeforeCurrentTime: $currentTime")
-        // 첫 번째 줄의 블록 초기화 (현재 시간 이전)
+    private fun eraseBeforeCurrentTime() {
+        val calendarToday = Calendar.getInstance().apply {
+            time = Date() // 오늘 날짜
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val calendarInputDate = Calendar.getInstance().apply {
+            time = focusDate // 입력받은 날짜
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val time = when {
+            calendarInputDate.after(calendarToday) -> LocalTime.of(0, 0)
+            calendarInputDate.before(calendarToday) -> LocalTime.of(23, 59)
+            else -> LocalTime.now()
+        }
+
+
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
-            if (itemTime.isBefore(currentTime)) {
+            if (itemTime.isBefore(time)) {
                 var color = (item.background as ColorDrawable).color
-                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
+                var newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
                 item.setBackgroundColor(newColor)
             }
             else{
-                return
+                break
             }
         }
     }
@@ -276,6 +373,5 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
             e.printStackTrace()
         }
     }
-
 
 }

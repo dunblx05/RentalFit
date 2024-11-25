@@ -2,6 +2,7 @@ package com.ssafy.rentalfit.ui.place
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,18 @@ import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.data.model.dto.Place
+import com.ssafy.rentalfit.data.remote.PlaceReservationService
+import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.ListEquipItemHorizontalBinding
 import com.ssafy.rentalfit.databinding.ListPlaceItemHorizontalBinding
+import com.ssafy.rentalfit.util.Utils.formatTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -49,8 +57,24 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
 
                 initSchedule(this@HorizontalViewHolder)
 
-                drawSchedule(this@HorizontalViewHolder, "10:30", "11:30")
-                drawSchedule(this@HorizontalViewHolder, "15:30", "17:00")
+                // 코루틴 스코프를 사용해 비동기로 데이터 가져오기
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val reservations = placeReservationService.selectResByPidInToday(place.placeId)
+                        reservations.forEach { reservation ->
+                            Log.d(TAG, "bindInfo: ${reservation.resStartTime}, ${reservation.resEndTime}")
+                            drawSchedule(
+                                this@HorizontalViewHolder,
+                                formatTime(reservation.resStartTime),
+                                formatTime(reservation.resEndTime)
+                            )
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace() // 예외 처리
+                    }
+                }
+
+                // 현재 시간 이전의 스케줄 제거
 
                 eraseBeforeCurrentTime(this@HorizontalViewHolder)
                 root.setOnClickListener {
@@ -126,7 +150,7 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
         }
 
         // 3시 ~ 6시 시간 및 블록 추가
-        for (hour in 15..18) {
+        for (hour in 15..17) {
             // 시간 라벨 추가
             val timeLabel = TextView(holder.itemView.context).apply {
                 text = hour.toString()

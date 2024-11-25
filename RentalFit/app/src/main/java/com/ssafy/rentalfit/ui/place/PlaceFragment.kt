@@ -75,7 +75,7 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
                 override fun onClick(placeId: Int) {
                     val intent = Intent(mainActivity, ReservationActivity::class.java).apply {
                         putExtra("name", "PlaceDetail")  // 예시로 장소 이름 전달
-                        putExtra("itemId", placeId)
+                        putExtra("placeId", placeId)
                     }
                     startActivity(intent)
                 }

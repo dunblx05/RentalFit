@@ -14,7 +14,7 @@ class HomePlaceAdapter(var placeList: List<Place>) :
     lateinit var homePlaceListener: ItemClickListener
 
     interface ItemClickListener {
-        fun onClick()
+        fun onClick(placeId: Int)
     }
 
     inner class HomePlaceViewHolder(private val binding: ListHomePlaceItemBinding) :
@@ -31,7 +31,7 @@ class HomePlaceAdapter(var placeList: List<Place>) :
 
                 // 아이템 하나를 클릭한다면.
                 root.setOnClickListener {
-                    homePlaceListener.onClick()
+                    homePlaceListener.onClick(place.placeId)
                 }
             }
         }

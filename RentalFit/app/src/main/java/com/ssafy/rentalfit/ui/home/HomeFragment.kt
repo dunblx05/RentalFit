@@ -129,10 +129,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
             // 장소 아이템 누른다면.
             homePlaceAdapter.homePlaceListener = object : HomePlaceAdapter.ItemClickListener {
-                override fun onClick() {
+                override fun onClick(placeId: Int) {
 
                     val intent = Intent(mainActivity, ReservationActivity::class.java)
                     intent.putExtra("name", "PlaceDetail")
+                    intent.putExtra("placeId", placeId)
                     startActivity(intent)
                 }
             }

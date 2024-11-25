@@ -30,6 +30,6 @@ interface HomeService {
     suspend fun selectPlaceByType(@Path("type") placeType: String): List<Place>
 
     // 장소 id에 따른 단건 조회
-    @GET("rest/equip/eid/{placeId}")
+    @GET("rest/place/pid/{placeId}")
     suspend fun selectPlaceById(@Path("placeId") placeId: Int): Place
 }

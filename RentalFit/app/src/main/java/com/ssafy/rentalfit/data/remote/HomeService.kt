@@ -20,7 +20,16 @@ interface HomeService {
     @GET("rest/equip/eid/{equipId}")
     suspend fun selectEquipById(@Path("equipId") equipId: Int): Equip
 
+    // 장소 관련
+    // 장소 전체 조회
     @GET("rest/place")
     suspend fun selectPlace() : List<Place>
-    
+
+    // 장소 타입별 조회
+    @GET("rest/place/type/{placeType}")
+    suspend fun selectPlaceByType(@Path("type") placeType: String): List<Place>
+
+    // 장소 id에 따른 단건 조회
+    @GET("rest/equip/eid/{placeId}")
+    suspend fun selectPlaceById(@Path("placeId") placeId: Int): Place
 }

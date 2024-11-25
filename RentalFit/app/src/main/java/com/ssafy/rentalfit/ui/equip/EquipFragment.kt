@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
@@ -19,7 +20,7 @@ import com.ssafy.rentalfit.ui.place.Place
 class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::bind, R.layout.fragment_equip) {
 
     private lateinit var mainActivity: MainActivity
-    private val equipViewModel: EquipViewModel by viewModels()
+    private val equipViewModel: EquipViewModel by activityViewModels()
 
     private lateinit var equipVerticalAdapter: EquipVerticalAdapter
 

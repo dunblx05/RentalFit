@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
-import com.ssafy.rentalfit.data.model.response.EquipOrderWithInfo
+import com.ssafy.rentalfit.data.model.response.EquipOrderWithInfoResponse
 import com.ssafy.rentalfit.databinding.ListEquipHistoryDetailItemBinding
 import com.ssafy.rentalfit.util.Utils.makeComma
 
-class EquipHistoryDetailAdapter(var equipDetailList: List<EquipOrderWithInfo>) :
+class EquipHistoryDetailAdapter(var equipDetailList: List<EquipOrderWithInfoResponse>) :
     RecyclerView.Adapter<EquipHistoryDetailAdapter.EquipHistoryDetailViewHolder>() {
     inner class EquipHistoryDetailViewHolder(private val binding: ListEquipHistoryDetailItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(equipOrderWithInfo: EquipOrderWithInfo) {
+        fun bind(equipOrderWithInfo: EquipOrderWithInfoResponse) {
             binding.apply {
 
                 // ip주소 변경해줘야함

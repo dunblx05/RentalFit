@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -14,6 +15,7 @@ import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.data.model.dto.Equip
+import com.ssafy.rentalfit.data.model.dto.ShoppingCart
 import com.ssafy.rentalfit.databinding.FragmentEquipDetailBinding
 import com.ssafy.rentalfit.util.Utils
 
@@ -102,7 +104,18 @@ class EquipDetailFragment : BaseFragment<FragmentEquipDetailBinding>(FragmentEqu
             // 장바구니로 가기.
             buttonEquipDetailOpenCart.setOnClickListener {
 
-                reservationActivity.changeFragmentReservation("Cart", -1)
+                equipViewModel.equip.value?.let { equip ->
+                    ShoppingCart(
+                        cartId = equip.equipId,
+                        cartImg = equip.equipImg,
+                        cartName = equip.equipName,
+                        cartCnt = equipViewModel.quantity.value!!,
+                        cartPrice = equip.equipPrice
+                    )
+                }?.apply {
+                    equipViewModel.addShoppingList(this)
+                    reservationActivity.changeFragmentReservation("Cart")
+                }
             }
 
             // 수량 -

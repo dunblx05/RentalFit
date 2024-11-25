@@ -4,5 +4,5 @@ data class EquipOrderResponse(
     val equipOrderId: Int,
     val userId: String,
     val equipOrderTime: String,
-    val details: List<EquipOrderDetail>
+    val details: List<EquipOrderDetailResponse>
 )

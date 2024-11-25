@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
@@ -11,12 +12,14 @@ import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentHomeBinding
+import com.ssafy.rentalfit.ui.equip.EquipViewModel
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home) {
 
     private lateinit var mainActivity: MainActivity
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val equipViewModel: EquipViewModel by viewModels()
 
     private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
     private lateinit var homePlaceAdapter: HomePlaceAdapter

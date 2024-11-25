@@ -3,17 +3,22 @@ package com.ssafy.rentalfit.ui.cart
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
+import com.ssafy.rentalfit.data.model.dto.ShoppingCart
 import com.ssafy.rentalfit.databinding.FragmentCartBinding
+import com.ssafy.rentalfit.ui.equip.EquipViewModel
 import com.ssafy.rentalfit.ui.place.ReservationBottomSheetFragment
 import com.ssafy.rentalfit.util.Utils
 
 class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind, R.layout.fragment_cart) {
 
     private lateinit var reservationActivity: ReservationActivity
+    private val equipViewModel: EquipViewModel by viewModels()
 
     private lateinit var cartAdapter: CartAdapter
 
@@ -25,19 +30,42 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObserver()
         settingRecyclerView()
         settingEvent()
+    }
+
+    // ViewModel Observer 등록
+    private fun registerObserver() {
+
+        binding.apply {
+
+            equipViewModel.shoppingList.observe(viewLifecycleOwner) {
+                refreshList()
+                equipViewModel.calculateCntPrice()
+            }
+        }
     }
 
     // 리사이클러뷰 설정
     private fun settingRecyclerView() {
 
-        cartAdapter = CartAdapter()
+        cartAdapter = CartAdapter(mutableListOf())
+
+        refreshList()
 
         binding.apply {
 
             recyclerViewCart.layoutManager = LinearLayoutManager(reservationActivity, LinearLayoutManager.VERTICAL, false)
             recyclerViewCart.adapter = cartAdapter
+        }
+    }
+
+    private fun refreshList() {
+
+        binding.apply {
+            cartAdapter.shoppingList = equipViewModel.shoppingList.value ?: mutableListOf()
+            cartAdapter.notifyDataSetChanged()
         }
     }
 
@@ -52,23 +80,25 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
             }
 
             // 삭제 하기.
-            cartAdapter.cartDeleteListener = object : CartAdapter.ItemClickListener {
-                override fun onClick() {
-
+            cartAdapter.cartDeleteListener = object : CartAdapter.ItemDeleteListener {
+                override fun onClick(position: Int, shoppingCart: ShoppingCart) {
+                    cartAdapter.shoppingList.removeAt(position)
+                    equipViewModel.removeItemShoppingList(shoppingCart)
+                    refreshList()
                 }
             }
 
             // 수량 + 버튼
-            cartAdapter.cartPlusListener = object : CartAdapter.ItemClickListener {
-                override fun onClick() {
-
+            cartAdapter.cartPlusListener = object : CartAdapter.ItemPlusListener {
+                override fun onPlus(cartName: String) {
+                    equipViewModel.increaseQuantity(cartName)
                 }
             }
 
             // 수량 - 버튼
-            cartAdapter.cartMinusListener = object : CartAdapter.ItemClickListener {
-                override fun onClick() {
-
+            cartAdapter.cartMinusListener = object : CartAdapter.ItemMinusListener {
+                override fun onMinus(cartName: String) {
+                    equipViewModel.decreaseQuantity(cartName)
                 }
             }
 
@@ -77,10 +107,6 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
 
                 val bottomSheet = CartBottomSheetFragment()
                 bottomSheet.show(parentFragmentManager, "CartBottomSheetFragment")
-                // 다이얼로그 임시로 띄워보기
-//                Utils.showCustomDialog(reservationActivity) {
-//                    reservationActivity.finish()
-//                }
             }
         }
     }

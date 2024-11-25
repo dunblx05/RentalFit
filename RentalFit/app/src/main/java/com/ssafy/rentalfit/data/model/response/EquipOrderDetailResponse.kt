@@ -1,6 +1,6 @@
 package com.ssafy.rentalfit.data.model.response
 
-data class EquipOrderDetail(
+data class EquipOrderDetailResponse(
     val detailId: Int,
     val equipOrderId: Int,
     val equipId: Int,

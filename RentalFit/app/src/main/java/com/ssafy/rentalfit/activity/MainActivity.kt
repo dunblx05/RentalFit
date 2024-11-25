@@ -161,20 +161,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     val payload = record.payload
                     val text = String(payload, Charset.forName("UTF-8"))
 
-                    when(text) {
-
-                        "시작" -> {
-                            homeViewModel.setNfcTagValue("시작")
-                        }
-
-                        "끝" -> {
-                            homeViewModel.setNfcTagValue("끝")
-                        }
-
-                        else -> {
-                            homeViewModel.setNfcTagValue("유효하지 않은 NFC 태그")
-                        }
-                    }
+//                    when(text) {
+//
+//                        "시작" -> {
+//                            homeViewModel.setNfcTagValue("시작")
+//                        }
+//
+//                        "끝" -> {
+//                            homeViewModel.setNfcTagValue("끝")
+//                        }
+//
+//                        else -> {
+//                            homeViewModel.setNfcTagValue("유효하지 않은 NFC 태그")
+//                        }
+//                    }
                 }
             }
         }

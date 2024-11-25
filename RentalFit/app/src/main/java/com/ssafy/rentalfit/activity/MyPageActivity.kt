@@ -30,7 +30,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
                 finish() // 프래그먼트가 없으면 액티비티 종료
             }
         }
-        changeFragmentMyPage(name, resId, equipOrderId)
+        changeFragmentMyPage(name)
     }
 
 

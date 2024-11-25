@@ -170,17 +170,18 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                         showCustomToast(requireContext(), "예약이 찼습니다. 다시 예약해주세요")
                         return@launch
                     }
-                    Log.d(TAG, "Avaiable Pass")
-                    var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
-                        -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
-                        placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
-                        resEndTime = combineDateAndTime(focusDate, endTime),
-                        resCost = totalPrice, place = place
-                    )
-                    placeReservationService.insertPlaceReservation(placeReservationResponse)
-                    showCustomToast(requireContext(), "예약이 완료되었습니다.")
-                    startActivity(intent)
-                    reservationActivity.finish()
+                    else{
+                        var placeReservationResponse: PlaceReservationResponse = PlaceReservationResponse(
+                            -1, userId = ApplicationClass.sharedPreferencesUtil.getUser().userId,
+                            placeId = placeId, resStartTime =  combineDateAndTime(focusDate, startTime),
+                            resEndTime = combineDateAndTime(focusDate, endTime),
+                            resCost = totalPrice, place = place
+                        )
+                        placeReservationService.insertPlaceReservation(placeReservationResponse)
+                        showCustomToast(requireContext(), "예약이 완료되었습니다.")
+                        startActivity(intent)
+                        reservationActivity.finish()
+                    }
                 }
             }
         }

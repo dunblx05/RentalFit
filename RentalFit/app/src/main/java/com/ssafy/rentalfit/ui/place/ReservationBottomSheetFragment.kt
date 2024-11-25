@@ -91,7 +91,9 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            Utils.showCustomDialog(reservationActivity) {
+            val content = "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+
+            Utils.showCustomDialog(reservationActivity, content) {
                 val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }

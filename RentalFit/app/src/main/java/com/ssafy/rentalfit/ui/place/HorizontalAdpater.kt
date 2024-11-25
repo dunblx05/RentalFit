@@ -1,5 +1,6 @@
 package com.ssafy.rentalfit.ui.place
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.rentalfit.R
@@ -48,6 +50,11 @@ class HorizontalAdapter(private val items: List<Place>) :
         }
 
         initSchedule(holder)
+
+        drawSchedule(holder, "10:30", "11:30")
+        drawSchedule(holder, "15:30", "17:00")
+
+        eraseBeforeCurrentTime(holder)
     }
 
     override fun getItemCount(): Int = items.size
@@ -132,11 +139,6 @@ class HorizontalAdapter(private val items: List<Place>) :
                 holder.secondRowBlocks.addView(invisibleBlock)
             }
         }
-
-        drawSchedule(holder, "10:30", "11:30")
-        drawSchedule(holder, "15:30", "17:00")
-
-        eraseBeforeCurrentTime(holder)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -182,7 +184,9 @@ class HorizontalAdapter(private val items: List<Place>) :
 //            Log.d(TAG, "eraseBeforeCurrentTime: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(end)) {
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+                var color = (item.background as ColorDrawable).color
+                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
+                item.setBackgroundColor(newColor)
             }
             else{
                 return

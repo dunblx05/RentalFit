@@ -3,6 +3,7 @@ package com.ssafy.rentalfit.ui.place
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.children
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
@@ -189,7 +191,9 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
         for (item in binding.firstRowBlocks.children) {
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (itemTime.isBefore(currentTime)) {
-                item.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.darkgrey_main))
+                var color = (item.background as ColorDrawable).color
+                val newColor = ColorUtils.setAlphaComponent(color, (0.2 * 255).toInt())
+                item.setBackgroundColor(newColor)
             }
             else{
                 return

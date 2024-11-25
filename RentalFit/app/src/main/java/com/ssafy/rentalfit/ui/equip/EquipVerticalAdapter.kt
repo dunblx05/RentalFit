@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.versionedparcelable.ParcelImpl
+import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListEquipItemVerticalBinding
 import com.ssafy.rentalfit.ui.place.Place
 
-class EquipVerticalAdapter(private val categories: List<Pair<String, List<Equip>>>): RecyclerView.Adapter<EquipVerticalAdapter.EquipVerticalViewHolder>() {
+class EquipVerticalAdapter(private var categories: List<Pair<String, List<Equip>>>): RecyclerView.Adapter<EquipVerticalAdapter.EquipVerticalViewHolder>() {
 
     lateinit var equipVerticalListener: ItemClickListener
 
     interface ItemClickListener {
-        fun onClick(equip: Equip)
+        fun onClick(equipId: Int)
     }
 
     inner class EquipVerticalViewHolder(private val binding: ListEquipItemVerticalBinding): RecyclerView.ViewHolder(binding.root) {
@@ -32,8 +34,8 @@ class EquipVerticalAdapter(private val categories: List<Pair<String, List<Equip>
                 recyclerViewListEquipItemVerticalHorizontal.adapter = equipHorizontalAdapter
 
                 equipHorizontalAdapter.equipHorizontalListener = object : EquipHorizontalAdapter.ItemClickListener {
-                    override fun onClick(equip: Equip) {
-                        equipVerticalListener.onClick(equip)
+                    override fun onClick(equipId: Int) {
+                        equipVerticalListener.onClick(equipId)
                     }
                 }
             }
@@ -53,4 +55,9 @@ class EquipVerticalAdapter(private val categories: List<Pair<String, List<Equip>
         holder.bindInfo(categories[position])
     }
 
+    fun updateData(newEquipList: List<Equip>) {
+        categories = newEquipList.groupBy { it.equipType }
+            .map { Pair(it.key, it.value) }
+        notifyDataSetChanged()
+    }
 }

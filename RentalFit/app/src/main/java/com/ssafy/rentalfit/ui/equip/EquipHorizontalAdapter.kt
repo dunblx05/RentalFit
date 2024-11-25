@@ -3,7 +3,10 @@ package com.ssafy.rentalfit.ui.equip
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
+import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListEquipItemHorizontalBinding
 
 class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapter<EquipHorizontalAdapter.EquipHorizontalViewHolder>() {
@@ -11,7 +14,7 @@ class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapte
     lateinit var equipHorizontalListener: ItemClickListener
 
     interface ItemClickListener {
-        fun onClick(equip: Equip)
+        fun onClick(equipId: Int)
     }
 
     inner class EquipHorizontalViewHolder(private val binding: ListEquipItemHorizontalBinding): RecyclerView.ViewHolder(binding.root) {
@@ -20,11 +23,14 @@ class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapte
 
             binding.apply {
 
-                imageListEquipItemHorizontal.setImageResource(R.drawable.temp)
-                textListEquipItemHorizontalName.text = equip.name
+                Glide.with(imageListEquipItemHorizontal.context)
+                    .load("${SERVER_URL}images/${equip.equipImg}")
+                    .into(imageListEquipItemHorizontal)
+
+                textListEquipItemHorizontalName.text = equip.equipName
 
                 root.setOnClickListener {
-                    equipHorizontalListener.onClick(equip)
+                    equipHorizontalListener.onClick(equip.equipId)
                 }
             }
         }

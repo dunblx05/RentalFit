@@ -6,17 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.BaseFragment
+import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.FragmentEquipBinding
 import com.ssafy.rentalfit.ui.place.Place
 
 class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::bind, R.layout.fragment_equip) {
 
     private lateinit var mainActivity: MainActivity
+    private val equipViewModel: EquipViewModel by viewModels()
 
     private lateinit var equipVerticalAdapter: EquipVerticalAdapter
 
@@ -28,9 +31,21 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObserver()
         settingToolbar()
         settingRecyclerView()
         settingEvent()
+    }
+
+    // ViewModel Observer 등록
+    private fun registerObserver() {
+
+        binding.apply {
+
+            equipViewModel.equipList.observe(viewLifecycleOwner) {
+                equipVerticalAdapter.updateData(it)
+            }
+        }
     }
 
     // 툴바 설정
@@ -64,15 +79,11 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
     // 리사이클러뷰 설정
     private fun settingRecyclerView() {
 
-        // Sample data
-        val sports = listOf("풋살", "야구", "축구", "수영", "탁구", "농구", "배구", "배드민턴", "유니폼")
-        val sampleData = sports.map { sport ->
-            sport to List(10) { Equip(it, "축구공", "@drawable/temp") }
-        }
+        equipViewModel.selectEquip()
 
         binding.apply {
 
-            equipVerticalAdapter = EquipVerticalAdapter(sampleData)
+            equipVerticalAdapter = EquipVerticalAdapter(emptyList())
 
             recyclerViewEquipVertical.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.VERTICAL, false)
             recyclerViewEquipVertical.adapter = equipVerticalAdapter
@@ -86,16 +97,14 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
 
             // 장비 아이템 하나 클릭한다면
             equipVerticalAdapter.equipVerticalListener = object : EquipVerticalAdapter.ItemClickListener {
-                override fun onClick(equip: Equip) {
+                override fun onClick(equipId: Int) {
 
                     val intent = Intent(mainActivity, ReservationActivity::class.java)
                     intent.putExtra("name", "EquipDetail")
-                    intent.putExtra("itemId", equip.id)
+                    intent.putExtra("itemId", equipId)
                     startActivity(intent)
                 }
             }
         }
     }
 }
-
-data class Equip(val id: Int, val name: String, val img: String)

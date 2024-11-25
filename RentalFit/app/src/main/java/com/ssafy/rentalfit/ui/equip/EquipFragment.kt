@@ -101,7 +101,7 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
 
                     val intent = Intent(mainActivity, ReservationActivity::class.java)
                     intent.putExtra("name", "EquipDetail")
-                    intent.putExtra("itemId", equipId)
+                    intent.putExtra("equipId", equipId)
                     startActivity(intent)
                 }
             }

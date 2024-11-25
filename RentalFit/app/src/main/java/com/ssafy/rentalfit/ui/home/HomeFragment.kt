@@ -139,10 +139,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
             // 장비 아이템 누른다면.
             homeEquipAdapter.homeEquipListener = object : HomeEquipAdapter.ItemClickListener {
-                override fun onClick() {
+                override fun onClick(equipId: Int) {
 
                     val intent = Intent(mainActivity, ReservationActivity::class.java)
                     intent.putExtra("name", "EquipDetail")
+                    intent.putExtra("equipId", equipId)
                     startActivity(intent)
                 }
             }

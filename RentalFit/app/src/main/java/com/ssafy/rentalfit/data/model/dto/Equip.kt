@@ -5,6 +5,6 @@ data class Equip(
     val equipName: String,
     val equipType: String,
     val equipPrice: Int,
-    val equipDetail: Any,
+    val equipDetail: String,
     val equipImg: String
 )

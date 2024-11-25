@@ -85,4 +85,8 @@ dependencies {
 
     //framework ktx dependency 추가
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+    //   구글 map api(사용)
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+    implementation ("com.google.android.gms:play-services-location:20.0.0")
 }

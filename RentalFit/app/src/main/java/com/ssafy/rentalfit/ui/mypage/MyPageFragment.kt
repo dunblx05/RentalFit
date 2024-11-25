@@ -1,10 +1,9 @@
 package com.ssafy.rentalfit.ui.mypage
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -17,7 +16,9 @@ import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentMyPageBinding
 
 private const val TAG = "MyPageFragment_싸피"
-class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page) {
+
+class MyPageFragment :
+    BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page) {
 
     private lateinit var mainActivity: MainActivity
 
@@ -48,7 +49,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
         myPageViewModel.user.observe(viewLifecycleOwner) {
 
             // 있다면.
-            if(it.userId.isNotEmpty()) {
+            if (it.userId.isNotEmpty()) {
 
                 binding.apply {
 
@@ -78,7 +79,7 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
 
                 setOnMenuItemClickListener {
 
-                    when(it.itemId) {
+                    when (it.itemId) {
 
                         // 알림 화면
                         R.id.menu_my_page_alarm -> {
@@ -129,6 +130,21 @@ class MyPageFragment: BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding:
                 intent.putExtra("name", "EquipHistory")
                 startActivity(intent)
             }
+
+            textMap.setOnClickListener {
+                val intent = Intent(mainActivity, MyPageActivity::class.java)
+                intent.putExtra("name", "Map")
+                startActivity(intent)
+            }
+
+            textTel.setOnClickListener {
+                val phoneNumber = "01012345678" // 전화번호
+                val dialIntent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$phoneNumber")
+                }
+                startActivity(dialIntent)
+            }
+
         }
     }
 

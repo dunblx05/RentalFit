@@ -10,6 +10,7 @@ import com.ssafy.rentalfit.ui.mypage.alarm.AlarmFragment
 import com.ssafy.rentalfit.ui.mypage.history.EquipHistoryFragment
 import com.ssafy.rentalfit.ui.mypage.history.HistoryFragment
 import com.ssafy.rentalfit.ui.mypage.history.PlaceHistoryFragment
+import com.ssafy.rentalfit.ui.mypage.map.MapFragment
 import com.ssafy.rentalfit.ui.place.PlaceDetailFragment
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding::inflate) {
@@ -80,6 +81,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(ActivityMyPageBinding
                     }
                 }
             }
+
+            "Map" -> {
+                goto = MapFragment()
+            }
+
         }
 
         transaction.replace(R.id.myPageContainer, goto)

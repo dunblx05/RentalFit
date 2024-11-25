@@ -29,7 +29,7 @@ class EquipViewModel:ViewModel() {
     val equip: LiveData<Equip> get() = _equip
 
     // 수량
-    private val _quantity = MutableLiveData<Int>()
+    private val _quantity = MutableLiveData<Int>(1)
     val quantity: LiveData<Int> get() = _quantity
 
     // 장바구니 리스트

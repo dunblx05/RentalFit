@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.versionedparcelable.ParcelImpl
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListEquipItemVerticalBinding
-import com.ssafy.rentalfit.ui.place.Place
 
 class EquipVerticalAdapter(private var categories: List<Pair<String, List<Equip>>>): RecyclerView.Adapter<EquipVerticalAdapter.EquipVerticalViewHolder>() {
 

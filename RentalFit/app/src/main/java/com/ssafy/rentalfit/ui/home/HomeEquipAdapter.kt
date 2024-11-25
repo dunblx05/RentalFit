@@ -17,7 +17,7 @@ class HomeEquipAdapter(var equipList: List<Equip>) :
     lateinit var homeEquipListener: ItemClickListener
 
     interface ItemClickListener {
-        fun onClick()
+        fun onClick(equipId: Int)
     }
 
     inner class HomeEquipViewHolder(private val binding: ListHomeEquipItemBinding) :
@@ -37,7 +37,7 @@ class HomeEquipAdapter(var equipList: List<Equip>) :
 
                 // 아이템 하나를 클릭한다면.
                 root.setOnClickListener {
-                    homeEquipListener.onClick()
+                    homeEquipListener.onClick(equip.equipId)
                 }
             }
         }

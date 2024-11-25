@@ -10,7 +10,9 @@ import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListHomeEquipItemBinding
 
 private const val TAG = "HomeEquipAdapter_싸피"
-class HomeEquipAdapter(var equipList:List<Equip>): RecyclerView.Adapter<HomeEquipAdapter.HomeEquipViewHolder>() {
+
+class HomeEquipAdapter(var equipList: List<Equip>) :
+    RecyclerView.Adapter<HomeEquipAdapter.HomeEquipViewHolder>() {
 
     lateinit var homeEquipListener: ItemClickListener
 
@@ -18,7 +20,8 @@ class HomeEquipAdapter(var equipList:List<Equip>): RecyclerView.Adapter<HomeEqui
         fun onClick()
     }
 
-    inner class HomeEquipViewHolder(private val binding: ListHomeEquipItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class HomeEquipViewHolder(private val binding: ListHomeEquipItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindInfo(equip: Equip) {
 
@@ -41,7 +44,8 @@ class HomeEquipAdapter(var equipList:List<Equip>): RecyclerView.Adapter<HomeEqui
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeEquipViewHolder {
-        val binding = ListHomeEquipItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ListHomeEquipItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HomeEquipViewHolder(binding)
     }
 

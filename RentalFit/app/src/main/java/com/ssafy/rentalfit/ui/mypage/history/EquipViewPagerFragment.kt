@@ -55,7 +55,7 @@ class EquipViewPagerFragment : BaseFragment<FragmentEquipViewPagerBinding>(
     private fun initEvent() {
         equipViewPagerAdapter.myListener = object : EquipViewPagerAdapter.ItemClickListener {
             override fun onClick(equipOrderId: Int) {
-                activity.changeFragmentMyPage("EquipHistoryDetail", -1, equipOrderId)
+                activity.changeFragmentMyPage("EquipHistoryDetail", equipOrderId = equipOrderId)
             }
         }
     }

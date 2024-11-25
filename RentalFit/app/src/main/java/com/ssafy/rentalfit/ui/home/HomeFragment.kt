@@ -38,6 +38,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         settingRecyclerViewEquip()
 
         homeViewModel.selectEquip()
+        homeViewModel.selectPlace()
 
         settingEvent()
     }
@@ -47,6 +48,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             homeEquipAdapter.equipList = it
             homeEquipAdapter.notifyDataSetChanged()
         }
+
+        homeViewModel.placeList.observe(viewLifecycleOwner) {
+            homePlaceAdapter.placeList = it
+            homePlaceAdapter.notifyDataSetChanged()
+        }
+
     }
 
     // 툴바 설정
@@ -94,7 +101,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     // 장소 리사이클러뷰 설정
     private fun settingRecyclerViewPlace() {
 
-        homePlaceAdapter = HomePlaceAdapter()
+        homePlaceAdapter = HomePlaceAdapter(emptyList())
 
         binding.apply {
 

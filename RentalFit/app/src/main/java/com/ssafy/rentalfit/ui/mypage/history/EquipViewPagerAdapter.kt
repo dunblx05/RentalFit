@@ -27,8 +27,15 @@ class EquipViewPagerAdapter(var equipList: List<EquipOrderResponse>) :
                     .into(equipPagerImg)
 
                 equipPagerDate.text = "${formatDate(equipOrderResponse.equipOrderTime)}"
-                equipPagerName.text =
-                    "${equipOrderResponse.details[0].equipName} 외 ${equipOrderResponse.details.size - 1}건"
+
+                if(equipOrderResponse.details.size == 1) {
+                    equipPagerName.text =
+                        "${equipOrderResponse.details[0].equipName}"
+                }
+                else {
+                    equipPagerName.text =
+                        "${equipOrderResponse.details[0].equipName} 외 ${equipOrderResponse.details.size - 1}건"
+                }
 
                 // 총 구입 수량 계산
                 val totalQuantity = equipOrderResponse.details.sumOf { it.quantity }

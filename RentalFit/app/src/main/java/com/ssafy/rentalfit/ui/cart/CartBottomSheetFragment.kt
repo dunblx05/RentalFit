@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
+import com.ssafy.rentalfit.base.ApplicationClass
+import com.ssafy.rentalfit.data.remote.RetrofitUtil
+import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.firebaseTokenService
 import com.ssafy.rentalfit.databinding.FragmentCartBottomSheetBinding
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
 import com.ssafy.rentalfit.ui.equip.EquipViewModel
@@ -18,6 +22,7 @@ import com.ssafy.rentalfit.util.ShoppingRepository.totalCnt
 import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
 import com.ssafy.rentalfit.util.Utils
 import com.ssafy.rentalfit.util.Utils.showCustomToast
+import kotlinx.coroutines.launch
 
 
 class CartBottomSheetFragment : BottomSheetDialogFragment() {
@@ -77,6 +82,12 @@ class CartBottomSheetFragment : BottomSheetDialogFragment() {
                     // 주문 서버로 전송.
                     equipViewModel.makeEquipOrder()
                     equipViewModel.clearShoppingList()
+
+                    val token = ApplicationClass.sharedPreferencesUtil.getToken()
+
+                    lifecycleScope.launch {
+                        firebaseTokenService.sendMessageTo(token, "주문 접수 완료", "주문 완료")
+                    }
 
                     val intent = Intent(reservationActivity, MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP

@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.dto.Place
 import com.ssafy.rentalfit.databinding.ListHomePlaceItemBinding
+import java.text.DecimalFormat
 
 class HomePlaceAdapter(var placeList: List<Place>) :
     RecyclerView.Adapter<HomePlaceAdapter.HomePlaceViewHolder>() {
@@ -26,6 +27,10 @@ class HomePlaceAdapter(var placeList: List<Place>) :
                 Glide.with(imageListHomePlaceItem.context)
                     .load("${SERVER_URL}images/${place.placeImg}")
                     .into(imageListHomePlaceItem)
+
+                val decimalFormat = DecimalFormat("#,###")
+                val totalPriceText = "시간당 ₩ ${decimalFormat.format(place.placeCost*2)}\n(최대 인원: ${place.placePeople}명)"
+                textListPlaceItemHorizontalCost.text = totalPriceText
 
                 textListHomePlaceItemName.text = place.placeName
 

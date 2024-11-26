@@ -84,34 +84,6 @@
                 android:text="시간" />
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/recyclerViewTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTimeLabel">
-            <!-- 텍스트 줄 (시간 표시) -->
-            <LinearLayout
-                android:id="@+id/firstRowTimeLabels"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal" />
-
-            <!-- 첫 번째 블록 줄 -->
-            <LinearLayout
-                android:id="@+id/firstRowBlocks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal" />
-        </LinearLayout>
-
         <!-- 시간 선택 -->
         <LinearLayout
             android:layout_marginTop="70dp"
@@ -155,18 +127,55 @@
                 android:theme="@style/CustomTimePickerStyle"
                 android:timePickerMode="spinner" />
 
+
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/recyclerViewTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTimeSelect">
+            <!-- 텍스트 줄 (시간 표시) -->
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="예약 현황"
+                android:layout_gravity="start"
+                style="@style/TextView_Place_BottomSheet_Time"/>
+            <LinearLayout
+                android:id="@+id/firstRowTimeLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="left"
+                android:orientation="horizontal" />
+
+            <!-- 첫 번째 블록 줄 -->
+            <LinearLayout
+                android:id="@+id/firstRowBlocks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal" />
+        </LinearLayout>
 
         <!-- 수량 선택 -->
         <LinearLayout
             android:id="@+id/textViewTotalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="36dp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewTimeSelect">
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewTime">
 
             <ImageView
                 android:layout_width="wrap_content"

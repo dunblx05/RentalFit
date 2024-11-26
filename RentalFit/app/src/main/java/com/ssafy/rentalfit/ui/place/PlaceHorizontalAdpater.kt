@@ -28,6 +28,7 @@ import com.ssafy.rentalfit.util.Utils.formatTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -54,6 +55,10 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
                     .load("${SERVER_URL}images/${place.placeImg}")
                     .into(itemImage)
 
+
+                val decimalFormat = DecimalFormat("#,###")
+                val totalPriceText = "₩ ${decimalFormat.format(place.placeCost)} (최대 인원: ${place.placePeople}명)"
+                textListPlaceItemHorizontalCost.text = totalPriceText
 
                 initSchedule(this@HorizontalViewHolder)
 

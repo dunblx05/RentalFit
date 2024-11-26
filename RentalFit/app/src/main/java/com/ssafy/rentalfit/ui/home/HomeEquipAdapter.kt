@@ -8,6 +8,8 @@ import com.bumptech.glide.Glide
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListHomeEquipItemBinding
+import com.ssafy.rentalfit.util.ShoppingRepository.totalPrice
+import java.text.DecimalFormat
 
 private const val TAG = "HomeEquipAdapter_싸피"
 
@@ -32,6 +34,10 @@ class HomeEquipAdapter(var equipList: List<Equip>) :
                 Glide.with(imageListHomeEquipItem.context)
                     .load("${SERVER_URL}images/${equip.equipImg}")
                     .into(imageListHomeEquipItem)
+
+                val decimalFormat = DecimalFormat("#,###")
+                val totalPriceText = "₩ ${decimalFormat.format(equip.equipPrice)}"
+                textListHomeEquipItemHorizontalCost.text = totalPriceText
 
                 textListHomeEquipItemName.text = equip.equipName
 

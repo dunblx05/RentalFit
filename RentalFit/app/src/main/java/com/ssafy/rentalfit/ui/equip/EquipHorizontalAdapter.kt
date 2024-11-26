@@ -8,6 +8,7 @@ import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.ApplicationClass.Companion.SERVER_URL
 import com.ssafy.rentalfit.data.model.dto.Equip
 import com.ssafy.rentalfit.databinding.ListEquipItemHorizontalBinding
+import java.text.DecimalFormat
 
 class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapter<EquipHorizontalAdapter.EquipHorizontalViewHolder>() {
 
@@ -27,7 +28,13 @@ class EquipHorizontalAdapter(private val list: List<Equip>): RecyclerView.Adapte
                     .load("${SERVER_URL}images/${equip.equipImg}")
                     .into(imageListEquipItemHorizontal)
 
+
+                val decimalFormat = DecimalFormat("#,###")
+                val totalPriceText = "₩ ${decimalFormat.format(equip.equipPrice)}"
+                textListEquipItemHorizontalCost.text = totalPriceText
+
                 textListEquipItemHorizontalName.text = equip.equipName
+
 
                 root.setOnClickListener {
                     equipHorizontalListener.onClick(equip.equipId)

@@ -86,7 +86,7 @@
 
         <!-- 시간 선택 -->
         <LinearLayout
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="24dp"
             android:id="@+id/textViewTimeSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,6 +150,14 @@
                 android:text="예약 현황"
                 android:layout_gravity="start"
                 style="@style/TextView_Place_BottomSheet_Time"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="해당 날짜의 현황을 고려하여 시작 시간과 종료 시간을 설정해주세요"
+                android:layout_gravity="start"
+                android:fontFamily="@font/font_regular"
+                android:textSize="12sp"
+                android:textColor="@color/oatmeal_main"/>
             <LinearLayout
                 android:id="@+id/firstRowTimeLabels"
                 android:layout_width="wrap_content"

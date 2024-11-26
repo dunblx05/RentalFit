@@ -15,6 +15,7 @@ import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
@@ -22,6 +23,7 @@ import com.ssafy.rentalfit.activity.ReservationActivity
 import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.data.model.dto.Place
 import com.ssafy.rentalfit.data.model.response.PlaceReservationResponse
+import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.firebaseTokenService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.homeService
 import com.ssafy.rentalfit.data.remote.RetrofitUtil.Companion.placeReservationService
 import com.ssafy.rentalfit.databinding.FragmentReservationBottomSheetBinding
@@ -178,6 +180,13 @@ class ReservationBottomSheetFragment : BottomSheetDialogFragment() {
                             resCost = totalPrice, place = place
                         )
                         placeReservationService.insertPlaceReservation(placeReservationResponse)
+
+                        val token = ApplicationClass.sharedPreferencesUtil.getToken()
+
+                        lifecycleScope.launch {
+                            firebaseTokenService.sendMessageTo(token, "예약 접수 완료", "예약 완료")
+                        }
+
                         showCustomToast(requireContext(), "예약이 완료되었습니다.")
                         startActivity(intent)
                         reservationActivity.finish()

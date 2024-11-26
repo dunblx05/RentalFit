@@ -212,7 +212,12 @@ class PlaceHorizontalAdapter(private val items: List<Place>) :
 //            Log.d(TAG, "drawSchedule: ${item.id}")
             val itemTime = LocalTime.of(item.id / 100, item.id % 100) // id를 시간으로 변환 (예: 1230 -> 12:30)
             if (!itemTime.isBefore(start) && !itemTime.isAfter(end) && itemTime != end) {
-                item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                if(itemTime.isBefore(nowTime)){
+                    item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.darkgrey_main))
+                }
+                else{
+                    item.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.grey_main))
+                }
             }
         }
 

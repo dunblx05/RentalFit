@@ -1,9 +1,12 @@
 package com.ssafy.rentalfit.ui.home
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,19 +14,23 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
+import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
+import com.ssafy.rentalfit.data.remote.RetrofitUtil
 import com.ssafy.rentalfit.databinding.FragmentHomeBinding
 import com.ssafy.rentalfit.ui.equip.EquipViewModel
+import com.ssafy.rentalfit.util.Utils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+private const val TAG = "HomeFragment_싸피"
 class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home) {
 
     private lateinit var mainActivity: MainActivity
 
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
     private val equipViewModel: EquipViewModel by viewModels()
 
     private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
@@ -31,6 +38,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
     private lateinit var homeEquipAdapter: HomeEquipAdapter
 
     private var sliderJob: Job? = null
+
+    // 다이얼로그 참조
+    private var nfcDialog: AlertDialog? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,6 +79,37 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             homePlaceAdapter.notifyDataSetChanged()
         }
 
+        homeViewModel.nfcTagValue.observe(viewLifecycleOwner) { tagValue ->
+
+            Log.d(TAG, "registerObserver: $tagValue")
+            
+            if (tagValue != null && tagValue != "") {
+
+                nfcDialog?.dismiss()
+
+                when (tagValue) {
+
+                    "시작" -> {
+                        Log.d(TAG, "registerObserver: $tagValue")
+                        val token = ApplicationClass.sharedPreferencesUtil.getToken()
+                        Log.d(TAG, "registerObserver: $token")
+                        homeViewModel.startNfc(token)
+                        homeViewModel.resetNfcTagValue()
+                    }
+
+                    "끝" -> {
+                        Log.d(TAG, "registerObserver: $tagValue")
+                        val token = ApplicationClass.sharedPreferencesUtil.getToken()
+                        homeViewModel.finishNfc(token)
+                        homeViewModel.resetNfcTagValue()
+                    }
+
+                    else -> {
+                        Utils.showCustomToast(mainActivity, "알 수 없는 NFC 태그입니다.")
+                    }
+                }
+            }
+        }
     }
 
     // 툴바 설정
@@ -82,7 +123,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
                 setOnMenuItemClickListener {
 
-                    when(it.itemId) {
+                    when (it.itemId) {
+
+                        // NFC
+                        R.id.menu_home_nfc -> {
+
+                            val content = "NFC를 태깅해주세요."
+                            val contentToast = "장소 대여가 시작 되었습니다."
+                            nfcDialog = Utils.showCustomDialog(mainActivity, content, contentToast) {
+
+                            }
+                        }
 
                         // 장바구니
                         R.id.menu_home_cart -> {
@@ -143,7 +194,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
         binding.apply {
 
-            recyclerViewHomePlace.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewHomePlace.layoutManager =
+                LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerViewHomePlace.adapter = homePlaceAdapter
         }
     }
@@ -155,7 +207,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
         binding.apply {
 
-            recyclerViewHomeEquip.layoutManager = LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewHomeEquip.layoutManager =
+                LinearLayoutManager(mainActivity, LinearLayoutManager.HORIZONTAL, false)
             recyclerViewHomeEquip.adapter = homeEquipAdapter
         }
     }
@@ -199,8 +252,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             sliderJob = viewLifecycleOwner.lifecycleScope.launch {
                 while (isActive) {
                     delay(3000)
-                    if(homeViewPagerAdapter.itemCount > 0) {
-                        val nextItem = (viewpager2HomeBanner.currentItem + 1) % homeViewPagerAdapter.itemCount
+                    if (homeViewPagerAdapter.itemCount > 0) {
+                        val nextItem =
+                            (viewpager2HomeBanner.currentItem + 1) % homeViewPagerAdapter.itemCount
                         viewpager2HomeBanner.setCurrentItem(nextItem, true)
                     }
                 }

@@ -22,6 +22,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide.init
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseActivity
@@ -54,14 +56,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             Manifest.permission.BLUETOOTH_ADVERTISE,
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.POST_NOTIFICATIONS
         )
     } else {
         arrayOf(
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.POST_NOTIFICATIONS
         )
     }
 
@@ -86,8 +90,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-
-        getNFCData(intent)
     }
 
     override fun onResume() {
@@ -107,6 +109,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         changeFragment("Home")
         Log.d(TAG, "onNewIntent: ")
+
+        getNFCData(intent)
     }
 
     private fun checkPermission() {
@@ -130,8 +134,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun initFCM(){
         // FCM 토큰 수신
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
 
+            if(!task.isSuccessful) {
+                Log.d(TAG, "FCM 토큰 얻기에 실패했습니다.", task.exception)
+                return@OnCompleteListener
+            }
+            Log.d(TAG, "token: ${task.result?: "task.result is null"}")
 
+            ApplicationClass.sharedPreferencesUtil.setToken(task.result)
+        })
+        createNotificationChannel(channel_id, "ssafy")
     }
 
     // Notification 수신을 위한 체널 추가
@@ -159,22 +172,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 message.records.forEach { record ->
 
                     val payload = record.payload
-                    val text = String(payload, Charset.forName("UTF-8"))
+                    val text = String(payload, 3, record.payload.size - 3)
 
-//                    when(text) {
-//
-//                        "시작" -> {
-//                            homeViewModel.setNfcTagValue("시작")
-//                        }
-//
-//                        "끝" -> {
-//                            homeViewModel.setNfcTagValue("끝")
-//                        }
-//
-//                        else -> {
-//                            homeViewModel.setNfcTagValue("유효하지 않은 NFC 태그")
-//                        }
-//                    }
+                    Log.d(TAG, "getNFCData: $text")
+                    
+                    when(text) {
+                        
+                        "시작" -> {
+                            homeViewModel.setNfcTagValue("시작")
+                        }
+
+                        "끝" -> {
+                            homeViewModel.setNfcTagValue("끝")
+                        }
+
+                        else -> {
+                            homeViewModel.setNfcTagValue("유효하지 않은 NFC 태그")
+                        }
+                    }
                 }
             }
         }
@@ -256,9 +271,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         const val channel_id = "ssafy_channel"
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
         fun uploadToken(token:String){
-
-            val firebaseService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
-
+            Log.d(TAG, "uploadToken: $token")
+            ApplicationClass.sharedPreferencesUtil.setToken(token)
         }
     }
 }

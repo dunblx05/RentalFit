@@ -8,7 +8,9 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
+import com.ssafy.rentalfit.base.ApplicationClass
 
 private const val TAG = "MyFirebaseMsgSvc_싸피"
 
@@ -31,6 +33,8 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
             val messageTitle = message.title
             val messageContent = message.body
 
+            ApplicationClass.sharedPreferencesUtil.addNotice(messageContent.toString())
+
             val mainIntent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             }
@@ -38,7 +42,7 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
             val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
 
             val builder1 = NotificationCompat.Builder(this, MainActivity.channel_id)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.mipmap.ic_rentalfit_round)
                 .setContentTitle(messageTitle)
                 .setContentText(messageContent)
                 .setAutoCancel(true)

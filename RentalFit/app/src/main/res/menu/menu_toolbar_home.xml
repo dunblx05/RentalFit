@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_home_nfc"
+        android:icon="@drawable/nfc"
+        android:title="NFC"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_home_cart"
         android:icon="@drawable/cart"
         android:title="장바구니"

@@ -11,5 +11,6 @@ class RetrofitUtil {
             ApplicationClass.retrofit.create(PlaceReservationService::class.java)
         val equipOrderService = ApplicationClass.retrofit.create(EquipOrderService::class.java)
         val homeService = ApplicationClass.retrofit.create(HomeService::class.java)
+        val firebaseTokenService = ApplicationClass.retrofit.create(FirebaseTokenService::class.java)
     }
 }

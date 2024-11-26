@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.rentalfit.R
+import com.ssafy.rentalfit.base.ApplicationClass
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.databinding.FragmentAlarmBinding
 
@@ -36,7 +37,10 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(
     }
 
     private fun initData() {
-        binding.alarmList.adapter = AlarmAdapter()
+
+        val alarmList = ApplicationClass.sharedPreferencesUtil.getNotice()
+
+        binding.alarmList.adapter = AlarmAdapter(alarmList)
 
         val dividerItemDecoration = DividerItemDecoration(activity, LinearLayoutManager.VERTICAL)
 

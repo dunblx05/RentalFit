@@ -76,4 +76,14 @@ class SharedPreferencesUtil (context: Context) {
 
         return list
     }
+
+    fun setToken(token: String) {
+        val editor = preferences.edit()
+        editor.putString("userToken", token)
+        editor.apply()
+    }
+
+    fun getToken(): String {
+        return  preferences.getString("userToken", "") ?: ""
+    }
 }

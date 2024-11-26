@@ -69,10 +69,10 @@ class CartBottomSheetFragment : BottomSheetDialogFragment() {
             // 장비 구매 서버로 전송.
             buttonCartBottomSheet.setOnClickListener {
 
-                val content = "예약을 완료하시면 취소가 불가능합니다. \n 예약하시겠습니까?"
+                val content = "장비를 구매하시면 취소가 불가능합니다. \n 구매하시겠습니까?"
+                val contentToast = "장비 구매가 완료되었습니다."
 
-                Utils.showCustomDialog(reservationActivity, content) {
-                    showCustomToast(requireContext(), "예약이 완료되었습니다.")
+                Utils.showCustomDialog(reservationActivity, content, contentToast) {
 
                     // 주문 서버로 전송.
                     equipViewModel.makeEquipOrder()

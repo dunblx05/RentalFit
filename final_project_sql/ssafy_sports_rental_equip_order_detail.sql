@@ -32,7 +32,7 @@ CREATE TABLE `equip_order_detail` (
   KEY `equip_id_idx` (`equip_id`),
   CONSTRAINT `equip_id` FOREIGN KEY (`equip_id`) REFERENCES `equip` (`equip_id`),
   CONSTRAINT `equip_order_id` FOREIGN KEY (`equip_order_id`) REFERENCES `equip_order` (`equip_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `equip_order_detail` (
 
 LOCK TABLES `equip_order_detail` WRITE;
 /*!40000 ALTER TABLE `equip_order_detail` DISABLE KEYS */;
-INSERT INTO `equip_order_detail` VALUES (1,1,1,5),(2,1,3,2),(3,2,2,2),(4,2,4,3),(5,3,5,4),(6,3,6,5),(7,4,7,1),(8,4,8,2),(9,5,9,3),(10,6,3,3),(11,7,3,4),(12,7,2,5);
+INSERT INTO `equip_order_detail` VALUES (1,1,1,5),(2,1,3,2),(3,2,2,2),(4,2,4,3),(5,3,5,4),(6,3,6,5),(7,4,7,1),(8,4,8,2),(9,5,9,3),(10,6,3,3),(11,7,3,4),(12,7,2,5),(13,8,4,5),(14,9,1,6),(15,9,6,6),(16,10,1,4),(17,11,3,3),(18,12,2,1),(19,12,1,1),(20,12,4,6),(21,12,11,5),(22,12,10,4),(23,13,1,4),(24,14,1,5),(25,15,1,2),(26,16,1,1),(27,16,2,1),(28,16,3,1),(29,17,1,1),(30,17,3,1),(31,17,4,1),(32,18,1,1),(33,19,1,1),(34,19,2,1),(35,20,1,1),(36,21,1,3),(37,22,1,3),(38,22,9,4),(39,23,2,1);
 /*!40000 ALTER TABLE `equip_order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-25 10:44:07
+-- Dump completed on 2024-11-26 15:05:37

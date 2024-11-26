@@ -37,7 +37,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('aaa','aaa','aaa',0),('Dxn8zsz35aZXWxmIKMyawHaJpCZ2','','김두영',0),('hsw','hsw','황선우',242),('kdy','kdy','김두영',380),('kdy2','kdy2','kdy2',0),('kdy3','kdy3','kdy3',0),('ksh','ksh','김성현',87),('pjh','pjh','박장훈',0),('qwer','qwer','qwer',0);
+INSERT INTO `user` VALUES ('aaa','aaa','aaa',0),('Dxn8zsz35aZXWxmIKMyawHaJpCZ2','','김두영',100),('fUiSgqXLSNWYoTVEKQzuWppLDr32','','김두영',110),('hsw','hsw','황선우',642),('kdy','kdy','김두영',1250),('kdy2','kdy2','kdy2',0),('kdy3','kdy3','kdy3',0),('ksh','ksh','김성현',87),('pjh','pjh','박장훈',0),('qwer','qwer','qwer',0),('VfPMbRxYodNdt5aNwfpq9r3vjVe2','','김두영',200),('XMoMQE7mYphvKLUI5PvzPIwE7ig2','','황선우',100),('zeFtEHUO1lZ7S5rCkbfTb74RrUs2','','김성현',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-25 10:44:08
+-- Dump completed on 2024-11-26 15:05:37

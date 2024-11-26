@@ -285,20 +285,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 장바구니 아이템 개수 (예시: 동적 설정 가능)
         val cartItemCount = equipViewModel.shoppingList.value?.size
-        if (cartItemCount != null) {
-            if (cartItemCount > 0) {
-                // 배지 설정
-                badgeDrawable.number = cartItemCount
-                badgeDrawable.isVisible = true
-                badgeDrawable.badgeTextColor=R.color.neon_main
-                badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.neon_main) // 연두색 배경
-                badgeDrawable.badgeTextColor = ContextCompat.getColor(this, R.color.black_main)
-                BadgeUtils.attachBadgeDrawable(badgeDrawable, toolbar, menu_cart_id)
-                Log.d(TAG, "showProductCntInCart: ${badgeDrawable.backgroundColor}")
-            } else {
-                badgeDrawable.isVisible = false // 장바구니가 비었으면 배지 숨김
-            }
+        if (cartItemCount != null && cartItemCount > 0) {
+            badgeDrawable.number = cartItemCount
         }
+        else {
+            badgeDrawable.number = 0
+        }
+        badgeDrawable.isVisible = true
+        badgeDrawable.badgeTextColor=R.color.neon_main
+        badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.neon_main) // 연두색 배경
+        badgeDrawable.badgeTextColor = ContextCompat.getColor(this, R.color.black_main)
+        BadgeUtils.attachBadgeDrawable(badgeDrawable, toolbar, menu_cart_id)
     }
 
     companion object{

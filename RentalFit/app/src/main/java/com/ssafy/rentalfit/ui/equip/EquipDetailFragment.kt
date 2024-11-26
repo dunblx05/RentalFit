@@ -114,7 +114,7 @@ class EquipDetailFragment : BaseFragment<FragmentEquipDetailBinding>(FragmentEqu
                     )
                 }?.apply {
                     equipViewModel.addShoppingList(this)
-                    reservationActivity.changeFragmentReservation("Cart")
+                    reservationActivity.finish()
                 }
             }
 

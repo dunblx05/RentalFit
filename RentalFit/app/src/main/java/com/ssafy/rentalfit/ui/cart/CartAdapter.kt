@@ -36,7 +36,7 @@ class CartAdapter(var shoppingList: MutableList<ShoppingCart>): RecyclerView.Ada
 
             binding.apply {
 
-                Log.d(TAG, "bindInfo: $shoppingCart")
+//                Log.d(TAG, "bindInfo: $shoppingCart")
                 
                 textListCartItemName.text = shoppingCart.cartName
                 textCartCnt.text = shoppingCart.cartCnt.toString()

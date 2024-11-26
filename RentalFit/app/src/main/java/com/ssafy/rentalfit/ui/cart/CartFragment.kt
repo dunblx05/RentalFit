@@ -1,7 +1,9 @@
 package com.ssafy.rentalfit.ui.cart
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -15,6 +17,8 @@ import com.ssafy.rentalfit.databinding.FragmentCartBinding
 import com.ssafy.rentalfit.ui.equip.EquipViewModel
 import com.ssafy.rentalfit.ui.place.ReservationBottomSheetFragment
 import com.ssafy.rentalfit.util.Utils
+
+private const val TAG = "CartFragment_싸피"
 
 class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind, R.layout.fragment_cart) {
 
@@ -34,6 +38,7 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
         registerObserver()
         settingRecyclerView()
         settingEvent()
+        settingButtonColor()
     }
 
     // ViewModel Observer 등록
@@ -95,6 +100,7 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
                     cartAdapter.shoppingList.removeAt(position)
                     equipViewModel.removeItemShoppingList(shoppingCart)
                     refreshList()
+                    settingButtonColor()
                 }
             }
 
@@ -112,7 +118,6 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
                 }
             }
 
-            // 예약 바텀시트 띄우기.
             buttonCartOpenBottomSheet.setOnClickListener {
                 if(cartAdapter.shoppingList.isEmpty()){
                     return@setOnClickListener
@@ -120,6 +125,16 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
                 val bottomSheet = CartBottomSheetFragment()
                 bottomSheet.show(parentFragmentManager, "CartBottomSheetFragment")
             }
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun settingButtonColor(){
+        if(cartAdapter.shoppingList.isEmpty()) {
+            binding.buttonCartOpenBottomSheet.alpha = 0.5f
+        }
+        else{
+            binding.buttonCartOpenBottomSheet.alpha = 1f
         }
     }
 }

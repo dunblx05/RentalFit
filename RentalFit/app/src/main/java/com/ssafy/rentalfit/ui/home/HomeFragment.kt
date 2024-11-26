@@ -49,7 +49,13 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
 
     override fun onResume() {
         super.onResume()
+        Log.d(TAG, "onResume: ")
         mainActivity.showProductCntInCart(binding.toolbarHome, R.id.menu_home_cart)
+    }
+
+    override fun onPause() {
+        super.onPause()
+//        mainActivity.showProductCntInCart(binding.toolbarHome, R.id.menu_home_cart)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

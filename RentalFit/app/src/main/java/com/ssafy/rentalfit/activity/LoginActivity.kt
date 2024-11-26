@@ -1,6 +1,7 @@
 package com.ssafy.rentalfit.activity
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.replace
@@ -15,6 +16,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+       setupKeyboardListener()
 
         val user = ApplicationClass.sharedPreferencesUtil.getUser()
 
@@ -36,6 +39,25 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         }
     }
 
+    fun setupKeyboardListener(){
+        val rootView = binding.root
+
+        rootView.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+
+            val screenHeight = rootView.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+
+            if (screenHeight > keypadHeight) {
+                // 키보드가 열렸을 때
+                binding.containerLogin.translationY = -keypadHeight.toFloat() * 0.85f
+            } else {
+                // 키보드가 닫혔을 때
+                binding.containerLogin.translationY = 0f
+            }
+        }
+    }
 
     fun changeFragmentLogin(name: String) {
 

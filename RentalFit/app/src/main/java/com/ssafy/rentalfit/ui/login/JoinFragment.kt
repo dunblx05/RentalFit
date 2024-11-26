@@ -71,6 +71,10 @@ class JoinFragment: BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind,
             buttonJoinCheckId.setOnClickListener {
 
                 val userId = editTextJoinId.text.toString()
+                if(userId.isEmpty()) {
+                    Utils.showCustomToast(loginActivity, "ID를 입력해주세요.")
+                    return@setOnClickListener
+                }
                 loginViewModel.isUsedId(userId)
             }
 

@@ -9,7 +9,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_bottom_place"
-        android:icon="@drawable/place"
+        android:icon="@drawable/baseline_stadium_24"
         android:title="장소"
         app:showAsAction="always" />
     <item

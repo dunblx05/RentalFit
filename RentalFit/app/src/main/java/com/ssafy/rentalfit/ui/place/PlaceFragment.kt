@@ -1,13 +1,18 @@
 package com.ssafy.rentalfit.ui.place
 
+import android.annotation.SuppressLint
 import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toolbar
+import androidx.annotation.OptIn
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.marginEnd
@@ -15,6 +20,9 @@ import androidx.core.view.marginStart
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.activity.MainActivity
 import com.ssafy.rentalfit.activity.ReservationActivity
@@ -35,6 +43,11 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showProductCntInCart(binding.toolbarPlace, R.id.menu_place_cart)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,10 +98,15 @@ class PlaceFragment : BaseFragment<FragmentPlaceBinding>(FragmentPlaceBinding::b
     }
 
     // 툴바 설정
+    @SuppressLint("ResourceAsColor")
+    @OptIn(ExperimentalBadgeUtils::class)
     private fun settingToolbar() {
         binding.apply {
             toolbarPlace.apply {
                 inflateMenu(R.menu.menu_toolbar_place)
+
+                mainActivity.showProductCntInCart(this, R.id.menu_place_cart)
+
                 setOnMenuItemClickListener {
                     when(it.itemId) {
                         // 장바구니로 가기

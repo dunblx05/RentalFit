@@ -28,14 +28,20 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
         mainActivity = context as MainActivity
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showProductCntInCart(binding.toolbarEquip, R.id.menu_equip_cart)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         registerObserver()
-        settingToolbar()
         settingRecyclerView()
         settingEvent()
+        settingToolbar()
     }
+
 
     // ViewModel Observer 등록
     private fun registerObserver() {
@@ -56,6 +62,8 @@ class EquipFragment : BaseFragment<FragmentEquipBinding>(FragmentEquipBinding::b
             toolbarEquip.apply {
 
                 inflateMenu(R.menu.menu_toolbar_equip)
+
+                mainActivity.showProductCntInCart(this, R.id.menu_equip_cart)
 
                 setOnMenuItemClickListener {
 

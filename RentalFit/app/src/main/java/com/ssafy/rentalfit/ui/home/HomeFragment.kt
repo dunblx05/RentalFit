@@ -47,6 +47,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
         mainActivity = context as MainActivity
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showProductCntInCart(binding.toolbarHome, R.id.menu_home_cart)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -120,6 +125,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind,
             toolbarHome.apply {
 
                 inflateMenu(R.menu.menu_toolbar_home)
+
+                mainActivity.showProductCntInCart(this, R.id.menu_home_cart)
 
                 setOnMenuItemClickListener {
 

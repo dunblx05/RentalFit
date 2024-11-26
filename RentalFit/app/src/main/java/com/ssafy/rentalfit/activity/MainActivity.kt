@@ -1,6 +1,7 @@
 package com.ssafy.rentalfit.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,14 +16,21 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide.init
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.android.material.badge.ExperimentalBadgeUtils
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.rentalfit.R
 import com.ssafy.rentalfit.base.ApplicationClass
@@ -30,7 +38,9 @@ import com.ssafy.rentalfit.base.BaseActivity
 import com.ssafy.rentalfit.base.BaseFragment
 import com.ssafy.rentalfit.data.remote.FirebaseTokenService
 import com.ssafy.rentalfit.databinding.ActivityMainBinding
+import com.ssafy.rentalfit.ui.cart.CartAdapter
 import com.ssafy.rentalfit.ui.equip.EquipFragment
+import com.ssafy.rentalfit.ui.equip.EquipViewModel
 import com.ssafy.rentalfit.ui.home.HomeFragment
 import com.ssafy.rentalfit.ui.home.HomeViewModel
 import com.ssafy.rentalfit.ui.mypage.MyPageFragment
@@ -48,6 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private lateinit var pIntent: PendingIntent
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val equipViewModel:EquipViewModel by viewModels()
 
     private val checker = PermissionChecker(this)
     private val runtimePermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -264,6 +275,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         transaction.replace(R.id.containerMain, goto)
         transaction.commit()
+    }
+
+    @OptIn(ExperimentalBadgeUtils::class)
+    @SuppressLint("ResourceAsColor")
+    fun showProductCntInCart(toolbar: MaterialToolbar, menu_cart_id: Int){
+
+        val badgeDrawable = BadgeDrawable.create(this) // 배지 생성
+
+        // 장바구니 아이템 개수 (예시: 동적 설정 가능)
+        val cartItemCount = equipViewModel.shoppingList.value?.size
+        if (cartItemCount != null) {
+            if (cartItemCount > 0) {
+                // 배지 설정
+                badgeDrawable.number = cartItemCount
+                badgeDrawable.isVisible = true
+                badgeDrawable.badgeTextColor=R.color.neon_main
+                badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.neon_main) // 연두색 배경
+                badgeDrawable.badgeTextColor = ContextCompat.getColor(this, R.color.black_main)
+                BadgeUtils.attachBadgeDrawable(badgeDrawable, toolbar, menu_cart_id)
+                Log.d(TAG, "showProductCntInCart: ${badgeDrawable.backgroundColor}")
+            } else {
+                badgeDrawable.isVisible = false // 장바구니가 비었으면 배지 숨김
+            }
+        }
     }
 
     companion object{

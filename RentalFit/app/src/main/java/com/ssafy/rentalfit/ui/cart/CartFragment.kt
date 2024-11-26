@@ -3,6 +3,7 @@ package com.ssafy.rentalfit.ui.cart
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +66,15 @@ class CartFragment: BaseFragment<FragmentCartBinding>(FragmentCartBinding::bind,
 
         binding.apply {
             cartAdapter.shoppingList = equipViewModel.shoppingList.value ?: mutableListOf()
+
+            if (cartAdapter.shoppingList.isEmpty()) {
+                noDataAnimation.visibility = View.VISIBLE
+                buttonCartOpenBottomSheet.setEnabled(false)
+            }
+            else {
+                noDataAnimation.visibility = View.GONE
+            }
+
             cartAdapter.notifyDataSetChanged()
         }
     }
